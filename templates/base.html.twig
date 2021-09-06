@@ -2,38 +2,34 @@
 <html>
 	<head>
 		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css" integrity="sha512-/VectwrK3cVMbl6IFsHj/O+fbxfLQm5rved2LR8HnaNuIL6fs8yBXNSi25hhQCB2713sc3Cbh5a4wLRSsZvDxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 		<title>
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
-		{# Run `composer require symfony/webpack-encore-bundle`
-						           and uncomment the following Encore helpers to start using Symfony UX #}
+
 		{% block stylesheets %}
-				<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
 		{% endblock %}
 
-		{% block javascripts %}
-			{#{{ encore_entry_script_tags('app') }}#}
-		{% endblock %}
 	</head>
 	<body>
+	<div class="pure-menu pure-menu-horizontal">
+		<a href="#" class="pure-menu-heading pure-menu-link">BRAND</a>
+		<ul class="pure-menu-list">
+			<li class="pure-menu-item">
+				<a href="#" class="pure-menu-link">News</a>
+			</li>
+			<li class="pure-menu-item">
+				<a href="#" class="pure-menu-link">Sports</a>
+			</li>
+			<li class="pure-menu-item">
+				<a href="#" class="pure-menu-link">Finance</a>
+			</li>
+		</ul>
+	</div>
 		{% block body %}
-			<div class="pure-menu pure-menu-horizontal">
-				<a href="#" class="pure-menu-heading pure-menu-link">BRAND</a>
-				<ul class="pure-menu-list">
-					<li class="pure-menu-item">
-						<a href="#" class="pure-menu-link">News</a>
-					</li>
-					<li class="pure-menu-item">
-						<a href="#" class="pure-menu-link">Sports</a>
-					</li>
-					<li class="pure-menu-item">
-						<a href="#" class="pure-menu-link">Finance</a>
-					</li>
-				</ul>
-			</div>
 
-			
 		{% endblock %}
 	</body>
 </html>
