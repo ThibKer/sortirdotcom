@@ -31,6 +31,5 @@ yarn-error.log
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-.idea/php.xml
-.idea/phpunit.xml
-.idea/vcs.xml
+###PHPStorm###
+.idea/*
