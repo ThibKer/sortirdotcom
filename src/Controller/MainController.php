@@ -13,7 +13,7 @@ class MainController extends AbstractController
      */
     public function home(): Response
     {
-        return $this->render('sortie/sortie.html.twig');
+        return $this->render('main/index.html.twig');
     }
 
     /**
@@ -21,6 +21,6 @@ class MainController extends AbstractController
      */
     public function profil(int $id): Response
     {
-        return $this->render('sortie/sortie.html.twig');
+        return $this->render('main/profil.html.twig');
     }
 }

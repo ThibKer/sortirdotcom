@@ -14,7 +14,7 @@ class SortieController extends AbstractController
      */
     public function creationSortie(): Response
     {
-        return $this->render('sortie/sortie.html.twig');
+        return $this->render('sortie/sortieCreation.html.twig');
     }
 
     /**
@@ -22,7 +22,7 @@ class SortieController extends AbstractController
      */
     public function modificationSortie(): Response
     {
-        return $this->render('sortie/sortie.html.twig');
+        return $this->render('sortie/sortieModification.html.twig');
     }
 
     /**
@@ -30,7 +30,7 @@ class SortieController extends AbstractController
      */
     public function annulationSortie(): Response
     {
-        return $this->render('sortie/sortie.html.twig');
+        return $this->render('sortie/sortieAnnulation.html.twig');
     }
 
     /**
