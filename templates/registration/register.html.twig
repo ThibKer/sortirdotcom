@@ -3,15 +3,40 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="content-register-form">
+        <h1>Register</h1>
+        <div class="pure-form pure-form-stacked">
+            <div class="pure-u-1">
+            {{ form_start(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+                {{ form_row(registrationForm.email, {
+                    'attr': {'class': 'pure-input-2-3'}
+                }) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                {{ form_row(registrationForm.pseudo, {
+                    'attr': {'class': 'pure-input-2-3'}
+                }) }}
+                {{ form_row(registrationForm.nom, {
+                    'attr': {'class': 'pure-input-2-3'}
+                }) }}
+                {{ form_row(registrationForm.prenom, {
+                    'attr': {'class': 'pure-input-2-3'}
+                }) }}
+                {{ form_row(registrationForm.telephone, {
+                    'attr': {'class': 'pure-input-2-3'}
+                }) }}
+
+                {{ form_row(registrationForm.plainPassword, {
+                    'attr': {'class': 'pure-input-2-3'}
+                }) }}
+                {{ form_row(registrationForm.agreeTerms, {
+                    'attr': {'class': 'pure-checkbox'}
+                }) }}
+
+                <button type="submit" class="pure-button pure-button-primary">Register</button>
+
+            {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

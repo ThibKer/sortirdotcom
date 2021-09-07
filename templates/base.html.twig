@@ -2,20 +2,21 @@
 <html>
 	<head>
 		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css" integrity="sha512-/VectwrK3cVMbl6IFsHj/O+fbxfLQm5rved2LR8HnaNuIL6fs8yBXNSi25hhQCB2713sc3Cbh5a4wLRSsZvDxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 		<title>
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
-
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css" integrity="sha512-/VectwrK3cVMbl6IFsHj/O+fbxfLQm5rved2LR8HnaNuIL6fs8yBXNSi25hhQCB2713sc3Cbh5a4wLRSsZvDxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css" />
 		{% block stylesheets %}
+
 		{% endblock %}
 
 	</head>
 	<body>
 	<div class="pure-menu pure-menu-horizontal">
-		<a href="#" class="pure-menu-heading pure-menu-link">BRAND</a>
+		<a href="{{ path('home') }}" class="pure-menu-heading pure-menu-link">Sortir.com</a>
 		<ul class="pure-menu-list">
 			<li class="pure-menu-item">
 				<a href="#" class="pure-menu-link">News</a>
