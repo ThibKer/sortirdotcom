@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css" integrity="sha512-/VectwrK3cVMbl6IFsHj/O+fbxfLQm5rved2LR8HnaNuIL6fs8yBXNSi25hhQCB2713sc3Cbh5a4wLRSsZvDxg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css"
+          integrity="sha512-/VectwrK3cVMbl6IFsHj/O+fbxfLQm5rved2LR8HnaNuIL6fs8yBXNSi25hhQCB2713sc3Cbh5a4wLRSsZvDxg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-		<title>
-			{% block title %}Welcome!
-			{% endblock %}
-		</title>
+    <title>
+        {% block title %}Welcome!{% endblock %}
+    </title>
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    {% block stylesheets %}
+    {% endblock %}
 
-		{% block stylesheets %}
-		{% endblock %}
+</head>
+<body>
+<div class="pure-menu pure-menu-horizontal">
+    <div class="pure-g">
+        <h1 class="pure-u-1-2">LOGO SORTIE ENI</h1>
+        {% if app.user %}
+            <ul class="pure-menu-list pure-u-1-2" id="base-button">
+                <li class="pure-menu-item">
+                    <a href="{{ path('home') }}" class="pure-menu-link">Accueil</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a href="{{ path('profil', {"id" : app.user.id}) }}" class="pure-menu-link">Mon profil</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a href="{{ path('app_logout') }}" class="pure-menu-link">Se déconnecter</a>
+                </li>
+            </ul>
+        {% endif %}
+    </div>
+</div>
+{% block body %}
 
-	</head>
-	<body>
-	<div class="pure-menu pure-menu-horizontal">
-		<a href="#" class="pure-menu-heading pure-menu-link">BRAND</a>
-		<ul class="pure-menu-list">
-			<li class="pure-menu-item">
-				<a href="#" class="pure-menu-link">News</a>
-			</li>
-			<li class="pure-menu-item">
-				<a href="#" class="pure-menu-link">Sports</a>
-			</li>
-			<li class="pure-menu-item">
-				<a href="#" class="pure-menu-link">Finance</a>
-			</li>
-		</ul>
-	</div>
-		{% block body %}
-
-		{% endblock %}
-	</body>
+{% endblock %}
+</body>
 </html>
