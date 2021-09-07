@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Site;
 use App\Entity\Sortie;
+use App\Form\ProfilFormType;
+use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class MainController extends AbstractController
 {
@@ -37,13 +42,5 @@ class MainController extends AbstractController
             "sorties" => $sorties,
             "sortiesInscit" => $sortiesInscrit
         ]);
-    }
-
-    /**
-     * @Route("/profil/{id}", name="profil")
-     */
-    public function profil(int $id): Response
-    {
-        return $this->render('main/profil.html.twig');
     }
 }
