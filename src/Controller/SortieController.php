@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,10 +41,11 @@ class SortieController extends AbstractController
     public function detailsSortie(int $id): Response
     {
 
-       // $repo = $this->getDoctrine()->getRepository(Sortie::class);
-       // $sortie = $repo->find($id);
-        return $this->render('sortie/sortie.html.twig' //, [ 'sortie' => $sortie
-   //     ]
-    );
+        $repo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $repo->find($id);
+        $participants = $sortie->getParticipants();
+        return $this->render('sortie/sortie.html.twig',
+            [ 'sortie' => $sortie,
+              'participants' => $participants]);
     }
 }
