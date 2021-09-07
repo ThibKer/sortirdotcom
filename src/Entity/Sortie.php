@@ -45,7 +45,7 @@ class Sortie
     private $infosSortie;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="siteOrganisateur")
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="organisations")
      */
     private $site;
 

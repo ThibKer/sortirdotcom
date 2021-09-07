@@ -3,7 +3,77 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <form method="post" class="pure-form pure-form-aligned"
+          style="	position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+    ">
+        <fieldset>
+            <legend>Register</legend>
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(registrationForm) }}
+            </div>
+
+            <div class="pure-control-group">
+                {{ form_row(registrationForm.pseudo) }}
+            </div>
+            <div class="pure-control-group">
+                {{ form_row(registrationForm.email) }}
+            </div>
+            <div class="pure-control-group">
+                {{ form_row(registrationForm.site) }}
+            </div>
+            <div class="pure-control-group">
+                {{ form_row(registrationForm.nom) }}
+            </div>
+            <div class="pure-control-group">
+                {{ form_row(registrationForm.prenom) }}
+            </div>
+            <div class="pure-control-group">
+                {{ form_row(registrationForm.telephone) }}
+            </div>
+            <div class="pure-control-group">
+                {{ form_label(registrationForm.plainPassword.first) }}
+                {{ form_widget(registrationForm.plainPassword.first) }}
+                {{ form_errors(registrationForm.plainPassword.first) }}
+            </div>
+            <div class="pure-control-group">
+                {{ form_label(registrationForm.plainPassword.second) }}
+                {{ form_widget(registrationForm.plainPassword.second) }}
+                {{ form_errors(registrationForm.plainPassword.second) }}
+            </div>
+
+            <!--
+            <div class="pure-control-group">
+                <label for="registration_form_confirmation" class="required">Re-Password</label>
+                <input type="password" id="registration_form_confirmation" name="registration_form[confirmation]" required="required" autocomplete="new-password">
+            </div>
+            -->
+
+            {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
+            #}
+            <div class="pure-controls">
+                <label for="cb-input" class="pure-checkbox">
+                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': ''}}) }} Agree terms
+                </label>
+                <button class="pure-button pure-button-primary" type="submit">Register</button>
+            </div>
+
+            {{ form_rest(registrationForm) }}
+
+        </fieldset>
+    </form>
+
+
+
+
+
+
+    {#
+    {% form_theme registrationForm 'foundation_5_layout.html.twig' %}
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
@@ -11,7 +81,11 @@
             label: 'Password'
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
-
+    #}
+        <!--
         <button type="submit" class="btn">Register</button>
+        -->
+    {#
     {{ form_end(registrationForm) }}
+    #}
 {% endblock %}
