@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
+use App\Entity\Sortie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,5 +41,28 @@ class SortieController extends AbstractController
     public function detailsSortie(int $id): Response
     {
         return $this->render('sortie/sortie.html.twig');
+    }
+
+    /**
+     * @Route("/sortie/gestioninscription/{id}", name="sortie_inscription")
+     */
+    public function gestionInscription(Sortie $sortie): Response
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $inscrit = $this->getUser()->getSorties();
+        $trouver = false;
+        foreach ($inscrit as $sortieInscrit) {
+            if($sortie->getId() == $sortieInscrit->getId()){
+                $trouver = true;
+            }
+        }
+        if($trouver){
+            $this->getUser()->removeSorty($sortie);
+        } else {
+            $this->getUser()->addSorty($sortie);
+        }
+        $manager->persist($sortie);
+        $manager->flush();
+        return $this->redirectToRoute('home');
     }
 }

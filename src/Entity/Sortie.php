@@ -71,6 +71,11 @@ class Sortie
      */
     private $participants;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateLimiteInscription;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -212,6 +217,18 @@ class Sortie
         if ($this->participants->removeElement($participant)) {
             $participant->removeSorty($this);
         }
+
+        return $this;
+    }
+
+    public function getDateLimiteInscription(): ?\DateTimeInterface
+    {
+        return $this->dateLimiteInscription;
+    }
+
+    public function setDateLimiteInscription(?\DateTimeInterface $dateLimiteInscription): self
+    {
+        $this->dateLimiteInscription = $dateLimiteInscription;
 
         return $this;
     }
