@@ -45,7 +45,7 @@ class Sortie
     private $infosSortie;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="siteOrganisateur")
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="organisations")
      */
     private $site;
 
@@ -70,6 +70,11 @@ class Sortie
      * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="sorties")
      */
     private $participants;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateLimiteInscription;
 
     public function __construct()
     {
@@ -212,6 +217,18 @@ class Sortie
         if ($this->participants->removeElement($participant)) {
             $participant->removeSorty($this);
         }
+
+        return $this;
+    }
+
+    public function getDateLimiteInscription(): ?\DateTimeInterface
+    {
+        return $this->dateLimiteInscription;
+    }
+
+    public function setDateLimiteInscription(?\DateTimeInterface $dateLimiteInscription): self
+    {
+        $this->dateLimiteInscription = $dateLimiteInscription;
 
         return $this;
     }

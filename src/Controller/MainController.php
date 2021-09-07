@@ -15,14 +15,27 @@ class MainController extends AbstractController
      */
     public function home(): Response
     {
-       $repositorySite = $this->getDoctrine()->getRepository(Site::class);
-       $repositorySortie = $this->getDoctrine()->getRepository(Sortie::class);
-       $sites = $repositorySite->findAll();
-       $sorties = $repositorySortie->findAll();
+        $repositorySite = $this->getDoctrine()->getRepository(Site::class);
+        $repositorySortie = $this->getDoctrine()->getRepository(Sortie::class);
+        $sites = $repositorySite->findAll();
+        $sorties = $repositorySortie->findAll();
+
+        $sortiesInscrit = [];
+        if ($this->getUser()) {
+            $userEtat = 1;
+            foreach ($this->getUser()->getSorties() as $sortieUser) {
+                foreach ($sorties as $sortie){
+                    if($sortieUser->getId() == $sortie->getId()){
+                        array_push($sortiesInscrit, $sortie);
+                    }
+                }
+            }
+        }
 
         return $this->render('main/index.html.twig', [
             "sites" => $sites,
-            "sorties" => $sorties
+            "sorties" => $sorties,
+            "sortiesInscit" => $sortiesInscrit
         ]);
     }
 
