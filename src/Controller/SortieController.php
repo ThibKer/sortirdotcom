@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
@@ -62,7 +61,13 @@ class SortieController extends AbstractController
      */
     public function detailsSortie(int $id): Response
     {
-        return $this->render('sortie/sortie.html.twig');
+
+        $repo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $repo->find($id);
+        $participants = $sortie->getParticipants();
+        return $this->render('sortie/sortie.html.twig',
+            [ 'sortie' => $sortie,
+              'participants' => $participants]);
     }
 
     /**
