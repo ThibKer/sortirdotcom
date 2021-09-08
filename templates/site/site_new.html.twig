@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un site{% endblock %}
+
+{% block body %}
+    <form method="post" class="pure-form pure-form-aligned"
+          style="	position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+    ">
+        <fieldset>
+            <legend>Ajouter un site</legend>
+            <div class="pure-control-group">
+                {{ form_row(formNew.nom) }}
+            </div>
+            <button class="pure-button pure-button-primary">{{ button_label|default('Ajouter') }}</button>
+        </fieldset>
+        {{ form_rest(formNew) }}
+    </form>
+
+{% endblock %}
