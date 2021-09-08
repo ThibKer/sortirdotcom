@@ -54,9 +54,10 @@
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.site) }}
                     </div>
+                    {{ form_row(formSortie._token) }}
                 </div>
                 <div class="creation-champs pure-controls">
-                    {{ form_row(formSortie.create) }}
+                    <button class="pure-button pure-button-primary" type="submit">Ajouter</button>
                 </div>
             </div>
         </fieldset>
