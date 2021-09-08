@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
@@ -22,7 +23,7 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
             $repository = $this->getDoctrine()->getRepository(Etat::class);
 
@@ -66,8 +67,8 @@ class SortieController extends AbstractController
         $sortie = $repo->find($id);
         $participants = $sortie->getParticipants();
         return $this->render('sortie/sortie.html.twig',
-            [ 'sortie' => $sortie,
-              'participants' => $participants]);
+            ['sortie' => $sortie,
+                'participants' => $participants]);
     }
 
     /**
@@ -77,19 +78,42 @@ class SortieController extends AbstractController
     {
         $manager = $this->getDoctrine()->getManager();
         $inscrit = $this->getUser()->getSorties();
-        $trouver = false;
+        $participantInscrit = false;
         foreach ($inscrit as $sortieInscrit) {
-            if($sortie->getId() == $sortieInscrit->getId()){
-                $trouver = true;
+            if ($sortie->getId() == $sortieInscrit->getId()) {
+                $participantInscrit = true;
             }
         }
-        if($trouver){
-            $this->getUser()->removeSorty($sortie);
-        } else {
-            $this->getUser()->addSorty($sortie);
+
+        $autorisationInscitpion = true;
+
+        // Pour empêcher l'inscription de l'organisateur
+        if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId()) {
+            $autorisationInscitpion = false;
         }
-        $manager->persist($sortie);
-        $manager->flush();
+
+        // Pour empêcher l'inscription dans une sortie pleine
+        if (count($sortie->getParticipants()) >= $sortie->getNbInscriptionMax() && !$participantInscrit){
+            $autorisationInscitpion = false;
+        }
+
+        if($autorisationInscitpion) {
+            if ($participantInscrit) {
+                $this->getUser()->removeSorty($sortie);
+            } else {
+                $this->getUser()->addSorty($sortie);
+            }
+
+            // Vérification Etat "COMPLET"
+            if (count($sortie->getParticipants()) < $sortie->getNbInscriptionMax()){
+                $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(3));
+            } else {
+                $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
+            }
+
+            $manager->persist($sortie);
+            $manager->flush();
+        }
         return $this->redirectToRoute('home');
     }
 }

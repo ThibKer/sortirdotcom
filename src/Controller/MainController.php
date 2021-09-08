@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Site;
 use App\Entity\Sortie;
@@ -23,16 +24,45 @@ class MainController extends AbstractController
         $repositorySite = $this->getDoctrine()->getRepository(Site::class);
         $repositorySortie = $this->getDoctrine()->getRepository(Sortie::class);
         $sites = $repositorySite->findAll();
-        $sorties = $repositorySortie->findAll();
+        $sorties = $repositorySortie->findBy(["etat" => [2, 3, 4, 5, 6]], ["etat" => "ASC"]);
 
+        // Affichage des sorties non publiées si c'est le notre
+        $sortiesOrganiser = $repositorySortie->findBy(["etat" => 1, "organisateur" => $this->getUser()]);
+        if (count($sortiesOrganiser) > 0) {
+            foreach ($sortiesOrganiser as $sortieOrganiserCourante) {
+                array_push($sorties, $sortieOrganiserCourante);
+            }
+        }
+
+        // Vérification des Etat "EN COURS" et "TERMINE"
+        foreach ($sorties as $sortieCourante) {
+            if ($sortieCourante->getEtat()->getId() != 1 ||
+                $sortieCourante->getEtat()->getId() != 3 ||
+                $sortieCourante->getEtat()->getId() != 5 ||
+                $sortieCourante->getEtat()->getId() != 6) {
+                // EN COURS
+                if ($sortieCourante->getDateHeureDebut()->getTimestamp() <= time() &&
+                    time() < ($sortieCourante->getDateHeureDebut()->getTimestamp() + ($sortieCourante->getDuree() * 60))) {
+                    $sortieCourante->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(4));
+                    $manager = $this->getDoctrine()->getManager();
+                    $manager->persist($sortieCourante);
+                    $manager->flush();
+                } // TERMINE
+                elseif (($sortieCourante->getDateHeureDebut()->getTimestamp() + ($sortieCourante->getDuree()) * 60) <= time()) {
+                    $sortieCourante->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(5));
+                    $manager = $this->getDoctrine()->getManager();
+                    $manager->persist($sortieCourante);
+                    $manager->flush();
+                }
+            }
+        }
+
+        // Liste des sorties dans lequel l'utilisateur courant est inscrit
         $sortiesInscrit = [];
-        if ($this->getUser()) {
-            $userEtat = 1;
-            foreach ($this->getUser()->getSorties() as $sortieUser) {
-                foreach ($sorties as $sortie){
-                    if($sortieUser->getId() == $sortie->getId()){
-                        array_push($sortiesInscrit, $sortie);
-                    }
+        foreach ($this->getUser()->getSorties() as $sortieUser) {
+            foreach ($sorties as $sortie) {
+                if ($sortieUser->getId() == $sortie->getId()) {
+                    array_push($sortiesInscrit, $sortie);
                 }
             }
         }
