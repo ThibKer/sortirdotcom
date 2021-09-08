@@ -7,3 +7,18 @@
     width: 80px;
     height: 80px;
 }
+
+
+.button-admin,
+.button-primary,
+.button-secondary,
+.button-warning,
+.button-error,
+.button-success {
+    color: white;
+    /*border-radius: 4px;*/
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.button-admin{
+    background: rgb(241, 48, 48);
+}
