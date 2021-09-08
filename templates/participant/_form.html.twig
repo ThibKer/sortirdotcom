@@ -30,6 +30,9 @@
         <div class="pure-control-group">
             {{ form_row(form.password) }}
         </div>
+
+        <legend></legend> <!-- make space beetween fields-->
+
         <div class="pure-control-group">
             {{ form_row(form.newPassword.first) }}
         {#     {{ form_label(form.newPassword.first) }}
@@ -42,6 +45,7 @@
             {{ form_widget(form.newPassword.second) }}
             {{ form_errors(form.newPassword.second) }} #}
         </div>
+        </fieldset>
         <div class="pure-controls">
             <button class="pure-button pure-button-primary" type="submit">{{ button_label|default('Save') }}</button>
             {% if is_granted('ROLE_ADMIN') %}
