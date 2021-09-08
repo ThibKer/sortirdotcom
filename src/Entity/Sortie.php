@@ -6,6 +6,7 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -25,16 +26,21 @@ class Sortie
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Date du début de la sortie requise")
      * @ORM\Column(type="datetime")
      */
     private $dateHeureDebut;
 
     /**
+     * @Assert\NotBlank(message="Durée de la sortie requise")
+     * @Assert\Range(min="15", minMessage="La durée doit être de 15 minutes minimum", max="60000", maxMessage="La durée doit être de 60000 minutes maximum")
      * @ORM\Column(type="integer")
      */
     private $duree;
 
     /**
+     * @Assert\NotBlank(message="Le nombre d'inscrit maximum est requis")
+     * @Assert\Range(min="1", minMessage="Une personne minimum", max="99", maxMessage="Le nombre de personne maximum est de 99")
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionMax;
@@ -72,6 +78,7 @@ class Sortie
     private $participants;
 
     /**
+     * @Assert\NotBlank(message="Date limite d'inscription requis")
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateLimiteInscription;

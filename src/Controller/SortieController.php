@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Form\LieuType;
 use App\Form\SortieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +22,10 @@ class SortieController extends AbstractController
     public function creationSortie(Request $request): Response
     {
         $sortie = new Sortie();
-        $form = $this->createForm(SortieType::class, $sortie);
-        $form->handleRequest($request);
+        $formSortie = $this->createForm(SortieType::class, $sortie);
+        $formSortie->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
             $manager = $this->getDoctrine()->getManager();
             $repository = $this->getDoctrine()->getRepository(Etat::class);
 
@@ -31,13 +33,14 @@ class SortieController extends AbstractController
             $sortie->setEtat($repository->find(1));
 
 
+            $manager->persist($sortie->getLieu());
             $manager->persist($sortie);
             $manager->flush();
             return $this->redirectToRoute('home');
         }
 
         return $this->render('sortie/sortieCreation.html.twig', [
-            "form" => $form->createView()
+            "formSortie" => $formSortie->createView()
         ]);
     }
 

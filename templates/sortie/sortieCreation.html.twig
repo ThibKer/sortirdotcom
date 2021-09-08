@@ -2,9 +2,63 @@
 
 {% block title %}Création d'une sortie{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+    <link href="{{ asset('css/sortieCreation.css') }}" rel="stylesheet">
+{% endblock %}
 
-    <div class="example-wrapper">
-        {{ form(form) }}
-    </div>
+{% block body %}
+    <form method="post" class="pure-form pure-form-aligned"
+          style="	position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+    ">
+        <fieldset>
+            <div class="example-wrapper pure-g">
+                <div class="pure-u-1-2">
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.nom) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.dateHeureDebut) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.duree) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.nbInscriptionMax) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.infosSortie) }}
+                    </div>
+                </div>
+                <div class="pure-u-1-2">
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.dateLimiteInscription) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.lieu.nom) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.lieu.rue) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.lieu.latitude) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.lieu.longitude) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.lieu.ville) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.site) }}
+                    </div>
+                </div>
+                <div class="creation-champs pure-controls">
+                    {{ form_row(formSortie.create) }}
+                </div>
+            </div>
+        </fieldset>
+    </form>
 {% endblock %}

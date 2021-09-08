@@ -22,12 +22,9 @@ class SortieType extends AbstractType
             ->add('nbInscriptionMax')
             ->add('infosSortie')
             ->add('dateLimiteInscription')
+            ->add('lieu', LieuType::class)
             ->add('site', EntityType::class, [
                 "class" => Site::class,
-                "choice_label" => "nom"
-            ])
-            ->add('lieu', EntityType::class, [
-                "class" => Lieu::class,
                 "choice_label" => "nom"
             ])
             ->add('create', SubmitType::class, [
