@@ -96,19 +96,30 @@ class SortieController extends AbstractController
         }
 
         // Pour empêcher l'inscription dans une sortie pleine
-        if (count($sortie->getParticipants()) >= $sortie->getNbInscriptionMax() && !$participantInscrit){
+        if (count($sortie->getParticipants()) >= $sortie->getNbInscriptionMax() && !$participantInscrit) {
             $autorisationInscitpion = false;
         }
 
-        if($autorisationInscitpion) {
+        // Pour empêcher l'inscription dans une sortie CREER / CLOTURER / EN COURS / TERMINER / ANNULER
+        if (!$participantInscrit && $sortie->getEtat()->getId() != 2) {
+            $autorisationInscitpion = false;
+        }
+
+        if (($participantInscrit && $sortie->getEtat()->getId() == 4) ||
+            ($participantInscrit && $sortie->getEtat()->getId() == 5) ||
+            ($participantInscrit && $sortie->getEtat()->getId() == 6)) {
+            $autorisationInscitpion = false;
+        }
+
+        if ($autorisationInscitpion) {
             if ($participantInscrit) {
                 $this->getUser()->removeSorty($sortie);
             } else {
                 $this->getUser()->addSorty($sortie);
             }
 
-            // Vérification Etat "COMPLET"
-            if (count($sortie->getParticipants()) < $sortie->getNbInscriptionMax()){
+            // Vérification Etat "CLOTURER"
+            if (count($sortie->getParticipants()) < $sortie->getNbInscriptionMax()) {
                 $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(3));
             } else {
                 $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
@@ -117,6 +128,18 @@ class SortieController extends AbstractController
             $manager->persist($sortie);
             $manager->flush();
         }
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/sortie/publication/{id}", name="sortie_publication")
+     */
+    public function publicationSortie(Sortie $sortie): Response
+    {
+        $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($sortie);
+        $manager->flush();
         return $this->redirectToRoute('home');
     }
 }
