@@ -77,55 +77,72 @@
                     </thead>
                     <tbody id="lol">
                     {% for sortie in sorties %}
-                            <tr class="">
-                                <td>{{ sortie.nom }}</td>
-                                <td>{{ sortie.dateHeureDebut|date('d/m/Y h:i') }}</td>
-                                <td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>
-                                <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</td>
-                                <td>{{ sortie.etat.libelle }}</td>
 
-                                {% set find = 0 %}
-                                {% if app.user.getSorties is not null %}
-                                    {% for sortieUser in app.user.getSorties %}
-                                        {% if sortieUser.id == sortie.id %}
-                                            {% set find = 1 %}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% else %}
-                                    {% set find = 0 %}
-                                {% endif %}
+                        <tr class="">
+                            <td>{{ sortie.nom }}</td>
+                            <td>{{ sortie.dateHeureDebut|date('d/m/Y h:i') }}</td>
+                            <td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>
+                            <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</td>
+                            <td>{{ sortie.etat.libelle }}</td>
 
-                                {% if find == 1 %}
-                                    <td>X</td>
-                                {% else %}
-                                    <td></td>
-                                {% endif %}
-
-                                <td>{{ sortie.organisateur.pseudo }}</td>
-
-                                {% if sortie.organisateur.id != app.user.id %}
-                                    {% if find == 1 %}
-                                        <td>
-                                            <a class="pure-button button-primary" href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
-                                            -
-                                            <a class="pure-button button-secondary" href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">Se désister</a>
-                                        </td>
-                                    {% else %}
-                                        <td>
-                                            <a class="pure-button button-primary" href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
-                                            -
-                                            <a class="pure-button button-secondary" href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">S'inscrire</a>
-                                        </td>
+                            {% set find = 0 %}
+                            {% if app.user.getSorties is not null %}
+                                {% for sortieUser in app.user.getSorties %}
+                                    {% if sortieUser.id == sortie.id %}
+                                        {% set find = 1 %}
                                     {% endif %}
-                                {% else %}
-                                    <td>
-                                        <a class="pure-button button-primary" href="{{ path('sortie_modifier', {"id" : sortie.id}) }}">Modifier</a>
-                                        -
-                                        <a class="pure-button button-secondary" href="">Publier</a>
-                                    </td>
-                                {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {% set find = 0 %}
+                            {% endif %}
 
-                            </tr>
+                            {% if find == 1 %}
+                                <td>X</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            <td>{{ sortie.organisateur.pseudo }}</td>
+
+                            {% if sortie.etat.id  == 1 %}
+                                <td>
+                                    <a class="pure-button button-secondary"
+                                       href="{{ path('sortie_modifier', {"id" : sortie.id}) }}">Modifier</a>
+                                    -
+                                    <a class="pure-button button-secondary"
+                                       href="{{ path('sortie_publication', {"id" : sortie.id}) }}">Publier</a>
+                                </td>
+                            {% elseif sortie.etat.id == 2 %}
+                                <td>
+                                    <a class="pure-button button-primary"
+                                       href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
+                                    -
+                                    {% if find == 1 %}
+                                        <a class="pure-button button-secondary"
+                                           href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">Se désister</a>
+                                    {% else %}
+                                        <a class="pure-button button-secondary"
+                                           href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">S'inscrire</a>
+                                    {% endif %}
+                                </td>
+                            {% elseif sortie.etat.id == 3 %}
+                                <td>
+                                    <a class="pure-button button-primary"
+                                       href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
+                                    {% if find == 1 %}
+                                        -
+                                        <a class="pure-button button-secondary"
+                                           href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">Se désister</a>
+                                    {% endif %}
+                                </td>
+                            {% elseif sortie.etat.id == 4 or sortie.etat.id == 5 or sortie.etat.id == 6 %}
+                                <td>
+                                    <a class="pure-button button-primary"
+                                       href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
+                                </td>
+                            {% endif %}
+
+                        </tr>
 
                     {% endfor %}
                     </tbody>
@@ -133,7 +150,9 @@
             </div>
         </div>
         <div id="bouton-creer-sortie">
-            <a href="{{ path('sortie_creer') }}"><button>Créer une sortie</button></a>
+            <a href="{{ path('sortie_creer') }}">
+                <button>Créer une sortie</button>
+            </a>
         </div>
     </main>
 {% endblock %}
