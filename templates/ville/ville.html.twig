@@ -19,10 +19,14 @@
             <tr>
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
-                <td><a href="">Modifier</a> - <a href="{{ path('remove_ville', {id:ville.id}) }}">Supprimer</a></td>
+                <td><a href="{{ path('update_ville', {id:ville.id}) }}">Modifier</a> - <a href="{{ path('remove_ville', {id:ville.id}) }}">Supprimer</a></td>
             </tr>
         {% endfor %}
-
+    <tr>
+        <td></td>
+        <td></td>
+        <td><a href="{{ path('new_ville') }}">Ajouter un ville</a></td>
+    </tr>
         </tbody>
     </table>
 </div>

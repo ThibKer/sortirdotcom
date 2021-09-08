@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une ville{% endblock %}
+
+{% block body %}
+<form method="post" class="pure-form pure-form-aligned"
+      style="	position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+    ">
+    <fieldset>
+        <legend>Ajouter une ville</legend>
+        <div class="pure-control-group">
+            {{ form_row(formNew.nom) }}
+        </div>
+        <div class="pure-control-group">
+            {{ form_row(formNew.codePostal) }}
+        </div>
+        <button class="pure-button pure-button-primary">{{ button_label|default('Ajouter') }}</button>
+    </fieldset>
+    {{ form_rest(formNew) }}
+</form>
+
+{% endblock %}
