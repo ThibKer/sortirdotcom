@@ -51,15 +51,20 @@
                         <div class="creation-champs pure-control-group">
                             {{ form_row(formUpdate.site) }}
                         </div>
-                        {{ form_row(formUpdate._token) }}
+                        {{ form_rest(formUpdate) }}
                     </div>
 
                     <div class="creation-champs pure-controls">
-                        <button class="pure-button pure-button-primary" type="submit">Ajouter</button>
+                        <button class="pure-button pure-button-primary" type="submit">Modifier</button>
+                        <a href="{{ path('sortie_publication', {"id" : sortie.id}) }}"><button class="pure-button pure-button-primary" type="button">Publier la sortie</button></a>
+                        <a href=""><button class="pure-button pure-button-primary" type="button">Supprimer la sortie</button></a>
+                        <a href="{{ path('home') }}"><button class="pure-button pure-button-primary" type="button">Annuler</button></a>
                     </div>
                 </div>
 
             </fieldset>
         </form>
+
+
 
 {% endblock %}
