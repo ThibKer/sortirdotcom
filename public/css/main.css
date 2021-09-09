@@ -35,3 +35,9 @@
 }#lol>tr:nth-child(even){
     background: rgba(53, 150, 47, 0.35);
 }
+
+
+.displayer{
+    background: #e0e0e0;
+    color: rgba(35, 33, 33, 0.85) !important;
+}
