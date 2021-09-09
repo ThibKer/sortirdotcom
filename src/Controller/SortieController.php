@@ -45,11 +45,27 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/sortie/modifier", name="sortie_modifier")
+     * @Route("/sortie/modifier/{id}", name="sortie_modifier", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function modificationSortie(): Response
+    public function modificationSortie(Request $request,Sortie $sortie): Response
     {
-        return $this->render('sortie/sortieModification.html.twig');
+        $form = $this->createForm(SortieType::class, $sortie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $form->get('nom')->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('home');
+        }
+        return $this->renderForm('sortie/sortieModification.html.twig', [
+            'sortie' => $sortie,
+            'formUpdate' => $form
+        ]);
+
     }
 
     /**
