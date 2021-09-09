@@ -71,13 +71,18 @@ class SortieController extends AbstractController
      */
     public function detailsSortie(int $id): Response
     {
-
         $repo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortie = $repo->find($id);
-        $participants = $sortie->getParticipants();
-        return $this->render('sortie/sortie.html.twig',
-            ['sortie' => $sortie,
+        $timestampFinSortie = ($sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree() * 60);
+        $timestampDans1Mois = (time() - (31 * 24 * 60 * 60));
+        if ($timestampFinSortie < $timestampDans1Mois) {
+            return $this->redirectToRoute('home');
+        } else{
+            $participants = $sortie->getParticipants();
+            return $this->render('sortie/sortie.html.twig',
+                ['sortie' => $sortie,
                 'participants' => $participants]);
+        }
     }
 
     /**

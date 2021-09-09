@@ -182,10 +182,21 @@ class MainController extends AbstractController
             }
         }
 
+        //Liste sorties archivées
+        $sortiesArchivees = [];
+        $timestampDans1Mois = (time() - (31 * 24 * 60 * 60));
+        foreach ($sorties as $sortie){
+            $timestampFinSortie = ($sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree() * 60);
+            if($timestampFinSortie < $timestampDans1Mois){
+                array_push($sortiesArchivees, $sortie);
+            }
+        }
+
         return $this->render('main/index.html.twig', [
             "sites" => $sites,
             "sorties" => $sorties,
-            "sortiesInscit" => $sortiesInscrit
+            "sortiesInscit" => $sortiesInscrit,
+            "sortiesArchivees" => $sortiesArchivees
         ]);
     }
 }
