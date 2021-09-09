@@ -4,7 +4,6 @@
 
 {% block body %}
 
-    <div class="example-wrapper">
         <form method="post" class="pure-form pure-form-aligned"
               style="	position: absolute;
                 top: 50%;
@@ -12,37 +11,55 @@
                 transform: translate(-50%,-50%);
     ">
             <fieldset>
-                <legend>Modifier une sortie</legend>
-                <div class="pure-control-group">
-                    {{ form_row(formUpdate.nom) }}
-                </div>
-                <div class="pure-control-group">
-                    {{ form_row(formUpdate.dateHeureDebut) }}
-                </div>
-                <div class="pure-control-group">
-                    {{ form_row(formUpdate.nbInscriptionMax) }}
-                </div>
-                <div class="pure-control-group">
-                    {{ form_row(formUpdate.infosSortie) }}
-                </div>
-                <div class="pure-control-group">
-                    {{ form_row(formUpdate.site) }}
-                </div>
-                <div class="pure-control-group">
-                    {{ form_row(formUpdate.lieu) }}
+                <div class="example-wrapper pure-g">
+                    <div class="pure-u-1-2">
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.nom) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.dateHeureDebut) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.duree) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.nbInscriptionMax) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.infosSortie) }}
+                        </div>
+                    </div>
+                    <div class="pure-u-1-2">
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.dateLimiteInscription) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.lieu.nom) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.lieu.rue) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.lieu.latitude) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.lieu.longitude) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.lieu.ville) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formUpdate.site) }}
+                        </div>
+                        {{ form_row(formUpdate._token) }}
+                    </div>
+
+                    <div class="creation-champs pure-controls">
+                        <button class="pure-button pure-button-primary" type="submit">Ajouter</button>
+                    </div>
                 </div>
 
-                <div class="pure-control-group">
-                    {{ form_row(formUpdate.duree) }}
-                </div>
-                <div class="pure-control-group">
-                    {{ form_row(formUpdate.dateLimiteInscription) }}
-                </div>
-
-                <button class="pure-button pure-button-primary">{{ button_label|default('Enregistrer') }}</button>
             </fieldset>
-            {{ form_rest(formUpdate) }}
         </form>
 
-    </div>
 {% endblock %}

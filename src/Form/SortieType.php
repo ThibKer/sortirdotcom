@@ -36,11 +36,6 @@ class SortieType extends AbstractType
                 "class" => Site::class,
                 "choice_label" => "nom"
             ])
-            ->add('lieu', EntityType::class, [
-                "class" => Lieu::class,
-                "choice_label" => "nom"
-            ])
-
         ;
     }
 
