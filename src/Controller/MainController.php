@@ -37,7 +37,6 @@ class MainController extends AbstractController
         // Vérification des Etat "EN COURS" et "TERMINE"
         foreach ($sorties as $sortieCourante) {
             if ($sortieCourante->getEtat()->getId() != 1 ||
-                $sortieCourante->getEtat()->getId() != 3 ||
                 $sortieCourante->getEtat()->getId() != 5 ||
                 $sortieCourante->getEtat()->getId() != 6) {
                 // EN COURS
@@ -54,6 +53,13 @@ class MainController extends AbstractController
                     $manager->persist($sortieCourante);
                     $manager->flush();
                 }
+            }
+            if($sortieCourante->getEtat()->getId() == 3 &&
+            count($sortieCourante->getParticipants()) < $sortieCourante->getNbInscriptionMax()) {
+                $sortieCourante->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($sortieCourante);
+                $manager->flush();
             }
         }
 
