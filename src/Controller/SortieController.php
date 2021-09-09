@@ -53,11 +53,17 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/sortie/annuler", name="sortie_annuler")
+     * @Route("/sortie/annuler/{id}", name="sortie_annuler")
      */
-    public function annulationSortie(): Response
+    public function annulationSortie(Sortie $sortie): Response
     {
-        return $this->render('sortie/sortieAnnulation.html.twig');
+        if($sortie->getOrganisateur()->getId() == $this->getUser()->getId()){
+            return $this->render('sortie/sortieAnnulation.html.twig', [
+                "sortie" => $sortie
+            ]);
+        } else {
+            return $this->redirectToRoute("home");
+        }
     }
 
     /**
