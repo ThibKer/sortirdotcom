@@ -30,9 +30,6 @@ class SortieType extends AbstractType
                 "class" => Lieu::class,
                 "choice_label" => "nom"
             ])
-            ->add('create', SubmitType::class, [
-                "label" => "Créer"
-            ])
         ;
     }
 
