@@ -3,36 +3,50 @@
 {% block title %}Participant{% endblock %}
 
 {% block body %}
-    <h1>Participant</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Pseudo</th>
-                <td>{{ participant.pseudo }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ participant.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ participant.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ participant.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ participant.email }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="pure-form pure-form-aligned"
+         style="	position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+    ">
 
-    <a href="{{ path('participant_index') }}">back to list</a>
 
-    <a href="{{ path('participant_edit', {'id': participant.id}) }}">edit</a>
+    <fieldset>
+        <legend>Profil d'un participant</legend>
 
-    {{ include('participant/_delete_form.html.twig') }}
+            <div class="pure-control-group">
+                <label>Pseudo</label>
+                <input class="displayer" disabled value="{{ participant.pseudo }}">
+            </div>
+            <div class="pure-control-group">
+                <label>Nom</label>
+                <input class="displayer" disabled value="{{ participant.nom }}">
+            </div>
+            <div class="pure-control-group">
+                <label>Prenom</label>
+                <input class="displayer" disabled value="{{ participant.prenom }}">
+            </div>
+            <div class="pure-control-group">
+                <label>Telephone</label>
+                <input class="displayer" disabled value="{{ participant.telephone }}">
+            </div>
+            <div class="pure-control-group">
+                <label>Email</label>
+                <input class="displayer" disabled value="{{ participant.email }}">
+            </div>
+
+        <div class="pure-controls">
+            <button class="pure-button button-primary" onClick="window.history.back();">Retour</button>
+            {% if participant.id == app.user.id %}
+                <a class="pure-button button-primary" href="{{ path('participant_edit', {'id': participant.id}) }}">edit</a>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="pure-button button-admin" href="{{ path('participant_edit', {'id': participant.id}) }}">edit</a>
+                <a class="pure-button button-admin" href="{{ path('participant_index') }}">Back to List</a>
+                {{ include('participant/_delete_form.html.twig') }}
+            {% endif %}
+        </div>
+    </fieldset>
+    </div>
 {% endblock %}

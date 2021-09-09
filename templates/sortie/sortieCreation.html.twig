@@ -4,6 +4,7 @@
 
 {% block stylesheets %}
     <link href="{{ asset('css/sortieCreation.css') }}" rel="stylesheet">
+
 {% endblock %}
 
 {% block body %}
@@ -56,10 +57,13 @@
                     </div>
                     {{ form_row(formSortie._token) }}
                 </div>
+
                 <div class="creation-champs pure-controls">
                     <button class="pure-button pure-button-primary" type="submit">Ajouter</button>
                 </div>
             </div>
+
         </fieldset>
     </form>
+
 {% endblock %}
