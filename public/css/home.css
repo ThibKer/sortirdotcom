@@ -10,8 +10,14 @@ body{
 }
 
 #home-liste-sortie{
-    overflow:scroll;
+    overflow-y:scroll;
     margin-left: 10px;
-    height: 500px;
+    height: 30vh;
+    width: max-content;
+}
+.home-liste-sortie{
+    overflow-y:scroll;
+    margin-left: 10px;
+    height: 30vh;
     width: max-content;
 }
