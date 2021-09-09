@@ -114,18 +114,29 @@
                                        href="{{ path('sortie_publication', {"id" : sortie.id}) }}">Publier</a>
                                 </td>
                             {% elseif sortie.etat.id == 2 %}
-                                <td>
-                                    <a class="pure-button button-primary"
-                                       href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
-                                    -
-                                    {% if find == 1 %}
+                                {% if app.user.id == sortie.organisateur.id %}
+                                    <td>
+                                        <a class="pure-button button-primary"
+                                           href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
+                                        -
                                         <a class="pure-button button-secondary"
-                                           href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">Se désister</a>
-                                    {% else %}
-                                        <a class="pure-button button-secondary"
-                                           href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">S'inscrire</a>
-                                    {% endif %}
-                                </td>
+                                           href="{{ path('sortie_annuler', {"id" : sortie.id}) }}">Annuler</a>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <a class="pure-button button-primary"
+                                           href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
+                                        -
+                                        {% if find == 1 %}
+                                            <a class="pure-button button-secondary"
+                                               href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">Se
+                                                désister</a>
+                                        {% else %}
+                                            <a class="pure-button button-secondary"
+                                               href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">S'inscrire</a>
+                                        {% endif %}
+                                    </td>
+                                {% endif %}
                             {% elseif sortie.etat.id == 3 %}
                                 <td>
                                     <a class="pure-button button-primary"
@@ -137,10 +148,24 @@
                                     {% endif %}
                                 </td>
                             {% elseif sortie.etat.id == 4 or sortie.etat.id == 5 or sortie.etat.id == 6 %}
-                                <td>
-                                    <a class="pure-button button-primary"
-                                       href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
-                                </td>
+                                {% set archivee = 0 %}
+
+                                {% for sortieArchivee in sortiesArchivees %}
+                                {% if sortieArchivee.id == sortie.id %}
+                                    {% set archivee = 1 %}
+                                {% endif %}
+                                {% endfor %}
+
+                                {% if archivee == 0 %}
+                                    <td>
+                                        <a class="pure-button button-primary"
+                                           href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        Archiver
+                                    </td>
+                                {% endif %}
                             {% endif %}
 
                         </tr>

@@ -47,4 +47,13 @@ class SortieRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findWithName($text){
+        $entityManager = $this->getEntityManager();
+        $dql = "SELECT s 
+        FROM App\Entity\Sortie s
+        WHERE s.nom LIKE '%".$text."%'";
+        $query = $entityManager->createQuery($dql);
+        return $query->getResult();
+    }
 }

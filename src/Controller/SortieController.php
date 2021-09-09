@@ -53,11 +53,26 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/sortie/annuler", name="sortie_annuler")
+     * @Route("/sortie/annuler/{id}", name="sortie_annuler")
      */
-    public function annulationSortie(): Response
+    public function annulationSortie(Sortie $sortie, Request $request): Response
     {
-        return $this->render('sortie/sortieAnnulation.html.twig');
+        if($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
+        $sortie->getEtat()->getId() == 2){
+            if($request->get("annulation-motif") !== null){
+                $sortie->setInfosSortie("Motif d'annulation : ".$request->get("annulation-motif"));
+                $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(6));
+                $manager = $this->getDoctrine()->getManager();
+                $manager->persist($sortie);
+                $manager->flush();
+                return $this->redirectToRoute("home");
+            }
+            return $this->render('sortie/sortieAnnulation.html.twig', [
+                "sortie" => $sortie
+            ]);
+        } else {
+            return $this->redirectToRoute("home");
+        }
     }
 
     /**
@@ -65,13 +80,18 @@ class SortieController extends AbstractController
      */
     public function detailsSortie(int $id): Response
     {
-
         $repo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortie = $repo->find($id);
-        $participants = $sortie->getParticipants();
-        return $this->render('sortie/sortie.html.twig',
-            ['sortie' => $sortie,
+        $timestampFinSortie = ($sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree() * 60);
+        $timestampDans1Mois = (time() - (31 * 24 * 60 * 60));
+        if ($timestampFinSortie < $timestampDans1Mois) {
+            return $this->redirectToRoute('home');
+        } else{
+            $participants = $sortie->getParticipants();
+            return $this->render('sortie/sortie.html.twig',
+                ['sortie' => $sortie,
                 'participants' => $participants]);
+        }
     }
 
     /**
