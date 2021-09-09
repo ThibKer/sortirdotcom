@@ -20,38 +20,38 @@
                         <div class="pure-u-1-2">
                             <div class="pure-g">
                                 <label for="choix-site" class="pure-u-1-2">Site : </label>
-                                <select id="choix-site" class="pure-u-1-2">
+                                <select id="choix-site" class="pure-u-1-2" name="tri-site">
                                     {% for site in sites %}
-                                        <option>{{ site.nom }}</option>
+                                        <option value="{{ site.id }}">{{ site.nom }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="pure-g">
                                 <label for="recherche-nom" class="pure-u-1-2">Le nom de la sortie contient : </label>
-                                <input id="recherche-nom" type="text" class="pure-u-1-2">
+                                <input id="recherche-nom" type="text" class="pure-u-1-2" name="tri-texte">
                             </div>
                             <div id="recherche-date" class="pure-g">
                                 <label for="date-debut" class="pure-u-1-4">Entre : </label>
-                                <input type="date" id="date-debut" class="pure-u-1-4">
+                                <input type="date" id="date-debut" class="pure-u-1-4" name="tri-date-debut">
                                 <label for="date-fin" class="pure-u-1-4"> et : </label>
-                                <input type="date" id="date-fin" class="pure-u-1-4">
+                                <input type="date" id="date-fin" class="pure-u-1-4" name="tri-date-fin">
                             </div>
                         </div>
                         <div class="pure-u-1-2">
                             <div class="pure-u-1-1">
-                                <input type="checkbox" id="checkbox-organisateur"/>
+                                <input type="checkbox" id="checkbox-organisateur" name="tri-checkbox" value="1"/>
                                 <label for="checkbox-organisateur">Sortie(s) dont je suis l'organisateur(trice)</label>
                             </div>
                             <div class="pure-u-1-1">
-                                <input type="checkbox" id="checkbox-inscrit"/>
+                                <input type="checkbox" id="checkbox-inscrit" name="tri-checkbox" value="2"/>
                                 <label for="checkbox-inscrit">Sortie(s) auxquelles je suis inscrit(e)</label>
                             </div>
                             <div class="pure-u-1-1">
-                                <input type="checkbox" id="checkbox-non-inscrit"/>
+                                <input type="checkbox" id="checkbox-non-inscrit" name="tri-checkbox" value="3"/>
                                 <label for="checkbox-non-inscrit">Sortie(s) auxquelles je ne suis pas inscrit(e)</label>
                             </div>
                             <div class="pure-u-1-1">
-                                <input type="checkbox" id="checkbox-passee"/>
+                                <input type="checkbox" id="checkbox-passee" name="tri-checkbox" value="4"/>
                                 <label for="checkbox-passee">Sortie(s) passée(s)</label>
                             </div>
                         </div>
