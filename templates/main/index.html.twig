@@ -14,13 +14,14 @@
         </div>
         <div id="liste">
             <h2>Filtre des sorties</h2>
-            <form id="filtre" class="pure-g pure-form">
+            <form id="filtre" class="pure-g pure-form" method="post">
                 <div id="filtre-option" class="pure-u-2-3">
                     <div class="pure-g">
                         <div class="pure-u-1-2">
                             <div class="pure-g">
                                 <label for="choix-site" class="pure-u-1-2">Site : </label>
                                 <select id="choix-site" class="pure-u-1-2" name="tri-site">
+                                    <option value="0"></option>
                                     {% for site in sites %}
                                         <option value="{{ site.id }}">{{ site.nom }}</option>
                                     {% endfor %}
@@ -39,19 +40,19 @@
                         </div>
                         <div class="pure-u-1-2">
                             <div class="pure-u-1-1">
-                                <input type="checkbox" id="checkbox-organisateur" name="tri-checkbox" value="1"/>
+                                <input type="checkbox" id="checkbox-organisateur" name="tri-checkbox-organisateur"/>
                                 <label for="checkbox-organisateur">Sortie(s) dont je suis l'organisateur(trice)</label>
                             </div>
                             <div class="pure-u-1-1">
-                                <input type="checkbox" id="checkbox-inscrit" name="tri-checkbox" value="2"/>
+                                <input type="checkbox" id="checkbox-inscrit" name="tri-checkbox-inscrit"/>
                                 <label for="checkbox-inscrit">Sortie(s) auxquelles je suis inscrit(e)</label>
                             </div>
                             <div class="pure-u-1-1">
-                                <input type="checkbox" id="checkbox-non-inscrit" name="tri-checkbox" value="3"/>
+                                <input type="checkbox" id="checkbox-non-inscrit" name="tri-checkbox-non-inscrit"/>
                                 <label for="checkbox-non-inscrit">Sortie(s) auxquelles je ne suis pas inscrit(e)</label>
                             </div>
                             <div class="pure-u-1-1">
-                                <input type="checkbox" id="checkbox-passee" name="tri-checkbox" value="4"/>
+                                <input type="checkbox" id="checkbox-passee" name="tri-checkbox-passee"/>
                                 <label for="checkbox-passee">Sortie(s) passée(s)</label>
                             </div>
                         </div>
