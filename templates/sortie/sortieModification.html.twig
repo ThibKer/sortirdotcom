@@ -57,7 +57,7 @@
                     <div class="creation-champs pure-controls">
                         <button class="pure-button pure-button-primary" type="submit">Modifier</button>
                         <a href="{{ path('sortie_publication', {"id" : sortie.id}) }}"><button class="pure-button pure-button-primary" type="button">Publier la sortie</button></a>
-                        <a href=""><button class="pure-button pure-button-primary" type="button">Supprimer la sortie</button></a>
+                        <a href="{{ path('sortie_suppression', {"id" : sortie.id}) }}"><button class="pure-button pure-button-primary" type="button">Supprimer la sortie</button></a>
                         <a href="{{ path('home') }}"><button class="pure-button pure-button-primary" type="button">Annuler</button></a>
                     </div>
                 </div>
