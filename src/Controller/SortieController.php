@@ -45,11 +45,27 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/sortie/modifier", name="sortie_modifier")
+     * @Route("/sortie/modifier/{id}", name="sortie_modifier", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function modificationSortie(): Response
+    public function modificationSortie(Request $request,Sortie $sortie): Response
     {
-        return $this->render('sortie/sortieModification.html.twig');
+        $form = $this->createForm(SortieType::class, $sortie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $form->get('nom')->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('home');
+        }
+        return $this->renderForm('sortie/sortieModification.html.twig', [
+            'sortie' => $sortie,
+            'formUpdate' => $form
+        ]);
+
     }
 
     /**
@@ -78,13 +94,11 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/details/{id}", name="sortie_details")
      */
-    public function detailsSortie(int $id): Response
+    public function detailsSortie(Sortie $sortie): Response
     {
-        $repo = $this->getDoctrine()->getRepository(Sortie::class);
-        $sortie = $repo->find($id);
         $timestampFinSortie = ($sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree() * 60);
         $timestampDans1Mois = (time() - (31 * 24 * 60 * 60));
-        if ($timestampFinSortie < $timestampDans1Mois) {
+        if ($timestampFinSortie < $timestampDans1Mois || $sortie->getEtat()->getId() == 7) {
             return $this->redirectToRoute('home');
         } else{
             $participants = $sortie->getParticipants();
@@ -160,6 +174,20 @@ class SortieController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($sortie);
         $manager->flush();
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/sortie/suppression/{id}", name="sortie_suppression")
+     */
+    public function suppressionSortie(Sortie $sortie): Response
+    {
+        if($sortie->getEtat()->getId() == 1 && $sortie->getOrganisateur()->getId() == $this->getUser()->getId()){
+            $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(7));
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($sortie);
+            $manager->flush();
+        }
         return $this->redirectToRoute('home');
     }
 }

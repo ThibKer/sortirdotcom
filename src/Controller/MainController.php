@@ -121,6 +121,15 @@ class MainController extends AbstractController
                 $sorties = $toAdd;
             }
 
+            // Enlever les supprimer
+            $toAdd = [];
+            foreach ($sorties as $sortie){
+                if($sortie->getEtat()->getId() != 7){
+                    array_push($toAdd, $sortie);
+                }
+            }
+            $sorties = $toAdd;
+
         } else {
             $sorties = $repositorySortie->findBy(["etat" => [2, 3, 4, 5, 6]], ["etat" => "ASC"]);
 
