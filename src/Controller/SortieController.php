@@ -78,13 +78,11 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/details/{id}", name="sortie_details")
      */
-    public function detailsSortie(int $id): Response
+    public function detailsSortie(Sortie $sortie): Response
     {
-        $repo = $this->getDoctrine()->getRepository(Sortie::class);
-        $sortie = $repo->find($id);
         $timestampFinSortie = ($sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree() * 60);
         $timestampDans1Mois = (time() - (31 * 24 * 60 * 60));
-        if ($timestampFinSortie < $timestampDans1Mois) {
+        if ($timestampFinSortie < $timestampDans1Mois || $sortie->getEtat()->getId() == 7) {
             return $this->redirectToRoute('home');
         } else{
             $participants = $sortie->getParticipants();
@@ -160,6 +158,20 @@ class SortieController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($sortie);
         $manager->flush();
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/sortie/suppression/{id}", name="sortie_suppression")
+     */
+    public function suppressionSortie(Sortie $sortie): Response
+    {
+        if($sortie->getEtat()->getId() == 1 && $sortie->getOrganisateur()->getId() == $this->getUser()->getId()){
+            $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(7));
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($sortie);
+            $manager->flush();
+        }
         return $this->redirectToRoute('home');
     }
 }
