@@ -41,3 +41,23 @@
     background: #e0e0e0;
     color: rgba(35, 33, 33, 0.85) !important;
 }
+
+
+#date_compte{
+    margin-left: 75vw;
+}
+
+
+.m5{
+    margin-left: 15%;
+    margin-right: 5%;
+}
+
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  90% 50% no-repeat ;
+}
+
+.centered{
+    text-align: center
+}
+

@@ -22,6 +22,14 @@
         </div>
         {% if app.user %}
             <ul class="pure-menu-list pure-u-1-2" id="base-button">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="pure-menu-item">
+                        <a href="{{ path('ville') }}" class="pure-menu-link">Villes</a>
+                    </li>
+                    <li class="pure-menu-item">
+                        <a href="{{ path('site') }}" class="pure-menu-link">Sites</a>
+                    </li>
+                {% endif %}
                 <li class="pure-menu-item">
                     <a href="{{ path('home') }}" class="pure-menu-link">Accueil</a>
                 </li>
