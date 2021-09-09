@@ -7,3 +7,37 @@
     width: 80px;
     height: 80px;
 }
+
+
+.button-admin,
+.button-primary,
+.button-secondary,
+.button-warning,
+.button-error,
+.button-success {
+    color: white;
+    /*border-radius: 4px;*/
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.button-admin{
+    background: rgb(241, 48, 48);
+}
+.button-primary{
+    background : rgba(48, 157, 217, 0.53);
+}
+.button-secondary{
+    background : rgba(215, 145, 59, 0.63);
+}
+
+
+#lol>tr:nth-child(odd){
+    background: rgba(76, 144, 234, 0.55);
+}#lol>tr:nth-child(even){
+    background: rgba(53, 150, 47, 0.35);
+}
+
+
+.displayer{
+    background: #e0e0e0;
+    color: rgba(35, 33, 33, 0.85) !important;
+}

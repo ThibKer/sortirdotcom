@@ -28,9 +28,22 @@ class ParticipantController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}", name="participant_show", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function show(Request $request, Participant $participant): Response
+    {
+        $form = $this->createForm(ParticipantType::class, $participant);
+        $form->handleRequest($request);
+
+        return $this->renderForm('participant/show.html.twig', [
+            'participant' => $participant,
+        ]);
+    }
+
 
     /**
-     * @Route("/{id}", name="participant_edit", methods={"GET","POST"}, requirements={"id"="\d+"})
+     * @Route("/edit/{id}", name="participant_edit", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
     public function edit(Request $request, Participant $participant, UserPasswordEncoderInterface $passwordEncoder): Response
     {

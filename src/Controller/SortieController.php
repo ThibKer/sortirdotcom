@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Form\LieuType;
 use App\Form\SortieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +22,10 @@ class SortieController extends AbstractController
     public function creationSortie(Request $request): Response
     {
         $sortie = new Sortie();
-        $form = $this->createForm(SortieType::class, $sortie);
-        $form->handleRequest($request);
+        $formSortie = $this->createForm(SortieType::class, $sortie);
+        $formSortie->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
             $manager = $this->getDoctrine()->getManager();
             $repository = $this->getDoctrine()->getRepository(Etat::class);
 
@@ -30,13 +33,14 @@ class SortieController extends AbstractController
             $sortie->setEtat($repository->find(1));
 
 
+            $manager->persist($sortie->getLieu());
             $manager->persist($sortie);
             $manager->flush();
             return $this->redirectToRoute('home');
         }
 
         return $this->render('sortie/sortieCreation.html.twig', [
-            "form" => $form->createView()
+            "formSortie" => $formSortie->createView()
         ]);
     }
 
@@ -82,8 +86,8 @@ class SortieController extends AbstractController
         $sortie = $repo->find($id);
         $participants = $sortie->getParticipants();
         return $this->render('sortie/sortie.html.twig',
-            [ 'sortie' => $sortie,
-              'participants' => $participants]);
+            ['sortie' => $sortie,
+                'participants' => $participants]);
     }
 
     /**
@@ -93,17 +97,63 @@ class SortieController extends AbstractController
     {
         $manager = $this->getDoctrine()->getManager();
         $inscrit = $this->getUser()->getSorties();
-        $trouver = false;
+        $participantInscrit = false;
         foreach ($inscrit as $sortieInscrit) {
-            if($sortie->getId() == $sortieInscrit->getId()){
-                $trouver = true;
+            if ($sortie->getId() == $sortieInscrit->getId()) {
+                $participantInscrit = true;
             }
         }
-        if($trouver){
-            $this->getUser()->removeSorty($sortie);
-        } else {
-            $this->getUser()->addSorty($sortie);
+
+        $autorisationInscitpion = true;
+
+        // Pour empêcher l'inscription de l'organisateur
+        if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId()) {
+            $autorisationInscitpion = false;
         }
+
+        // Pour empêcher l'inscription dans une sortie pleine
+        if (count($sortie->getParticipants()) >= $sortie->getNbInscriptionMax() && !$participantInscrit) {
+            $autorisationInscitpion = false;
+        }
+
+        // Pour empêcher l'inscription dans une sortie CREER / CLOTURER / EN COURS / TERMINER / ANNULER
+        if (!$participantInscrit && $sortie->getEtat()->getId() != 2) {
+            $autorisationInscitpion = false;
+        }
+
+        if (($participantInscrit && $sortie->getEtat()->getId() == 4) ||
+            ($participantInscrit && $sortie->getEtat()->getId() == 5) ||
+            ($participantInscrit && $sortie->getEtat()->getId() == 6)) {
+            $autorisationInscitpion = false;
+        }
+
+        if ($autorisationInscitpion) {
+            if ($participantInscrit) {
+                $this->getUser()->removeSorty($sortie);
+            } else {
+                $this->getUser()->addSorty($sortie);
+            }
+
+            // Vérification Etat "CLOTURER"
+            if (count($sortie->getParticipants()) < $sortie->getNbInscriptionMax()) {
+                $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(3));
+            } else {
+                $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
+            }
+
+            $manager->persist($sortie);
+            $manager->flush();
+        }
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/sortie/publication/{id}", name="sortie_publication")
+     */
+    public function publicationSortie(Sortie $sortie): Response
+    {
+        $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
+        $manager = $this->getDoctrine()->getManager();
         $manager->persist($sortie);
         $manager->flush();
         return $this->redirectToRoute('home');

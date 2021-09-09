@@ -1,4 +1,7 @@
 {
+    "components/jquery": {
+        "version": "3.5.1"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.3"
     },
@@ -628,6 +631,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.3.1"
+    },
+    "twig/intl-extra": {
+        "version": "v3.3.0"
     },
     "twig/twig": {
         "version": "v3.3.2"

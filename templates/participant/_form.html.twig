@@ -1,4 +1,58 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+
+
+<form method="post" class="pure-form pure-form-aligned"
+      style="	position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+    ">
+    <fieldset>
+        <legend>Edit Participant</legend>
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="pure-control-group">
+            {{ form_row(form.pseudo) }}
+        </div>
+        <div class="pure-control-group">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="pure-control-group">
+            {{ form_row(form.nom) }}
+        </div>
+        <div class="pure-control-group">
+            {{ form_row(form.prenom) }}
+        </div>
+        <div class="pure-control-group">
+            {{ form_row(form.telephone) }}
+        </div>
+        <div class="pure-control-group">
+            {{ form_row(form.password) }}
+        </div>
+
+        <legend></legend> <!-- make space beetween fields-->
+
+        <div class="pure-control-group">
+            {{ form_row(form.newPassword.first) }}
+        {#     {{ form_label(form.newPassword.first) }}
+            {{ form_widget(form.newPassword.first) }}
+            {{ form_errors(form.newPassword.first) }}  #}
+        </div>
+        <div class="pure-control-group">
+            {{ form_row(form.newPassword.second) }}
+        {#     {{ form_label(form.newPassword.second) }}
+            {{ form_widget(form.newPassword.second) }}
+            {{ form_errors(form.newPassword.second) }} #}
+        </div>
+        </fieldset>
+        <div class="pure-controls">
+            <button class="pure-button pure-button-primary" type="submit">{{ button_label|default('Save') }}</button>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="pure-button button-admin"  href="{{ path('participant_index') }}">Back to List</a>
+                {{ include('participant/_delete_form.html.twig') }}
+            {% endif %}
+        </div>
+        {{ form_rest(form) }}
+    </fieldset>
+</form>
