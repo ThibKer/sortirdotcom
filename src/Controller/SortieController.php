@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class SortieController extends AbstractController
 {
@@ -24,7 +25,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/creer", name="sortie_creer")
      */
-    public function creationSortie(Request $request): Response
+    public function creationSortie(Request $request, SerializerInterface $serializer): Response
     {
         $sortie = new Sortie();
         $formSortie = $this->createForm(SortieLieuType::class, $sortie);
@@ -49,12 +50,12 @@ class SortieController extends AbstractController
 
         $repositoryLieu = $this->getDoctrine()->getRepository(Lieu::class);
         $lieux = $repositoryLieu->findAll();
-
-        //TODO
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-
+        foreach ($lieux as $lieu) {
+            foreach ($lieu->getSorties() as $sortieForEach) {
+                $lieu->removeSorty($sortieForEach);
+            }
+            $lieu->setVille(null);
+        }
         $lieuxDonneesJSON = $serializer->serialize($lieux, 'json');
 
 

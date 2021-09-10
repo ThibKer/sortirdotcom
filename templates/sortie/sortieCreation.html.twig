@@ -46,16 +46,16 @@
                         {{ form_row(formSortie.lieu) }}
                     </div>
                     <div class="creation-champs pure-control-group">
-                        <label for="rue">Rue</label>
-                        <input class="displayer" type="text" disabled value="" id="nom-holder">
+                        <label for="rue-holder">Rue</label>
+                        <input class="displayer" type="text" disabled id="rue-holder" value="">
                     </div>
                     <div class="creation-champs pure-control-group">
-                        <label for="latitude">Latitude</label>
-                        <input class="displayer" id="latitude" type="text" disabled value="">
+                        <label for="latitude-holde">Latitude</label>
+                        <input class="displayer" type="text"  id="latitude-holder" disabled value="">
                     </div>
                     <div class="creation-champs pure-control-group">
-                        <label for="longitude">Longitude</label>
-                        <input class="displayer" id="longitude" type="text" disabled value="">
+                        <label for="longitude-holder">Longitude</label>
+                        <input class="displayer"type="text"  id="longitude-holder" disabled value="">
                     </div>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.site) }}
@@ -73,18 +73,22 @@
     <input type="hidden" value="{{ lieuxdonnees }}" id="hidden-pas-ouf">
     <script>
         document.getElementById('select-creation').addEventListener("click", () => {
-            choix = document.getElementById('select-creation').value;
+            select = document.getElementById('select-creation').getElementsByTagName("select");
+            for(i = 0; i < select.length; i++){
+                choix = select[i].value;
+            }
             lieux = document.getElementById('hidden-pas-ouf').value;
             lieuxObj = JSON.parse(lieux);
+            trouver = false;
             for (i = 0; i < lieuxObj.length; i++) {
-                if (lieuxObj[i].nom == choix) {
+                if (lieuxObj[i].id == choix) {
                     trouver = lieuxObj[i];
                 }
             }
             if (trouver) {
-                document.getElementById("nom-holder").innerText =
-                    trouver.nom
-                ;
+                document.getElementById("rue-holder").value = trouver.rue;
+                document.getElementById("latitude-holder").value = trouver.latitude;
+                document.getElementById("longitude-holder").value = trouver.longitude;
             }
         });
     </script>
