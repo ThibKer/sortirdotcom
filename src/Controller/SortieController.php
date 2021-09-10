@@ -27,8 +27,8 @@ class SortieController extends AbstractController
         $formSortie->handleRequest($request);
 
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-            if(($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp())||
-                ($sortie->getDateLimiteInscription()->getTimestamp() < time())){
+            if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
+                ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
                 return $this->redirectToRoute('sortie_creer');
             }
             $manager = $this->getDoctrine()->getManager();
@@ -78,7 +78,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/modifier/{id}", name="sortie_modifier", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function modificationSortie(Request $request,Sortie $sortie): Response
+    public function modificationSortie(Request $request, Sortie $sortie): Response
     {
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
@@ -104,10 +104,10 @@ class SortieController extends AbstractController
      */
     public function annulationSortie(Sortie $sortie, Request $request): Response
     {
-        if($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
-        $sortie->getEtat()->getId() == 2){
-            if($request->get("annulation-motif") !== null){
-                $sortie->setInfosSortie("Motif d'annulation : ".$request->get("annulation-motif"));
+        if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
+            $sortie->getEtat()->getId() == 2) {
+            if ($request->get("annulation-motif") !== null) {
+                $sortie->setInfosSortie("Motif d'annulation : " . $request->get("annulation-motif"));
                 $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(6));
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($sortie);
@@ -131,11 +131,11 @@ class SortieController extends AbstractController
         $timestampDans1Mois = (time() - (31 * 24 * 60 * 60));
         if ($timestampFinSortie < $timestampDans1Mois || $sortie->getEtat()->getId() == 7) {
             return $this->redirectToRoute('home');
-        } else{
+        } else {
             $participants = $sortie->getParticipants();
             return $this->render('sortie/sortie.html.twig',
                 ['sortie' => $sortie,
-                'participants' => $participants]);
+                    'participants' => $participants]);
         }
     }
 
@@ -201,10 +201,12 @@ class SortieController extends AbstractController
      */
     public function publicationSortie(Sortie $sortie): Response
     {
-        $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($sortie);
-        $manager->flush();
+        if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId() && $sortie->getEtat()->getId() == 1) {
+            $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($sortie);
+            $manager->flush();
+        }
         return $this->redirectToRoute('home');
     }
 
@@ -213,7 +215,7 @@ class SortieController extends AbstractController
      */
     public function suppressionSortie(Sortie $sortie): Response
     {
-        if($sortie->getEtat()->getId() == 1 && $sortie->getOrganisateur()->getId() == $this->getUser()->getId()){
+        if ($sortie->getEtat()->getId() == 1 && $sortie->getOrganisateur()->getId() == $this->getUser()->getId()) {
             $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(7));
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($sortie);
