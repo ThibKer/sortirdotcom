@@ -31,4 +31,52 @@
             </div>
         </form>
     </main>
+
+
+
+    <div class="pure-form pure-form-aligned"
+         style="	position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+    ">
+
+
+        <fieldset>
+            <legend>Profil d'un participant</legend>
+
+            <div class="pure-control-group">
+                <label>Pseudo</label>
+                <input class="displayer" disabled value="{{ participant.pseudo }}">
+            </div>
+            <div class="pure-control-group">
+                <label>Nom</label>
+                <input class="displayer" disabled value="{{ participant.nom }}">
+            </div>
+            <div class="pure-control-group">
+                <label>Prenom</label>
+                <input class="displayer" disabled value="{{ participant.prenom }}">
+            </div>
+            <div class="pure-control-group">
+                <label>Telephone</label>
+                <input class="displayer" disabled value="{{ participant.telephone }}">
+            </div>
+            <div class="pure-control-group">
+                <label>Email</label>
+                <input class="displayer" disabled value="{{ participant.email }}">
+            </div>
+
+            <div class="pure-controls">
+                <button class="pure-button button-primary" onClick="window.history.back();">Retour</button>
+                {% if participant.id == app.user.id %}
+                    <a class="pure-button button-primary" href="{{ path('participant_edit', {'id': participant.id}) }}">edit</a>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="pure-button button-admin" href="{{ path('participant_edit', {'id': participant.id}) }}">edit</a>
+                    <a class="pure-button button-admin" href="{{ path('participant_index') }}">Back to List</a>
+                    {{ include('participant/_delete_form.html.twig') }}
+                {% endif %}
+            </div>
+        </fieldset>
+    </div>
 {% endblock %}
