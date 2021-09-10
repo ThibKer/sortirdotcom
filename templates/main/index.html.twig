@@ -41,7 +41,8 @@
                         <div class="pure-u-1-2 ">
 
                             <div class="pure-u-1 pure-control-group pure-checkbox">
-                                <input class="m5" type="checkbox" id="checkbox-organisateur" name="tri-checkbox-organisateur"/>
+                                <input class="m5" type="checkbox" id="checkbox-organisateur"
+                                       name="tri-checkbox-organisateur"/>
                                 <label for="checkbox-organisateur">Sortie(s) dont je suis l'organisateur(trice)</label>
                             </div>
                             <div class="pure-u-1 pure-control-group pure-checkbox">
@@ -49,7 +50,8 @@
                                 <label for="checkbox-inscrit">Sortie(s) auxquelles je suis inscrit(e)</label>
                             </div>
                             <div class="pure-u-1 pure-control-group pure-checkbox">
-                                <input class="m5" type="checkbox" id="checkbox-non-inscrit" name="tri-checkbox-non-inscrit"/>
+                                <input class="m5" type="checkbox" id="checkbox-non-inscrit"
+                                       name="tri-checkbox-non-inscrit"/>
                                 <label for="checkbox-non-inscrit">Sortie(s) auxquelles je ne suis pas inscrit(e)</label>
                             </div>
                             <div class="pure-u-1 pure-control-group pure-checkbox">
@@ -108,7 +110,15 @@
                                 <td></td>
                             {% endif %}
 
-                            <td>{{ sortie.organisateur.pseudo }}</td>
+                            {% if app.user.id != sortie.organisateur.id %}
+                                <td>
+                                    <a href="{{ path('participant_show', {"id" : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                                </td>
+                            {% else %}
+                                <td>
+                                    {{ sortie.organisateur.pseudo }}
+                                </td>
+                            {% endif %}
 
                             {% if sortie.etat.id  == 1 %}
                                 <td>
@@ -156,9 +166,9 @@
                                 {% set archivee = 0 %}
 
                                 {% for sortieArchivee in sortiesArchivees %}
-                                {% if sortieArchivee.id == sortie.id %}
-                                    {% set archivee = 1 %}
-                                {% endif %}
+                                    {% if sortieArchivee.id == sortie.id %}
+                                        {% set archivee = 1 %}
+                                    {% endif %}
                                 {% endfor %}
 
                                 {% if archivee == 0 %}
@@ -168,7 +178,9 @@
                                     </td>
                                 {% else %}
                                     <td>
-                                        <button class="pure-button button-warning button-no-button" disabled href="">Archiver</button>
+                                        <button class="pure-button button-warning button-no-button" disabled href="">
+                                            Archiver
+                                        </button>
                                     </td>
                                 {% endif %}
                             {% endif %}
