@@ -18,6 +18,7 @@
     color: white;
     /*border-radius: 4px;*/
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    font-size: 0.8em;
 }
 .button-admin{
     background: rgb(241, 48, 48);
@@ -28,7 +29,9 @@
 .button-secondary{
     background : rgba(215, 145, 59, 0.63);
 }
-
+.button-warning{
+    background : rgba(59, 215, 67, 0.98);
+}
 
 #lol>tr:nth-child(odd){
     background: rgba(76, 144, 234, 0.55);
@@ -41,3 +44,26 @@
     background: #e0e0e0;
     color: rgba(35, 33, 33, 0.85) !important;
 }
+
+
+#date_compte{
+    margin-left: 75vw;
+}
+
+
+.m5{
+    margin-left: 15%;
+    margin-right: 5%;
+}
+
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  90% 50% no-repeat ;
+}
+
+.centered{
+    text-align: center;
+    justify-content: center;
+    justify-self: center;
+    justify-items: center;
+}
+

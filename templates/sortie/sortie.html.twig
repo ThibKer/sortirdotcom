@@ -35,18 +35,17 @@
         <tr>
             <th>Pseudo</th>
             <th>Nom</th>
+            <th>Detail</th>
         </tr>
         </thead>
         <tbody>
-
             {%  for participant in participants %}
             <tr>
                 <td>{{ participant.pseudo }}</td>
                 <td>{{ participant.prenom }} {{ participant.nom }}</td>
+                <td><a class="pure-button button-primary" href={{ path("participant_show",{"id":participant.id}) }}>Profil</a></td>
             </tr>
             {% endfor %}
-
-
         </tbody>
     </table>
 
