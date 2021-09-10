@@ -59,19 +59,30 @@
 
 
 #date_compte{
-    margin-left: 75vw;
+    margin-left: 70vw;
 }
 
 
+.ml10{
+    margin-left: 10%;
+}
 .m5{
     margin-left: 15%;
     margin-right: 5%;
 }
+.mt1{
+    margin-top: 1%;
+}
+.mb1{
+    margin-bottom: 1%;
+}
 
+/*
+    //  ajoute une icone dans les date picker field
 [type="date"] {
     background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  90% 50% no-repeat ;
 }
-
+*/
 .centered{
     text-align: center;
     justify-content: center;

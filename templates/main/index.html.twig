@@ -67,8 +67,10 @@
             </form>
 
 
-            <div id="tableau-sortie">
-
+            <div id="tableau-sortie" class="pure-g">
+                <div class="pure-u-1 pure-control-group mb1 ml10">
+                    <label><strong>Filtrer par :</strong> {{ labelFiltre }}</label>
+                </div>
                 <table class="pure-table pure-u-1-1 fixed_header" id="home-liste-sortie" style="">
                     <thead>
                     <tr>
@@ -190,7 +192,7 @@
                 </table>
             </div>
         </div>
-        <div id="bouton-creer-sortie centered">
+        <div class="pure-control-group ml10 mt1" id="bouton-creer-sortie">
             <a class="pure-button button-primary" href="{{ path('sortie_creer') }}">Créer une sortie</a>
         </div>
     </main>
