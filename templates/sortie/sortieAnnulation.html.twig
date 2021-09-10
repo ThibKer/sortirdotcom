@@ -6,32 +6,6 @@
     <link href="{{ asset('css/annulation.css') }}" rel="stylesheet">{% endblock %}
 
 {% block body %}
-    <main class="example-wrapper main-div">
-        <h1>Annuler une sortie</h1>
-        <div class="annulation-div">
-            <p>Nom de la sortie : {{ sortie.nom }}</p>
-        </div>
-        <div class="annulation-div">
-            <p>Date : {{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
-        </div>
-        <div class="annulation-div">
-            <p>Ville : {{ sortie.lieu.ville.nom }}</p>
-        </div>
-        <div class="annulation-div">
-            <p>Lieu : {{ sortie.lieu.nom }} {{ sortie.lieu.rue }}</p>
-        </div>
-        <form method="post" class="pure-form">
-            <div class="annulation-div">
-                <label for="annulation-motif">Motif : </label>
-                <textarea id="annulation-motif" name="annulation-motif"></textarea>
-            </div>
-            <div class="annulation-div">
-                <input type="submit" value="Confirmer" class="pure-button button-primary">
-                <a href="{{ path('home') }}" class="pure-button button-primary">Retour</a>
-            </div>
-        </form>
-    </main>
-
 
 
     <div class="pure-form pure-form-aligned"
@@ -40,43 +14,39 @@
                 left: 50%;
                 transform: translate(-50%,-50%);
     ">
-
-
         <fieldset>
-            <legend>Profil d'un participant</legend>
+            <legend>Annuler une sortie</legend>
 
             <div class="pure-control-group">
-                <label>Pseudo</label>
-                <input class="displayer" disabled value="{{ participant.pseudo }}">
+                <label>Nom de la sortie </label>
+                <input class="displayer" disabled value="{{ sortie.nom }}">
             </div>
             <div class="pure-control-group">
-                <label>Nom</label>
-                <input class="displayer" disabled value="{{ participant.nom }}">
+                <label>Date</label>
+                <input class="displayer" disabled value="{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}">
             </div>
             <div class="pure-control-group">
-                <label>Prenom</label>
-                <input class="displayer" disabled value="{{ participant.prenom }}">
+                <label>Ville</label>
+                <input class="displayer" disabled value="{{ sortie.lieu.ville.nom }}">
             </div>
             <div class="pure-control-group">
-                <label>Telephone</label>
-                <input class="displayer" disabled value="{{ participant.telephone }}">
+                <label>Lieu</label>
+                <input class="displayer" disabled value="{{ sortie.lieu.nom }} {{ sortie.lieu.rue }}">
             </div>
             <div class="pure-control-group">
-                <label>Email</label>
-                <input class="displayer" disabled value="{{ participant.email }}">
+                <label>Motif</label>
+                <textarea id="annulation-motif" name="annulation-motif"></textarea>
             </div>
 
-            <div class="pure-controls">
-                <button class="pure-button button-primary" onClick="window.history.back();">Retour</button>
-                {% if participant.id == app.user.id %}
-                    <a class="pure-button button-primary" href="{{ path('participant_edit', {'id': participant.id}) }}">edit</a>
-                {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a class="pure-button button-admin" href="{{ path('participant_edit', {'id': participant.id}) }}">edit</a>
-                    <a class="pure-button button-admin" href="{{ path('participant_index') }}">Back to List</a>
-                    {{ include('participant/_delete_form.html.twig') }}
-                {% endif %}
-            </div>
+            <form method="post" class="pure-form">
+                <div class="pure-controls">
+                    <input type="submit" value="Confirmer" class="pure-button button-primary">
+                    <button class="pure-button button-primary" onClick="window.history.back();">Retour</button>
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                    {% endif %}
+                </div>
+            </form>
         </fieldset>
     </div>
 {% endblock %}
