@@ -75,6 +75,11 @@
             </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>{{ sortie.organisateur.getPseudo() }}</td>
+                    <td>{{ sortie.organisateur.getPrenom() }} {{ sortie.organisateur.getNom() }}</td>
+                    <td><a class="pure-button button-secondary" href={{ path("participant_show",{"id":sortie.organisateur.getId()}) }}>Profil</a></td>
+                </tr>
                 {%  for participant in participants %}
                 <tr>
                     <td>{{ participant.pseudo }}</td>

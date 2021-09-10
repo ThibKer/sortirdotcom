@@ -26,7 +26,12 @@ class SortieType extends AbstractType
             ->add('infosSortie')
             ->add('dateLimiteInscription')
             ->add('site')
-            ->add('lieu', LieuType::class)
+            ->add('lieu', LieuType::class, [
+                'class' => Lieu::class,
+                'rue_option' => $this.getRue(),
+                'lat_option' => $this.getRue(),
+                'long_option' => $this.getRue(),
+            ])
             ->add('site', EntityType::class, [
                 "class" => Site::class,
                 "choice_label" => "nom"
