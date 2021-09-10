@@ -24,7 +24,7 @@ class ParticipantType extends AbstractType
             ->add('pseudo')
             ->add('password', PasswordType::class,[
                 'mapped' => false,
-                'label' => 'Current Password',
+                'label' => 'Mot de passe',
                 'attr' => ['autocomplete' => 'password'],
                 'constraints' => [
                     new NotBlank([
@@ -52,7 +52,7 @@ class ParticipantType extends AbstractType
                 'required' => false,
                 'invalid_message' => 'The password fields must match.',
                 'options' => ['attr' => ['class' => 'password-field']],
-                'first_options'  => ['label' => 'New Password'],
+                'first_options'  => ['label' => 'Nouveau'],
                 'second_options' => ['label' => 'Confirmation'],
             ])
             ->add('nom')

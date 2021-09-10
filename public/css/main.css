@@ -52,9 +52,12 @@
  }
 
 
-.displayer{
-    background: #e0e0e0;
+.displayed{
+    font-weight: bold;
+    text-align:center !important;
     color: rgba(35, 33, 33, 0.85) !important;
+    width: max-content;
+    display: inline !important;
 }
 
 
@@ -73,6 +76,7 @@
 .mt1{
     margin-top: 1%;
 }
+
 .mb1{
     margin-bottom: 1%;
 }

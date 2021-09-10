@@ -10,7 +10,7 @@
                 transform: translate(-50%,-50%);
     ">
     <fieldset>
-        <legend>Please sign in</legend>
+        <legend>Connectez-vous s'il vous plait</legend>
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
@@ -24,12 +24,12 @@
         <!--<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>-->
 
         <div class="pure-control-group">
-            <label for="inputLogin">Login</label>
+            <label for="inputLogin">Identifiant</label>
             <input placeholder="login" type="text" value="{{ last_username }}" name="login" id="inputLogin" class="form-control" autocomplete="email" required autofocus>
             <span class="pure-form-message-inline">pseudo / email</span>
         </div>
         <div class="pure-control-group">
-            <label for="inputPassword">Password</label>
+            <label for="inputPassword">Mot de passe</label>
             <input placeholder="*****" type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
         </div>
 
@@ -43,10 +43,10 @@
         #}
         <div class="pure-controls">
             <label for="cb-input" class="pure-checkbox">
-                <input id="cb-input" type="checkbox" name="remember_me"> Remember me
+                <input id="cb-input" type="checkbox" name="remember_me"> se souvenir de moi
             </label>
             <button class="pure-button pure-button-primary" type="submit">
-                Sign in
+                Connection
             </button>
         </div>
     </fieldset>

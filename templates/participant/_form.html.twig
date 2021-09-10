@@ -7,7 +7,7 @@
                 transform: translate(-50%,-50%);
     ">
     <fieldset>
-        <legend>Edit Participant</legend>
+        <legend>Editer votre profil</legend>
         <div class="my-custom-class-for-errors">
             {{ form_errors(form) }}
         </div>
@@ -22,10 +22,10 @@
             {{ form_row(form.nom) }}
         </div>
         <div class="pure-control-group">
-            {{ form_row(form.prenom) }}
+            {{ form_row(form.prenom, {'label' : 'Prénom'}) }}
         </div>
         <div class="pure-control-group">
-            {{ form_row(form.telephone) }}
+            {{ form_row(form.telephone, {'label' : 'Téléphone'}) }}
         </div>
         <div class="pure-control-group">
             {{ form_row(form.password) }}
@@ -45,9 +45,13 @@
             {{ form_widget(form.newPassword.second) }}
             {{ form_errors(form.newPassword.second) }} #}
         </div>
+        <div class="pure-control-group">
+            <label>Site</label>
+            <label class="displayed">{{ participant.site.nom }}</label>
+        </div>
         </fieldset>
         <div class="pure-controls">
-            <button class="pure-button pure-button-primary" type="submit">{{ button_label|default('Save') }}</button>
+            <button class="pure-button button-primary" type="submit">{{ button_label|default('Save') }}</button>
             {% if is_granted('ROLE_ADMIN') %}
                 <a class="pure-button button-admin"  href="{{ path('participant_index') }}">Back to List</a>
                 {{ include('participant/_delete_form.html.twig') }}
