@@ -29,9 +29,9 @@ body{
 }
 
 .fixed_header thead {
-    height: 4vh;
-    background: #B0413E;
+
 }
+
 .fixed_header thead tr {
     display: block;
     height: auto;
