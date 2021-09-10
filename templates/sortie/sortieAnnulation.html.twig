@@ -6,8 +6,6 @@
     <link href="{{ asset('css/annulation.css') }}" rel="stylesheet">{% endblock %}
 
 {% block body %}
-
-
     <div class="pure-form pure-form-aligned"
          style="	position: absolute;
                 top: 50%;
@@ -33,12 +31,11 @@
                 <label>Lieu</label>
                 <input class="displayer" disabled value="{{ sortie.lieu.nom }} {{ sortie.lieu.rue }}">
             </div>
-            <div class="pure-control-group">
-                <label>Motif</label>
-                <textarea id="annulation-motif" name="annulation-motif"></textarea>
-            </div>
-
             <form method="post" class="pure-form">
+                <div class="pure-control-group">
+                    <label>Motif</label>
+                    <textarea id="annulation-motif" name="annulation-motif"></textarea>
+                </div>
                 <div class="pure-controls">
                     <input type="submit" value="Confirmer" class="pure-button button-primary">
                     <button class="pure-button button-primary" onClick="window.history.back();">Retour</button>
