@@ -4,8 +4,12 @@
 }
 
 #base-logo{
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
+}
+
+.base-titre{
+    text-align: center;
 }
 
 .button-no-button{
@@ -18,7 +22,7 @@
 .button-warning,
 .button-error,
 .button-success {
-    color: white;
+    color: black;
     /*border-radius: 4px;*/
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     font-size: 0.8em;
@@ -27,20 +31,25 @@
     background: rgb(241, 48, 48);
 }
 .button-primary{
-    background : rgba(48, 157, 217, 0.53);
+    background : #AAE6FA;
 }
 .button-secondary{
-    background : rgba(215, 145, 59, 0.63);
+    background : #FAF391;
 }
 .button-warning{
-    background : rgba(215, 95, 59, 0.98);
+    background : lightgray;
 }
 
 #lol>tr:nth-child(odd){
-    background: rgba(76, 144, 234, 0.55);
+    background: white;
 }#lol>tr:nth-child(even){
-    background: rgba(53, 150, 47, 0.35);
+    background: lightpink;
 }
+
+ .menu-bordereau{
+     background-color: #FAF391;
+     height: max-content;
+ }
 
 
 .displayer{
