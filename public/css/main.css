@@ -63,9 +63,18 @@
 }
 
 
+.ml10{
+    margin-left: 10%;
+}
 .m5{
     margin-left: 15%;
     margin-right: 5%;
+}
+.mt1{
+    margin-top: 1%;
+}
+.mb1{
+    margin-bottom: 1%;
 }
 
 /*
