@@ -7,6 +7,7 @@ use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\LieuType;
+use App\Form\SortieLieuType;
 use App\Form\SortieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,32 @@ class SortieController extends AbstractController
      * @Route("/sortie/creer", name="sortie_creer")
      */
     public function creationSortie(Request $request): Response
+    {
+        $sortie = new Sortie();
+        $formSortie = $this->createForm(SortieLieuType::class, $sortie);
+        $formSortie->handleRequest($request);
+
+        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $repository = $this->getDoctrine()->getRepository(Etat::class);
+
+            $sortie->setOrganisateur($this->getUser());
+            $sortie->setEtat($repository->find(1));
+
+            $manager->persist($sortie);
+            $manager->flush();
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('sortie/sortieCreation.html.twig', [
+            "formSortie" => $formSortie->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/sortie/creer/lieu", name="sortie_creer_lieu")
+     */
+    public function creationSortieSupp(Request $request): Response
     {
         $sortie = new Sortie();
         $formSortie = $this->createForm(SortieType::class, $sortie);
@@ -39,7 +66,7 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('sortie/sortieCreation.html.twig', [
+        return $this->render('sortie/sortieCreationAvecLieu.html.twig', [
             "formSortie" => $formSortie->createView()
         ]);
     }
