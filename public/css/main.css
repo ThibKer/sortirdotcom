@@ -8,6 +8,9 @@
     height: 80px;
 }
 
+.button-no-button{
+
+}
 
 .button-admin,
 .button-primary,
@@ -30,7 +33,7 @@
     background : rgba(215, 145, 59, 0.63);
 }
 .button-warning{
-    background : rgba(59, 215, 67, 0.98);
+    background : rgba(215, 95, 59, 0.98);
 }
 
 #lol>tr:nth-child(odd){
@@ -67,3 +70,6 @@
     justify-items: center;
 }
 
+.detail-table{
+    margin-top: 5vh;
+}
