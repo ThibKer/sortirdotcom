@@ -26,6 +26,7 @@ class MainController extends AbstractController
         $repositorySortie = $this->getDoctrine()->getRepository(Sortie::class);
         $sites = $repositorySite->findAll();
         $sortiesInscrit = [];
+        $labelFiltre = "";
 
         //Tri
         if (($request->get("tri-site") !== null) || (
@@ -44,19 +45,23 @@ class MainController extends AbstractController
 
             if ($request->get("tri-site") != "0") {
                 $requeteDql["site"] = $request->get("tri-site");
+                $labelFiltre .= "Site |";
             }
 
             if ($request->get("tri-checkbox-organisateur") !== null) {
                 $requeteDql["organisateur"] = $this->getUser()->getId();
+                $labelFiltre .= "Organisateur |";
             }
 
             if ($request->get("tri-checkbox-passee") !== null) {
                 $requeteDql["etat"] = 5;
+                $labelFiltre .= "Sortie passées |";
             }
 
             $sorties = $repositorySortie->findBy($requeteDql);
 
             if ($request->get("tri-date-debut") !== "") {
+                $labelFiltre .= "Date de début |";
                 $date = explode("-", $request->get("tri-date-debut"));
                 $timeStampDateChoisie = mktime(0, 0, 0, $date[1], $date[2], $date[0]);
                 $toAdd = [];
@@ -69,6 +74,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-date-fin") !== "") {
+                $labelFiltre .= "Date de fin |";
                 $date = explode("-", $request->get("tri-date-fin"));
                 $timeStampDateChoisie = mktime(0, 0, 0, $date[1], $date[2], $date[0]);
                 $toAdd = [];
@@ -81,6 +87,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-checkbox-inscrit") !== null) {
+                $labelFiltre .= "Inscrit";
                 $toAdd = [];
                 foreach ($sorties as $sortie){
                     foreach ($sortie->getParticipants() as $participant){
@@ -93,6 +100,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-checkbox-non-inscrit") !== null) {
+                $labelFiltre .= "Non-inscrit";
                 $toAdd = [];
                 foreach ($sorties as $sortie){
                     $userInscrit = false;
@@ -109,6 +117,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-texte") != ""){
+                $labelFiltre .= "Recherche par ". $request->get("tri-texte") ." |";
                 $result = $repositorySortie->findWithName($request->get("tri-texte"));
                 $toAdd = [];
                 foreach ($sorties as $sortie){
@@ -124,11 +133,16 @@ class MainController extends AbstractController
             // Enlever les supprimer
             $toAdd = [];
             foreach ($sorties as $sortie){
-                if($sortie->getEtat()->getId() != 7){
+                if($sortie->getEtat()->getId() != 7 && $sortie->getEtat()->getId() != 1){
                     array_push($toAdd, $sortie);
                 }
             }
             $sorties = $toAdd;
+
+            $sortiesUtilisateur = $repositorySortie->findBy(["etat" => 1, "organisateur" => $this->getUser()->getId()]);
+            foreach ($sortiesUtilisateur as $sortieUtilisateur){
+                array_push($sorties, $sortieUtilisateur);
+            }
 
         } else {
             $sorties = $repositorySortie->findBy(["etat" => [2, 3, 4, 5, 6]], ["etat" => "ASC"]);
@@ -205,7 +219,8 @@ class MainController extends AbstractController
             "sites" => $sites,
             "sorties" => $sorties,
             "sortiesInscit" => $sortiesInscrit,
-            "sortiesArchivees" => $sortiesArchivees
+            "sortiesArchivees" => $sortiesArchivees,
+            "labelFiltre" => $labelFiltre
         ]);
     }
 }
