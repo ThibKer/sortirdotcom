@@ -42,12 +42,12 @@
                             <img src="{{ asset('img/plus-circle.svg') }}">
                         </a>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group" id="select-creation">
                         {{ form_row(formSortie.lieu) }}
                     </div>
                     <div class="creation-champs pure-control-group">
                         <label for="rue">Rue</label>
-                        <input class="displayer"  type="text" disabled value="{{ formSortie.lieu.rue }}">
+                        <input class="displayer" type="text" disabled value="" id="nom-holder">
                     </div>
                     <div class="creation-champs pure-control-group">
                         <label for="latitude">Latitude</label>
@@ -70,4 +70,22 @@
 
         </fieldset>
     </form>
+    <input type="hidden" value="{{ lieuxdonnees }}" id="hidden-pas-ouf">
+    <script>
+        document.getElementById('select-creation').addEventListener("click", () => {
+            choix = document.getElementById('select-creation').value;
+            lieux = document.getElementById('hidden-pas-ouf').value;
+            lieuxObj = JSON.parse(lieux);
+            for (i = 0; i < lieuxObj.length; i++) {
+                if (lieuxObj[i].nom == choix) {
+                    trouver = lieuxObj[i];
+                }
+            }
+            if (trouver) {
+                document.getElementById("nom-holder").innerText =
+                    trouver.nom
+                ;
+            }
+        });
+    </script>
 {% endblock %}
