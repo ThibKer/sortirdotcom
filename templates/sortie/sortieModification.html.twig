@@ -10,11 +10,11 @@
                 left: 50%;
                 transform: translate(-50%,-50%);
     ">
-            <fieldset>
-                <div class="example-wrapper pure-g">
+            <fieldset class="pure-g">
+                <div class="pure-g">
                     <div class="pure-u-1-2">
                         <div class="creation-champs pure-control-group">
-                            {{ form_row(formUpdate.nom) }}
+                            {{ form_row(formUpdate.nom, { 'label': 'Nom de la sortie' }) }}
                         </div>
                         <div class="creation-champs pure-control-group">
                             {{ form_row(formUpdate.dateHeureDebut) }}
@@ -34,7 +34,7 @@
                             {{ form_row(formUpdate.dateLimiteInscription) }}
                         </div>
                         <div class="creation-champs pure-control-group">
-                            {{ form_row(formUpdate.lieu.nom) }}
+                            {{ form_row(formUpdate.lieu.nom,  { 'label': 'Lieu' }) }}
                         </div>
                         <div class="creation-champs pure-control-group">
                             {{ form_row(formUpdate.lieu.rue) }}
@@ -53,18 +53,22 @@
                         </div>
                         {{ form_rest(formUpdate) }}
                     </div>
-
-                    <div class="creation-champs pure-controls">
-                        <button class="pure-button pure-button-primary" type="submit">Modifier</button>
-                        <a href="{{ path('sortie_publication', {"id" : sortie.id}) }}"><button class="pure-button pure-button-primary" type="button">Publier la sortie</button></a>
-                        <a href="{{ path('sortie_suppression', {"id" : sortie.id}) }}"><button class="pure-button pure-button-primary" type="button">Supprimer la sortie</button></a>
-                        <a href="{{ path('home') }}"><button class="pure-button pure-button-primary" type="button">Annuler</button></a>
-                    </div>
                 </div>
 
             </fieldset>
+            <div class="pure-g">
+                <div class="pure-u-sm-1-6" >
+                    <button class="pure-button pure-button-primary" type="submit">Modifier</button>
+                </div>
+                <div class="pure-u-sm-2-6">
+                    <a href="{{ path('sortie_publication', {"id" : sortie.id}) }}"><button class="pure-button pure-button-primary" type="button">Publier la sortie</button></a>
+                </div>
+                <div class="pure-u-sm-2-6">
+                    <a href="{{ path('sortie_suppression', {"id" : sortie.id}) }}"><button class="pure-button pure-button-primary" type="button">Supprimer la sortie</button></a>
+                </div>
+                <div class="pure-u-sm-1-6">
+                    <a href="{{ path('home') }}"><button class="pure-button pure-button-primary" type="button">Annuler</button></a>
+                </div>
+            </div>
         </form>
-
-
-
 {% endblock %}
