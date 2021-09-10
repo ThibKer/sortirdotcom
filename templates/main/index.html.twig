@@ -8,9 +8,15 @@
 
 {% block body %}
     <main class="">
-        <div id="date_compte" class="pure-u-1-4">
-            <p>Date du jour : {{ "now"|format_datetime(locale='fr') }}</p>
-            <p>Participant : {{ app.user.username }} </p>
+        <div id="date_compte" class="pure-u-1-5 pure-form-aligned pure-form-aligned">
+            <div class="pure-control-group mt1">
+                <label>Date du jour </label>
+                <label class="displayed">{{ "now"|format_datetime(locale='fr') }}</label>
+            </div>
+            <div class="pure-control-group mt1">
+                <label>Participant </label>
+                <label class="displayed">{{ app.user.username }}</label>
+            </div>
         </div>
         <div id="liste">
             <h2>Filtre des sorties</h2>

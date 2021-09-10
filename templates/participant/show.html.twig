@@ -10,30 +10,27 @@
                 left: 50%;
                 transform: translate(-50%,-50%);
     ">
-
-
     <fieldset>
-        <legend>Profil d'un participant</legend>
-
-            <div class="pure-control-group">
-                <label>Pseudo</label>
-                <input class="displayer" disabled value="{{ participant.pseudo }}">
-            </div>
+        <legend>Profil de '<strong>{{ participant.pseudo }}</strong>'</legend>
             <div class="pure-control-group">
                 <label>Nom</label>
-                <input class="displayer" disabled value="{{ participant.nom }}">
+                <label class="displayed">{{ participant.nom }}</label>
             </div>
             <div class="pure-control-group">
-                <label>Prenom</label>
-                <input class="displayer" disabled value="{{ participant.prenom }}">
+                <label>Prénom</label>
+                <label class="displayed">{{ participant.prenom }}</label>
             </div>
             <div class="pure-control-group">
-                <label>Telephone</label>
-                <input class="displayer" disabled value="{{ participant.telephone }}">
+                <label>Téléphone</label>
+                <label class="displayed">{{ participant.telephone }}</label>
             </div>
             <div class="pure-control-group">
                 <label>Email</label>
-                <input class="displayer" disabled value="{{ participant.email }}">
+                <label class="displayed">{{ participant.email }}</label>
+            </div>
+            <div class="pure-control-group">
+                <label>Site</label>
+                <label class="displayed">{{ participant.site.nom }}</label>
             </div>
 
         <div class="pure-controls">
