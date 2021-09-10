@@ -37,15 +37,28 @@
                     </div>
                 </div>
                 <div class="pure-u-1-2">
-
                     <div>
-                        <a href="{{ path('sortie_creer_lieu') }}">
-                            <img src="{{ asset('img/plus-circle.svg') }}">
+                        <a href="{{ path('sortie_creer') }}">
+                            <img src="{{ asset('img/dash-circle.svg') }}">
                         </a>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.lieu) }}
-                    </div>
+                    <fieldset>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formSortie.lieu.nom) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formSortie.lieu.rue) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formSortie.lieu.latitude) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formSortie.lieu.longitude) }}
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            {{ form_row(formSortie.lieu.ville) }}
+                        </div>
+                    </fieldset>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.site) }}
                     </div>
@@ -66,7 +79,7 @@
         <div class='col-md-5'>
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker6'>
-                    <input type='text' class="form-control" />
+                    <input type='text' class="form-control"/>
                     <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
             </span>
@@ -76,7 +89,7 @@
         <div class='col-md-5'>
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker7'>
-                    <input type='text' class="form-control" />
+                    <input type='text' class="form-control"/>
                     <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
             </span>

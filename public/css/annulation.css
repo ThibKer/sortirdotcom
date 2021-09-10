@@ -1,0 +1,9 @@
+.main-div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.annulation-div{
+    text-align: center;
+    width: 100%;
+}
