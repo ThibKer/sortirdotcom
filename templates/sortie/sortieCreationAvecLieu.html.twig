@@ -24,6 +24,9 @@
                         {{ form_row(formSortie.dateHeureDebut) }}
                     </div>
                     <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.dateLimiteInscription) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.duree) }}
                     </div>
                     <div class="creation-champs pure-control-group">
@@ -34,9 +37,6 @@
                     </div>
                 </div>
                 <div class="pure-u-1-2">
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.dateLimiteInscription) }}
-                    </div>
                     <div>
                         <a href="{{ path('sortie_creer') }}">
                             <img src="{{ asset('img/dash-circle.svg') }}">
