@@ -31,10 +31,10 @@
                                 <label for="recherche-nom" class="pure-u-1-2">Le nom de la sortie contient : </label>
                                 <input id="recherche-nom" type="text" class="pure-u-1-2" name="tri-texte">
                             </div>
-                            <div id="recherche-date" class="pure-g">
+                            <div id="recherche-date" class="pure-g centered">
                                 <label for="date-debut" class="pure-u-1-4">Entre : </label>
                                 <input type="date" id="date-debut" class="pure-u-1-4" name="tri-date-debut">
-                                <label for="date-fin" class="pure-u-1-4"> et : </label>
+                                <label for="date-fin" class="pure-u-1-4">et : </label>
                                 <input type="date" id="date-fin" class="pure-u-1-4" name="tri-date-fin">
                             </div>
                         </div>
@@ -63,8 +63,11 @@
                     <button class="pure-button button-primary" type="submit">Rechercher</button>
                 </div>
             </form>
+
+
             <div id="tableau-sortie">
-                <table class="pure-table pure-u-1-1" id="home-liste-sortie" style="">
+
+                <table class="pure-table pure-u-1-1 fixed_header" id="home-liste-sortie" style="">
                     <thead>
                     <tr>
                         <th>Nom de la sortie</th>
@@ -77,9 +80,8 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody id="lol" class="home-liste-sortie">
+                    <tbody id="lol">
                     {% for sortie in sorties %}
-
                         <tr class="">
                             <td>{{ sortie.nom }}</td>
                             <td>{{ sortie.dateHeureDebut|date('d/m/Y h:i') }}</td>
@@ -164,7 +166,7 @@
                                     </td>
                                 {% else %}
                                     <td>
-                                        Archiver
+                                        <a class="pure-button button-warning" href="">Archiver</a>
                                     </td>
                                 {% endif %}
                             {% endif %}
@@ -176,10 +178,8 @@
                 </table>
             </div>
         </div>
-        <div id="bouton-creer-sortie">
-            <a class="pure-button button-primary" href="{{ path('sortie_creer') }}">
-                Créer une sortie
-            </a>
+        <div id="bouton-creer-sortie centered">
+            <a class="pure-button button-primary" href="{{ path('sortie_creer') }}">Créer une sortie</a>
         </div>
     </main>
 {% endblock %}

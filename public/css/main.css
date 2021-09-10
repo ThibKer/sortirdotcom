@@ -28,7 +28,9 @@
 .button-secondary{
     background : rgba(215, 145, 59, 0.63);
 }
-
+.button-warning{
+    background : rgba(59, 215, 67, 0.98);
+}
 
 #lol>tr:nth-child(odd){
     background: rgba(76, 144, 234, 0.55);
@@ -58,6 +60,9 @@
 }
 
 .centered{
-    text-align: center
+    text-align: center;
+    justify-content: center;
+    justify-self: center;
+    justify-items: center;
 }
 
