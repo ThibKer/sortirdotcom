@@ -37,7 +37,6 @@
                     </div>
                 </div>
                 <div class="pure-u-1-2">
-
                     <div>
                         <a href="{{ path('sortie_creer_lieu') }}">
                             <img src="{{ asset('img/plus-circle.svg') }}">
@@ -45,6 +44,18 @@
                     </div>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.lieu) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        <label for="rue">Rue</label>
+                        <input class="displayer"  type="text" disabled value="{{ formSortie.lieu.rue }}">
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        <label for="latitude">Latitude</label>
+                        <input class="displayer" id="latitude" type="text" disabled value="">
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        <label for="longitude">Longitude</label>
+                        <input class="displayer" id="longitude" type="text" disabled value="">
                     </div>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.site) }}
@@ -59,44 +70,4 @@
 
         </fieldset>
     </form>
-
-
-
-    <div class="container">
-        <div class='col-md-5'>
-            <div class="form-group">
-                <div class='input-group date' id='datetimepicker6'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-                </div>
-            </div>
-        </div>
-        <div class='col-md-5'>
-            <div class="form-group">
-                <div class='input-group date' id='datetimepicker7'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker6').datetimepicker();
-            $('#datetimepicker7').datetimepicker({
-                useCurrent: false //Important! See issue #1075
-            });
-            $("#datetimepicker6").on("dp.change", function (e) {
-                $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-            });
-            $("#datetimepicker7").on("dp.change", function (e) {
-                $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-            });
-        });
-    </script>
-
 {% endblock %}
