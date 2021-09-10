@@ -41,9 +41,9 @@
         <tbody>
             {%  for participant in participants %}
             <tr>
-                <td>{{ participant.pseudo }}</a></td>
+                <td>{{ participant.pseudo }}</td>
                 <td>{{ participant.prenom }} {{ participant.nom }}</td>
-                <td><a class="pure-button button-primary" href={{ path("participant_show",{"id":participant.id}) }}></a></td>
+                <td><a class="pure-button button-primary" href={{ path("participant_show",{"id":participant.id}) }}>Profil</a></td>
             </tr>
             {% endfor %}
         </tbody>

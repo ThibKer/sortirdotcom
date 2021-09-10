@@ -2,28 +2,33 @@
 
 {% block title %}Annulation de la sortie{% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('css/annulation.css') }}" rel="stylesheet">{% endblock %}
+
 {% block body %}
-    <main class="example-wrapper">
+    <main class="example-wrapper main-div">
         <h1>Annuler une sortie</h1>
-        <div>
+        <div class="annulation-div">
             <p>Nom de la sortie : {{ sortie.nom }}</p>
         </div>
-        <div>
+        <div class="annulation-div">
             <p>Date : {{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</p>
         </div>
-        <div>
+        <div class="annulation-div">
             <p>Ville : {{ sortie.lieu.ville.nom }}</p>
         </div>
-        <div>
+        <div class="annulation-div">
             <p>Lieu : {{ sortie.lieu.nom }} {{ sortie.lieu.rue }}</p>
         </div>
-        <form method="post">
-            <div>
+        <form method="post" class="pure-form">
+            <div class="annulation-div">
                 <label for="annulation-motif">Motif : </label>
                 <textarea id="annulation-motif" name="annulation-motif"></textarea>
             </div>
-            <input type="submit" value="Confirmer" class="pure-button button-primary">
-            <a href="{{ path('home') }}" class="pure-button button-primary">Retour</a>
+            <div class="annulation-div">
+                <input type="submit" value="Confirmer" class="pure-button button-primary">
+                <a href="{{ path('home') }}" class="pure-button button-primary">Retour</a>
+            </div>
         </form>
     </main>
 {% endblock %}
