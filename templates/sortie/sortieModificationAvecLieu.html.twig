@@ -34,11 +34,11 @@
                 <div class="pure-u-1-2">
                     <div class="creation-champs pure-control-group" id="select-creation">
                         <div class="creation-champs pure-control-group" id="select-creation">
-                            {{ form_row(formUpdate.lieu) }}
+                            {{ form_row(formLieu) }}
                         </div>
                         <div>
-                            <a href="{{ path('sortie_modifier_lieu', {"id" : sortie.id}) }}">
-                                <img src="{{ asset('img/plus-circle.svg') }}">
+                            <a href="{{ path('sortie_modifier', {"id" : sortie.id}) }}">
+                                <img src="{{ asset('img/dash-circle.svg') }}">
                             </a>
                         </div>
                         <div class="creation-champs pure-control-group">

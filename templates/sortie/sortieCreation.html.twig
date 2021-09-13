@@ -5,29 +5,50 @@
 {% block stylesheets %}
     <link href="{{ asset('css/sortieCreation.css') }}" rel="stylesheet">
 
+    <!-- DatePicker Import -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 {% endblock %}
 
 {% block body %}
-    <form method="post" class="pure-form pure-form-aligned"
-          style="	position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-    ">
+    <form method="post" class="pure-form pure-form-aligned centred-conteneur">
         <fieldset>
             <div class="example-wrapper pure-g">
                 <div class="pure-u-1-2">
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.nom) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.dateHeureDebut) }}
+
+                    <div class='creation-champs pure-control-group'>
+                        {{ form_label(formSortie.dateHeureDebut) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                {{ form_widget(formSortie.dateHeureDebut) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.dateLimiteInscription) }}
+
+                    <div class='creation-champs pure-control-group'>
+                        {{ form_label(formSortie.dateLimiteInscription) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group' id='datetimepicker2'>
+                                {{ form_widget(formSortie.dateLimiteInscription) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.duree) }}
+                        {{ form_row(formSortie.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
                     </div>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.nbInscriptionMax) }}
@@ -77,6 +98,19 @@
         </fieldset>
     </form>
     <input type="hidden" value="{{ lieuxdonnees }}" id="hidden">
+
+    <script>
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: "YYYY-MM-DD hh:mm:ss",
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: "YYYY-MM-DD hh:mm:ss",
+            });
+        });
+    </script>
+
+
     <script>
         window.onload = function() {
             changementInfoLieu();

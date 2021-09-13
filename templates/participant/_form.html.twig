@@ -1,11 +1,6 @@
 
 
-<form method="post" class="pure-form pure-form-aligned"
-      style="	position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-    ">
+<form method="post" class="pure-form pure-form-aligned centred-conteneur">
     <fieldset>
         <legend>Editer votre profil</legend>
         <div class="my-custom-class-for-errors">
@@ -45,13 +40,15 @@
             {{ form_widget(form.newPassword.second) }}
             {{ form_errors(form.newPassword.second) }} #}
         </div>
+
+        <legend></legend> <!-- make space beetween fields-->
+        
         <div class="pure-control-group">
             <label>Site</label>
             <label class="displayed">{{ participant.site.nom }}</label>
         </div>
-        </fieldset>
         <div class="pure-controls">
-            <button class="pure-button button-primary" type="submit">{{ button_label|default('Save') }}</button>
+            <button class="pure-button button-primary" type="submit">{{ button_label|default('Sauvegarder') }}</button>
             {% if is_granted('ROLE_ADMIN') %}
                 <a class="pure-button button-admin"  href="{{ path('participant_index') }}">Back to List</a>
                 {{ include('participant/_delete_form.html.twig') }}

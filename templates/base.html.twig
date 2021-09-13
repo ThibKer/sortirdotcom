@@ -12,9 +12,11 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     {% block stylesheets %}
     {% endblock %}
-
 </head>
+
+
 {% if error is defined %}
+
 <body onload="errorAlert('{{ error }}')">
 {% else %}
 <body>

@@ -8,6 +8,7 @@ use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\LieuType;
+use App\Form\ModifierSortieType;
 use App\Form\SortieLieuType;
 use App\Form\SortieType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,21 +32,24 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
+        if ($formSortie->isSubmitted()) {
 
-        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-            if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
-                ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
-                return $this->redirectToRoute('sortie_creer');
+            if ($formSortie->isValid()){
+
+                if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
+                    ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
+                    return $this->redirectToRoute('sortie_creer');
+                }
+                $manager = $this->getDoctrine()->getManager();
+                $repository = $this->getDoctrine()->getRepository(Etat::class);
+
+                $sortie->setOrganisateur($this->getUser());
+                $sortie->setEtat($repository->find(1));
+
+                $manager->persist($sortie);
+                $manager->flush();
+                return $this->redirectToRoute('home');
             }
-            $manager = $this->getDoctrine()->getManager();
-            $repository = $this->getDoctrine()->getRepository(Etat::class);
-
-            $sortie->setOrganisateur($this->getUser());
-            $sortie->setEtat($repository->find(1));
-
-            $manager->persist($sortie);
-            $manager->flush();
-            return $this->redirectToRoute('home');
         }
 
 
@@ -100,8 +104,8 @@ class SortieController extends AbstractController
     public function modificationSortie(Request $request, Sortie $sortie): Response
     {
         if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
-        $sortie->getEtat()->getId() == 1) {
-            $form = $this->createForm(SortieLieuType::class, $sortie);
+            $sortie->getEtat()->getId() == 1) {
+            $form = $this->createForm(SortieType::class, $sortie);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -116,6 +120,41 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/sortieModification.html.twig', [
                 'sortie' => $sortie,
                 'formUpdate' => $form
+            ]);
+        } else {
+            return $this->redirectToRoute('home', [
+                "error" => "Erreur, Modification impossible"
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/sortie/modifier/lieu/{id}", name="sortie_modifier_lieu", methods={"GET","POST"}, requirements={"id"="\d+"})
+     */
+    public function modificationLieuSortie(Request $request, Sortie $sortie): Response
+    {
+        if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
+            $sortie->getEtat()->getId() == 1) {
+            $formSortie = $this->createForm(ModifierSortieType::class, $sortie);
+            $formSortie->handleRequest($request);
+
+            $lieu = new Lieu();
+            $formLieu = $this->createForm(LieuType::class, $lieu);
+            $formLieu->handleRequest($request);
+
+            if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+                $sortie->setLieu($lieu);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($lieu);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('home');
+            }
+            return $this->renderForm('sortie/sortieModificationAvecLieu.html.twig', [
+                'sortie' => $sortie,
+                'formUpdate' => $formSortie,
+                'formLieu' => $formLieu
             ]);
         } else {
             return $this->redirectToRoute('home', [

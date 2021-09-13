@@ -27,7 +27,7 @@
                             <div class="pure-g">
                                 <label for="choix-site" class="pure-u-1-2">Site : </label>
                                 <select id="choix-site" class="pure-u-1-2" name="tri-site">
-                                    <option value="0"></option>
+                                    <option value="0">---------Choisir un site-------</option>
                                     {% for site in sites %}
                                         <option value="{{ site.id }}">{{ site.nom }}</option>
                                     {% endfor %}
@@ -35,12 +35,12 @@
                             </div>
                             <div class="pure-g">
                                 <label for="recherche-nom" class="pure-u-1-2">Le nom de la sortie contient : </label>
-                                <input id="recherche-nom" type="text" class="pure-u-1-2" name="tri-texte">
+                                <input id="recherche-nom" type="text" class="pure-u-1-2" name="tri-texte" placeholder="Rechercher">
                             </div>
-                            <div id="recherche-date" class="pure-g centered">
-                                <label for="date-debut" class="pure-u-1-4">Entre : </label>
+                            <div id="recherche-date" class="pure-g">
+                                <label for="date-debut" class="pure-u-1-4 label-date-filtre">Entre : </label>
                                 <input type="date" id="date-debut" class="pure-u-1-4" name="tri-date-debut">
-                                <label for="date-fin" class="pure-u-1-4">et : </label>
+                                <label for="date-fin" class="pure-u-1-4 label-date-filtre">et : </label>
                                 <input type="date" id="date-fin" class="pure-u-1-4" name="tri-date-fin">
                             </div>
                         </div>
