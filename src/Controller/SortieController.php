@@ -34,8 +34,8 @@ class SortieController extends AbstractController
         $formSortie->handleRequest($request);
         if ($formSortie->isSubmitted()) {
 
-          //  dd($formSortie->getData());
             if ($formSortie->isValid()){
+
                 if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
                     ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
                     return $this->redirectToRoute('sortie_creer');
