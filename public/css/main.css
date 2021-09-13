@@ -58,6 +58,9 @@
     color: rgba(35, 33, 33, 0.85) !important;
     width: max-content;
 }
+.labeldisplay{
+    padding: .5em .6em;
+}
 
 
 #date_compte{

@@ -45,18 +45,24 @@
                     <div class="creation-champs pure-control-group" id="select-creation">
                         {{ form_row(formSortie.lieu) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label for="rue-holder">Rue</label>
-                        <input class="displayer" type="text" disabled id="rue-holder" value="">
-                    </div>
-                    <div class="creation-champs pure-control-group">
-                        <label for="latitude-holde">Latitude</label>
-                        <input class="displayer" type="text"  id="latitude-holder" disabled value="">
-                    </div>
-                    <div class="creation-champs pure-control-group">
-                        <label for="longitude-holder">Longitude</label>
-                        <input class="displayer"type="text"  id="longitude-holder" disabled value="">
-                    </div>
+
+                    <legend></legend>
+
+                        <div class="creation-champs pure-control-group">
+                            <label class="labeldisplay" for="rue-holder">Rue</label>
+                            <label class="displayed labeldisplay" id="rue-holder"></label>
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            <label class="labeldisplay" for="latitude-holde">Latitude</label>
+                            <label class="displayed labeldisplay" id="latitude-holder"></label>
+                        </div>
+                        <div class="creation-champs pure-control-group">
+                            <label class="labeldisplay" for="longitude-holder">Longitude</label>
+                            <label class="displayed labeldisplay" id="longitude-holder"></label>
+                        </div>
+
+                    <legend></legend>
+
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.site) }}
                     </div>
@@ -70,14 +76,14 @@
 
         </fieldset>
     </form>
-    <input type="hidden" value="{{ lieuxdonnees }}" id="hidden-pas-ouf">
+    <input type="hidden" value="{{ lieuxdonnees }}" id="hidden">
     <script>
-        document.getElementById('select-creation').addEventListener("click", () => {
+        document.getElementById('select-creation').addEventListener("change", () => {
             select = document.getElementById('select-creation').getElementsByTagName("select");
             for(i = 0; i < select.length; i++){
                 choix = select[i].value;
             }
-            lieux = document.getElementById('hidden-pas-ouf').value;
+            lieux = document.getElementById('hidden').value;
             lieuxObj = JSON.parse(lieux);
             trouver = false;
             for (i = 0; i < lieuxObj.length; i++) {
@@ -86,9 +92,9 @@
                 }
             }
             if (trouver) {
-                document.getElementById("rue-holder").value = trouver.rue;
-                document.getElementById("latitude-holder").value = trouver.latitude;
-                document.getElementById("longitude-holder").value = trouver.longitude;
+                document.getElementById("rue-holder").innerText = trouver.rue;
+                document.getElementById("latitude-holder").innerText = trouver.latitude;
+                document.getElementById("longitude-holder").innerText = trouver.longitude;
             }
         });
     </script>
