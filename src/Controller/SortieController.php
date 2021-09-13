@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\AnnulationSortie;
 use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
@@ -125,9 +126,12 @@ class SortieController extends AbstractController
         if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
             $sortie->getEtat()->getId() == 2) {
             if ($request->get("annulation-motif") !== null) {
-                $sortie->setInfosSortie("Motif d'annulation : " . $request->get("annulation-motif"));
                 $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(6));
+                $annulation = new AnnulationSortie();
+                $annulation->setLibelle($request->get("annulation-motif"));
+                $annulation->setSortie($sortie);
                 $manager = $this->getDoctrine()->getManager();
+                $manager->persist($annulation);
                 $manager->persist($sortie);
                 $manager->flush();
                 return $this->redirectToRoute("home");

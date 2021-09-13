@@ -83,6 +83,11 @@ class Sortie
      */
     private $dateLimiteInscription;
 
+    /**
+     * @ORM\OneToOne(targetEntity=AnnulationSortie::class, mappedBy="sortie", cascade={"persist", "remove"})
+     */
+    private $annulationSortie;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -236,6 +241,23 @@ class Sortie
     public function setDateLimiteInscription(?\DateTimeInterface $dateLimiteInscription): self
     {
         $this->dateLimiteInscription = $dateLimiteInscription;
+
+        return $this;
+    }
+
+    public function getAnnulationSortie(): ?AnnulationSortie
+    {
+        return $this->annulationSortie;
+    }
+
+    public function setAnnulationSortie(AnnulationSortie $annulationSortie): self
+    {
+        // set the owning side of the relation if necessary
+        if ($annulationSortie->getSortie() !== $this) {
+            $annulationSortie->setSortie($this);
+        }
+
+        $this->annulationSortie = $annulationSortie;
 
         return $this;
     }
