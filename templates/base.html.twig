@@ -14,7 +14,11 @@
     {% endblock %}
 
 </head>
+{% if error is defined %}
 <body onload="errorAlert('{{ error }}')">
+{% else %}
+<body>
+{% endif %}
 <div class="pure-menu pure-menu-horizontal menu-bordereau">
     <div class="pure-g">
         <div class="pure-u-1-3">
