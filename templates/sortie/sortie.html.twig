@@ -3,12 +3,7 @@
 {% block title %}Détails d'une sortie{% endblock %}
 
 {% block body %}
-    <div class="pure-form pure-form-aligned"
-          style="	position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-    ">
+    <div class="pure-form pure-form-aligned centred-conteneur">
         <fieldset>
             <legend>Détail de la sortie</legend>
             <div class="example-wrapper pure-g">
@@ -64,14 +59,16 @@
                         <label class="displayed">{{ sortie.lieu.longitude }}</label>
                     </div>
                     {% if sortie.etat.id == 6 %}
-                    <div class="creation-champs pure-control-group">
-                        <label>Motif d'annulation</label>
-                        <label class="displayed">{{ sortie.annulationSortie.libelle }}</label>
-                    </div>
+                        <div class="creation-champs pure-control-group">
+                            <label>Motif d'annulation</label>
+                            <label class="displayed">{{ sortie.annulationSortie.libelle }}</label>
+                        </div>
                     {% endif %}
                 </div>
             </div>
         </fieldset>
+    </div>
+    <div class="centred-conteneur">
         <table class="pure-table detail-table">
             <thead>
             <tr>
@@ -81,18 +78,20 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ sortie.organisateur.getPseudo() }}</td>
-                    <td>{{ sortie.organisateur.getPrenom() }} {{ sortie.organisateur.getNom() }}</td>
-                    <td><a class="pure-button button-secondary" href={{ path("participant_show",{"id":sortie.organisateur.getId()}) }}>Profil</a></td>
-                </tr>
-                {%  for participant in participants %}
+            <tr>
+                <td>{{ sortie.organisateur.getPseudo() }}</td>
+                <td>{{ sortie.organisateur.getPrenom() }} {{ sortie.organisateur.getNom() }}</td>
+                <td><a class="pure-button button-secondary"
+                       href={{ path("participant_show",{"id":sortie.organisateur.getId()}) }}>Profil</a></td>
+            </tr>
+            {% for participant in participants %}
                 <tr>
                     <td>{{ participant.pseudo }}</td>
                     <td>{{ participant.prenom }} {{ participant.nom }}</td>
-                    <td><a class="pure-button button-primary" href={{ path("participant_show",{"id":participant.id}) }}>Profil</a></td>
+                    <td><a class="pure-button button-primary" href={{ path("participant_show",{"id":participant.id}) }}>Profil</a>
+                    </td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
             </tbody>
         </table>
     </div>
