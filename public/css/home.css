@@ -9,6 +9,30 @@
     width: max-content;
 }
 
+h2{
+    margin-left: 20px;
+}
+
+ #filtre{
+    margin-left: 20px;
+}
+
+ #filtre-recherche button{
+     width: 26vh;
+     height: 10vh;
+ }
+
+#bouton-creer-sortie a{
+    width: 26vh;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.label-date-filtre{
+    width: max-content;
+}
 
 .fixed_header{
     width: 80vw;
