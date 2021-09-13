@@ -3,8 +3,6 @@
 {% block title %}Création d'une sortie{% endblock %}
 
 {% block stylesheets %}
-    <link href="{{ asset('css/sortieCreation.css') }}" rel="stylesheet">
-
     <!-- DatePicker Import -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
@@ -36,15 +34,17 @@
                     </div>
 
                     <div class='creation-champs pure-control-group'>
+                        <div class="form-group">
                         {{ form_label(formSortie.dateLimiteInscription) }}
                         <div class="creation-champs pure-control-group">
-                            <div class='input-group' id='datetimepicker2'>
+                            <div class='input-group date' id='datetimepicker2'>
                                 {{ form_widget(formSortie.dateLimiteInscription) }}
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
+                            </div>
                     </div>
 
                     <div class="creation-champs pure-control-group">
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="creation-champs pure-controls">
-                    <button class="pure-button pure-button-primary" type="submit">Ajouter</button>
+                    <button class="pure-button button-primary" type="submit">Ajouter</button>
                 </div>
             </div>
 

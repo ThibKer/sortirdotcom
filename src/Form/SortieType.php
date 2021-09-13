@@ -36,7 +36,7 @@ class SortieType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'label' => "Limite inscription",
-                'label_attr' => ['class' => 'labeldisplay inline'],
+                'label_attr' => ['class' => 'labeldisplay'],
                 'attr' => [
                     'class' => 'form-control input-inline datetimepicker',
                     'data-provide' => 'datetimepicker',

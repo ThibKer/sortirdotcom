@@ -3,26 +3,52 @@
 {% block title %}Modifier une sortie{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/modification.css') }}.css">
+    <!-- DatePicker Import -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
 {% endblock %}
 
 {% block body %}
 
     <form method="post" class="pure-form pure-form-aligned centred-conteneur">
-        <fieldset class="pure-g">
-            <div class="pure-g">
+        <fieldset>
+            <div class="example-wrapper pure-g">
                 <div class="pure-u-1-2">
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formUpdate.nom, { 'label': 'Nom de la sortie' }) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formUpdate.dateHeureDebut) }}
+
+                    <div class='creation-champs pure-control-group'>
+                        {{ form_label(formUpdate.dateHeureDebut) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                {{ form_widget(formUpdate.dateHeureDebut) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formUpdate.dateLimiteInscription) }}
+
+                    <div class='creation-champs pure-control-group'>
+                        {{ form_label(formUpdate.dateLimiteInscription) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group' id='datetimepicker2'>
+                                {{ form_widget(formUpdate.dateLimiteInscription) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="creation-champs pure-control-group">
-                        {{ form_row(formUpdate.duree) }}
+                        {{ form_row(formUpdate.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
                     </div>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formUpdate.nbInscriptionMax) }}
@@ -32,20 +58,20 @@
                     </div>
                 </div>
                 <div class="pure-u-1-2">
-                    <div class="creation-champs pure-control-group" id="select-creation">
-                        <div class="creation-champs pure-control-group" id="select-creation">
-                            {{ form_row(formUpdate.lieu) }}
-                        </div>
-                        <div>
-                            <a href="{{ path('sortie_modifier_lieu', {"id" : sortie.id}) }}">
-                                <img src="{{ asset('img/plus-circle.svg') }}">
-                            </a>
-                        </div>
-                        <div class="creation-champs pure-control-group">
-                            {{ form_row(formUpdate.site) }}
-                        </div>
-                        {{ form_rest(formUpdate) }}
+
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formUpdate.site) }}
                     </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formUpdate.lieu) }}
+                    </div>
+                    <div>
+                        <a href="{{ path('sortie_modifier_lieu', {"id" : sortie.id}) }}">
+                            <img src="{{ asset('img/plus-circle.svg') }}">
+                        </a>
+                    </div>
+                    {{ form_rest(formUpdate) }}
+
                 </div>
             </div>
         </fieldset>
@@ -60,4 +86,14 @@
             <a class="pure-button button-primary" href="{{ path('home') }}">Annuler</a>
         </div>
     </div>
+    <script>
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: "YYYY-MM-DD hh:mm:ss",
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: "YYYY-MM-DD hh:mm:ss",
+            });
+        });
+    </script>
 {% endblock %}
