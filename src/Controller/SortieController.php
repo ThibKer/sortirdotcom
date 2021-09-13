@@ -31,21 +31,24 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
+        if ($formSortie->isSubmitted()) {
 
-        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-            if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
-                ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
-                return $this->redirectToRoute('sortie_creer');
+          //  dd($formSortie->getData());
+            if ($formSortie->isValid()){
+                if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
+                    ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
+                    return $this->redirectToRoute('sortie_creer');
+                }
+                $manager = $this->getDoctrine()->getManager();
+                $repository = $this->getDoctrine()->getRepository(Etat::class);
+
+                $sortie->setOrganisateur($this->getUser());
+                $sortie->setEtat($repository->find(1));
+
+                $manager->persist($sortie);
+                $manager->flush();
+                return $this->redirectToRoute('home');
             }
-            $manager = $this->getDoctrine()->getManager();
-            $repository = $this->getDoctrine()->getRepository(Etat::class);
-
-            $sortie->setOrganisateur($this->getUser());
-            $sortie->setEtat($repository->find(1));
-
-            $manager->persist($sortie);
-            $manager->flush();
-            return $this->redirectToRoute('home');
         }
 
 

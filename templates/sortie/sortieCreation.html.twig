@@ -20,14 +20,33 @@
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.nom) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.dateHeureDebut) }}
+
+                    <div class='creation-champs pure-control-group'>
+                        {{ form_label(formSortie.dateHeureDebut) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                {{ form_widget(formSortie.dateHeureDebut) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.dateLimiteInscription) }}
+
+                    <div class='creation-champs pure-control-group'>
+                        {{ form_label(formSortie.dateLimiteInscription) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group' id='datetimepicker2'>
+                                {{ form_widget(formSortie.dateLimiteInscription) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.duree) }}
+                        {{ form_row(formSortie.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
                     </div>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.nbInscriptionMax) }}
@@ -77,6 +96,19 @@
         </fieldset>
     </form>
     <input type="hidden" value="{{ lieuxdonnees }}" id="hidden">
+
+    <script>
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: "YYYY-MM-DD hh:mm:ss",
+            });
+            $('#datetimepicker2').datetimepicker({
+                    format: "YYYY-MM-DD hh:mm:ss",
+            });
+        });
+    </script>
+
+
     <script>
         document.getElementById('select-creation').addEventListener("change", () => {
             select = document.getElementById('select-creation').getElementsByTagName("select");
