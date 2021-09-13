@@ -99,23 +99,29 @@ class SortieController extends AbstractController
      */
     public function modificationSortie(Request $request, Sortie $sortie): Response
     {
-        $form = $this->createForm(SortieLieuType::class, $sortie);
-        $form->handleRequest($request);
+        if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
+        $sortie->getEtat()->getId() == 1) {
+            $form = $this->createForm(SortieLieuType::class, $sortie);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $form->get('nom')->getData();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $form->get('nom')->getData();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($sortie);
-            $entityManager->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($sortie);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('home');
+                return $this->redirectToRoute('home');
+            }
+            return $this->renderForm('sortie/sortieModification.html.twig', [
+                'sortie' => $sortie,
+                'formUpdate' => $form
+            ]);
+        } else {
+            return $this->redirectToRoute('home', [
+                "error" => "Erreur, Modification impossible"
+            ]);
         }
-        return $this->renderForm('sortie/sortieModification.html.twig', [
-            'sortie' => $sortie,
-            'formUpdate' => $form
-        ]);
-
     }
 
     /**
@@ -140,7 +146,9 @@ class SortieController extends AbstractController
                 "sortie" => $sortie
             ]);
         } else {
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("home", [
+                "error" => "Annulation impossible"
+            ]);
         }
     }
 
@@ -152,7 +160,9 @@ class SortieController extends AbstractController
         $timestampFinSortie = ($sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree() * 60);
         $timestampDans1Mois = (time() - (31 * 24 * 60 * 60));
         if ($timestampFinSortie < $timestampDans1Mois || $sortie->getEtat()->getId() == 7) {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home', [
+                "error" => "Erreur, sortie archivée"
+            ]);
         } else {
             $participants = $sortie->getParticipants();
             return $this->render('sortie/sortie.html.twig',
@@ -214,8 +224,11 @@ class SortieController extends AbstractController
 
             $manager->persist($sortie);
             $manager->flush();
+            return $this->redirectToRoute('home');
         }
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('home', [
+            "error" => "Inscription / Désinscription impossible"
+        ]);
     }
 
     /**
@@ -228,8 +241,11 @@ class SortieController extends AbstractController
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($sortie);
             $manager->flush();
+            return $this->redirectToRoute('home');
         }
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('home', [
+            "error" => "Erreur, sortie non publiable"
+        ]);
     }
 
     /**
@@ -242,7 +258,10 @@ class SortieController extends AbstractController
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($sortie);
             $manager->flush();
+            return $this->redirectToRoute('home');
         }
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('home', [
+            "error" => "Erreur, sortie non supprimable"
+        ]);
     }
 }

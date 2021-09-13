@@ -215,12 +215,18 @@ class MainController extends AbstractController
             }
         }
 
+        $error = "";
+        if($request->get("error") !== null){
+            $error = $request->get("error");
+        }
+
         return $this->render('main/index.html.twig', [
             "sites" => $sites,
             "sorties" => $sorties,
             "sortiesInscit" => $sortiesInscrit,
             "sortiesArchivees" => $sortiesArchivees,
-            "labelFiltre" => $labelFiltre
+            "labelFiltre" => $labelFiltre,
+            "error" => $error
         ]);
     }
 }
