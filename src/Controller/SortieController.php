@@ -29,7 +29,7 @@ class SortieController extends AbstractController
     public function creationSortie(Request $request, SerializerInterface $serializer): Response
     {
         $sortie = new Sortie();
-        $formSortie = $this->createForm(SortieLieuType::class, $sortie);
+        $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
 
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
@@ -72,7 +72,7 @@ class SortieController extends AbstractController
     public function creationSortieSupp(Request $request): Response
     {
         $sortie = new Sortie();
-        $formSortie = $this->createForm(SortieType::class, $sortie);
+        $formSortie = $this->createForm(SortieLieuType::class, $sortie);
         $formSortie->handleRequest($request);
 
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
@@ -99,7 +99,7 @@ class SortieController extends AbstractController
      */
     public function modificationSortie(Request $request, Sortie $sortie): Response
     {
-        $form = $this->createForm(SortieType::class, $sortie);
+        $form = $this->createForm(SortieLieuType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
