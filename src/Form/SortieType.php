@@ -18,16 +18,30 @@ class SortieType extends AbstractType
         $builder
             ->add('nom')
             ->add('dateHeureDebut', DateTimeType::class,[
-                'date_format' => 'y M d',
-
-                'with_minutes' => true,
-                'with_seconds' => false,
-
+                'required' => true,
+                'widget' => 'single_text',
+                'html5' => false,
+               // 'input_format' => 'Y-m-d H:i:s',
+                'label_attr' => ['class' => 'labeldisplay'],
+                'attr' => [
+                    'class' => 'form-control input-inline datetimepicker',
+                    'data-provide' => 'datetimepicker',
+                ],
             ])
             ->add('duree')
             ->add('nbInscriptionMax')
             ->add('infosSortie')
-            ->add('dateLimiteInscription')
+            ->add('dateLimiteInscription', DateTimeType::class,[
+                'required' => true,
+                'widget' => 'single_text',
+                'html5' => false,
+                'label' => "Limite inscription",
+                'label_attr' => ['class' => 'labeldisplay inline'],
+                'attr' => [
+                    'class' => 'form-control input-inline datetimepicker',
+                    'data-provide' => 'datetimepicker',
+                ],
+            ])
             ->add('lieu', EntityType::class,[
                 "class" => Lieu::class,
                 "choice_label" => "nom"
