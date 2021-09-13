@@ -72,7 +72,7 @@
     </form>
     <input type="hidden" value="{{ lieuxdonnees }}" id="hidden-pas-ouf">
     <script>
-        document.getElementById('select-creation').addEventListener("click", () => {
+        document.getElementById('select-creation').addEventListener("change", () => {
             select = document.getElementById('select-creation').getElementsByTagName("select");
             for(i = 0; i < select.length; i++){
                 choix = select[i].value;
