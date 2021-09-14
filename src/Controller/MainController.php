@@ -28,6 +28,14 @@ class MainController extends AbstractController
         $sites = $repositorySite->findAll();
         $sortiesInscrit = [];
         $labelFiltre = "";
+        $labelBuilder["tri_site"] = "";
+        $labelBuilder["tri_checkbox_organisateur"] = "";
+        $labelBuilder["tri_checkbox_passee"] = "";
+        $labelBuilder["tri_date_debut"] = "";
+        $labelBuilder["tri_date_fin"] = "";
+        $labelBuilder["tri_checkbox_inscrit"] = "";
+        $labelBuilder["tri_checkbox_non_inscrit"] = "";
+        $labelBuilder["tri_texte"] = "";
 
         //Tri
         if (($request->get("tri-site") !== null) || (
@@ -46,17 +54,17 @@ class MainController extends AbstractController
 
             if ($request->get("tri-site") != "0") {
                 $requeteDql["site"] = $request->get("tri-site");
-                $labelFiltre .= "Site '".$repositorySite->find($request->get("tri-site"))->getNom()."' | ";
+                $labelBuilder["tri_site"] = "Site '" . $repositorySite->find($request->get("tri-site"))->getNom() . "' | ";
             }
 
             if ($request->get("tri-checkbox-organisateur") !== null) {
                 $requeteDql["organisateur"] = $this->getUser()->getId();
-                $labelFiltre .= "Que j'organise | ";
+                $labelBuilder["tri_checkbox_organisateur"] = "Que j'organise | ";
             }
 
             if ($request->get("tri-checkbox-passee") !== null) {
                 $requeteDql["etat"] = 5;
-                $labelFiltre .= "Sortie(s) passée(s) | ";
+                $labelBuilder["tri_checkbox_passee"] = "Sortie(s) passée(s) | ";
             }
 
             $sorties = $repositorySortie->findBy($requeteDql);
@@ -64,7 +72,7 @@ class MainController extends AbstractController
             if ($request->get("tri-date-debut") !== "") {
 
                 $date = explode("-", $request->get("tri-date-debut"));
-                $labelFiltre .= "À partir du ".$date[2]."/". $date[1]."/". $date[0] ." | ";
+                $labelBuilder["tri_date_debut"] = "À partir du " . $date[2] . "/" . $date[1] . "/" . $date[0] . " | ";
                 $timeStampDateChoisie = mktime(0, 0, 0, $date[1], $date[2], $date[0]);
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
@@ -78,7 +86,7 @@ class MainController extends AbstractController
             if ($request->get("tri-date-fin") !== "") {
                 $date = explode("-", $request->get("tri-date-fin"));
                 $timeStampDateChoisie = mktime(0, 0, 0, $date[1], $date[2], $date[0]);
-                $labelFiltre .= "Jusqu'au ".$date[2]."/". $date[1]."/". $date[0] ." | ";
+                $labelBuilder["tri_date_fin"] = "Jusqu'au " . $date[2] . "/" . $date[1] . "/" . $date[0] . " | ";
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
                     if ($sortie->getDateHeureDebut()->getTimestamp() < $timeStampDateChoisie) {
@@ -89,7 +97,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-checkbox-inscrit") !== null) {
-                $labelFiltre .= "Inscrit | ";
+                $labelBuilder["tri_checkbox_inscrit"] = "Inscrit | ";
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
                     foreach ($sortie->getParticipants() as $participant) {
@@ -102,7 +110,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-checkbox-non-inscrit") !== null) {
-                $labelFiltre .= "Non-inscrit | ";
+                $labelBuilder["tri_checkbox_non_inscrit"] = "Non-inscrit | ";
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
                     $userInscrit = false;
@@ -119,7 +127,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-texte") != "") {
-                $labelFiltre .= "Recherche par '" . $request->get("tri-texte") . "' | ";
+                $labelBuilder["tri_texte"] = "Recherche par '" . $request->get("tri-texte") . "' | ";
                 $result = $repositorySortie->findWithName($request->get("tri-texte"));
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
@@ -226,6 +234,21 @@ class MainController extends AbstractController
         if ($request->get("error") !== null) {
             $error = $request->get("error");
         }
+
+        // Affichage filtre
+        $labelFiltre = $labelBuilder["tri_site"] .
+            $labelBuilder["tri_texte"] .
+            $labelBuilder["tri_date_debut"] .
+            $labelBuilder["tri_date_fin"] .
+            $labelBuilder["tri_checkbox_organisateur"] .
+            $labelBuilder["tri_checkbox_inscrit"] .
+            $labelBuilder["tri_checkbox_non_inscrit"] .
+            $labelBuilder["tri_checkbox_passee"];
+
+        if(strchr($labelFiltre, "| ")){
+            $labelFiltre = substr($labelFiltre, 0, -2);
+        }
+
 
         return $this->render('main/index.html.twig', [
             "sites" => $sites,
