@@ -8,13 +8,10 @@ use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SortieLieuType extends AbstractType
+class ModifierSortieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -45,7 +42,7 @@ class SortieLieuType extends AbstractType
                     'data-provide' => 'datetimepicker',
                 ],
             ])
-            ->add('lieu', LieuType::class)
+
             ->add('site', EntityType::class, [
                 "class" => Site::class,
                 "choice_label" => "nom"

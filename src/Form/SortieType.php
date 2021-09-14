@@ -8,9 +8,6 @@ use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,13 +17,36 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('dateHeureDebut')
+            ->add('dateHeureDebut', DateTimeType::class,[
+                'required' => true,
+                'widget' => 'single_text',
+                'html5' => true,
+               // 'input_format' => 'Y-m-d H:i:s',
+                'label' => "Limeption",
+                'label_attr' => ['class' => 'labeldisplay'],
+                'attr' => [
+                    'class' => 'form-control input-inline datetimepicker',
+                    'data-provide' => 'datetimepicker',
+                ],
+            ])
             ->add('duree')
             ->add('nbInscriptionMax')
             ->add('infosSortie')
-            ->add('dateLimiteInscription')
-            ->add('site')
-            ->add('lieu', LieuType::class)
+            ->add('dateLimiteInscription', DateTimeType::class,[
+                'required' => true,
+                'widget' => 'single_text',
+                'html5' => false,
+                'label' => "Limiteption",
+                'label_attr' => ['class' => 'labeldisplay'],
+                'attr' => [
+                    'class' => 'form-control input-inline datetimepicker',
+                    'data-provide' => 'datetimepicker',
+                ],
+            ])
+            ->add('lieu', EntityType::class,[
+                "class" => Lieu::class,
+                "choice_label" => "nom"
+            ])
             ->add('site', EntityType::class, [
                 "class" => Site::class,
                 "choice_label" => "nom"
@@ -41,3 +61,6 @@ class SortieType extends AbstractType
         ]);
     }
 }
+
+
+

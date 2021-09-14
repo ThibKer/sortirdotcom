@@ -2,9 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css"
-          integrity="sha512-/VectwrK3cVMbl6IFsHj/O+fbxfLQm5rved2LR8HnaNuIL6fs8yBXNSi25hhQCB2713sc3Cbh5a4wLRSsZvDxg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
     <title>
         {% block title %}Welcome!{% endblock %}
     </title>
@@ -13,8 +11,18 @@
     {% block stylesheets %}
     {% endblock %}
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css"
+          integrity="sha512-/VectwrK3cVMbl6IFsHj/O+fbxfLQm5rved2LR8HnaNuIL6fs8yBXNSi25hhQCB2713sc3Cbh5a4wLRSsZvDxg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
+
+
+{% if error is defined %}
+
+<body onload="errorAlert('{{ error }}')">
+{% else %}
 <body>
+{% endif %}
 <div class="pure-menu pure-menu-horizontal menu-bordereau">
     <div class="pure-g">
         <div class="pure-u-1-3">
@@ -50,4 +58,5 @@
 
 {% endblock %}
 </body>
+<script src="{{ asset('js/error.js') }}"></script>
 </html>

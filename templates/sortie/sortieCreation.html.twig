@@ -3,31 +3,51 @@
 {% block title %}Création d'une sortie{% endblock %}
 
 {% block stylesheets %}
-    <link href="{{ asset('css/sortieCreation.css') }}" rel="stylesheet">
-
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/moment.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 {% endblock %}
 
 {% block body %}
-    <form method="post" class="pure-form pure-form-aligned"
-          style="	position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-    ">
+    <form method="post" class="pure-form pure-form-aligned centred-conteneur">
         <fieldset>
             <div class="example-wrapper pure-g">
                 <div class="pure-u-1-2">
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.nom) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.dateHeureDebut) }}
+
+                    <div class='creation-champs pure-control-group'>
+                        {{ form_label(formSortie.dateHeureDebut) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                {{ form_widget(formSortie.dateHeureDebut) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.dateLimiteInscription) }}
+
+                    <div class='creation-champs pure-control-group'>
+                        <div class="form-group">
+                        {{ form_label(formSortie.dateLimiteInscription) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group date' id='datetimepicker2'>
+                                {{ form_widget(formSortie.dateLimiteInscription) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                            </div>
                     </div>
+
                     <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.duree) }}
+                        {{ form_row(formSortie.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
                     </div>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.nbInscriptionMax) }}
@@ -70,15 +90,33 @@
                 </div>
 
                 <div class="creation-champs pure-controls">
-                    <button class="pure-button pure-button-primary" type="submit">Ajouter</button>
+                    <button class="pure-button button-primary" type="submit">Ajouter</button>
                 </div>
             </div>
 
         </fieldset>
     </form>
     <input type="hidden" value="{{ lieuxdonnees }}" id="hidden">
+
     <script>
-        document.getElementById('select-creation').addEventListener("change", () => {
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: "YYYY-MM-DD hh:mm:ss",
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: "YYYY-MM-DD hh:mm:ss",
+            });
+        });
+    </script>
+
+
+    <script>
+        window.onload = function() {
+            changementInfoLieu();
+        };
+        document.getElementById('select-creation').addEventListener("change", changementInfoLieu);
+
+        function changementInfoLieu(){
             select = document.getElementById('select-creation').getElementsByTagName("select");
             for(i = 0; i < select.length; i++){
                 choix = select[i].value;
@@ -96,6 +134,6 @@
                 document.getElementById("latitude-holder").innerText = trouver.latitude;
                 document.getElementById("longitude-holder").innerText = trouver.longitude;
             }
-        });
+        }
     </script>
 {% endblock %}

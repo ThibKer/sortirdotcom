@@ -89,9 +89,9 @@ class MainController extends AbstractController
             if ($request->get("tri-checkbox-inscrit") !== null) {
                 $labelFiltre .= "Inscrit";
                 $toAdd = [];
-                foreach ($sorties as $sortie){
-                    foreach ($sortie->getParticipants() as $participant){
-                        if($participant->getId() == $this->getUser()->getId()){
+                foreach ($sorties as $sortie) {
+                    foreach ($sortie->getParticipants() as $participant) {
+                        if ($participant->getId() == $this->getUser()->getId()) {
                             array_push($toAdd, $sortie);
                         }
                     }
@@ -102,27 +102,27 @@ class MainController extends AbstractController
             if ($request->get("tri-checkbox-non-inscrit") !== null) {
                 $labelFiltre .= "Non-inscrit";
                 $toAdd = [];
-                foreach ($sorties as $sortie){
+                foreach ($sorties as $sortie) {
                     $userInscrit = false;
-                    foreach ($sortie->getParticipants() as $participant){
-                        if($participant->getId() == $this->getUser()->getId()){
+                    foreach ($sortie->getParticipants() as $participant) {
+                        if ($participant->getId() == $this->getUser()->getId()) {
                             $userInscrit = true;
                         }
                     }
-                    if(!$userInscrit){
+                    if (!$userInscrit) {
                         array_push($toAdd, $sortie);
                     }
                 }
                 $sorties = $toAdd;
             }
 
-            if ($request->get("tri-texte") != ""){
-                $labelFiltre .= "Recherche par ". $request->get("tri-texte") ." |";
+            if ($request->get("tri-texte") != "") {
+                $labelFiltre .= "Recherche par " . $request->get("tri-texte") . " |";
                 $result = $repositorySortie->findWithName($request->get("tri-texte"));
                 $toAdd = [];
-                foreach ($sorties as $sortie){
-                    foreach ($result as $resultatSortie){
-                        if($resultatSortie->getId() == $sortie->getId()){
+                foreach ($sorties as $sortie) {
+                    foreach ($result as $resultatSortie) {
+                        if ($resultatSortie->getId() == $sortie->getId()) {
                             array_push($toAdd, $sortie);
                         }
                     }
@@ -132,15 +132,15 @@ class MainController extends AbstractController
 
             // Enlever les supprimer
             $toAdd = [];
-            foreach ($sorties as $sortie){
-                if($sortie->getEtat()->getId() != 7 && $sortie->getEtat()->getId() != 1){
+            foreach ($sorties as $sortie) {
+                if ($sortie->getEtat()->getId() != 7 && $sortie->getEtat()->getId() != 1) {
                     array_push($toAdd, $sortie);
                 }
             }
             $sorties = $toAdd;
 
             $sortiesUtilisateur = $repositorySortie->findBy(["etat" => 1, "organisateur" => $this->getUser()->getId()]);
-            foreach ($sortiesUtilisateur as $sortieUtilisateur){
+            foreach ($sortiesUtilisateur as $sortieUtilisateur) {
                 array_push($sorties, $sortieUtilisateur);
             }
 
@@ -174,9 +174,7 @@ class MainController extends AbstractController
 
         }
 
-
-
-        // Vérification des Etat "EN COURS" et "TERMINE"
+        // Vérification des Etat "EN COURS" , "TERMINE" et "CLOTURER"
         foreach ($sorties as $sortieCourante) {
             if ($sortieCourante->getEtat()->getId() != 1 ||
                 $sortieCourante->getEtat()->getId() != 5 ||
@@ -194,10 +192,17 @@ class MainController extends AbstractController
                     $manager = $this->getDoctrine()->getManager();
                     $manager->persist($sortieCourante);
                     $manager->flush();
+                } // CLOTURER
+                elseif ($sortieCourante->getDateLimiteInscription()->getTimestamp() < time()) {
+                    $sortieCourante->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(3));
+                    $manager = $this->getDoctrine()->getManager();
+                    $manager->persist($sortieCourante);
+                    $manager->flush();
                 }
             }
             if ($sortieCourante->getEtat()->getId() == 3 &&
-                count($sortieCourante->getParticipants()) < $sortieCourante->getNbInscriptionMax()) {
+                count($sortieCourante->getParticipants()) < $sortieCourante->getNbInscriptionMax() &&
+                $sortieCourante->getDateLimiteInscription()->getTimestamp() >= time()) {
                 $sortieCourante->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
                 $manager = $this->getDoctrine()->getManager();
                 $manager->persist($sortieCourante);
@@ -208,11 +213,16 @@ class MainController extends AbstractController
         //Liste sorties archivées
         $sortiesArchivees = [];
         $timestampDans1Mois = (time() - (31 * 24 * 60 * 60));
-        foreach ($sorties as $sortie){
+        foreach ($sorties as $sortie) {
             $timestampFinSortie = ($sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree() * 60);
-            if($timestampFinSortie < $timestampDans1Mois){
+            if ($timestampFinSortie < $timestampDans1Mois) {
                 array_push($sortiesArchivees, $sortie);
             }
+        }
+
+        $error = "";
+        if ($request->get("error") !== null) {
+            $error = $request->get("error");
         }
 
         return $this->render('main/index.html.twig', [
@@ -220,7 +230,8 @@ class MainController extends AbstractController
             "sorties" => $sorties,
             "sortiesInscit" => $sortiesInscrit,
             "sortiesArchivees" => $sortiesArchivees,
-            "labelFiltre" => $labelFiltre
+            "labelFiltre" => $labelFiltre,
+            "error" => $error
         ]);
     }
 }
