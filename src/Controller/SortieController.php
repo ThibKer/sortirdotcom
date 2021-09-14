@@ -32,13 +32,20 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
+        $error = "";
+        if($request->get('error') !== null){
+            $error = $request->get('error');
+        }
+
         if ($formSortie->isSubmitted()) {
 
             if ($formSortie->isValid()){
 
                 if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
                     ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
-                    return $this->redirectToRoute('sortie_creer');
+                    return $this->redirectToRoute('sortie_creer', [
+                        "error" => "Erreur sur les dates"
+                    ]);
                 }
                 $manager = $this->getDoctrine()->getManager();
                 $repository = $this->getDoctrine()->getRepository(Etat::class);
@@ -63,10 +70,10 @@ class SortieController extends AbstractController
         }
         $lieuxDonneesJSON = $serializer->serialize($lieux, 'json');
 
-
         return $this->render('sortie/sortieCreation.html.twig', [
             "formSortie" => $formSortie->createView(),
-            "lieuxdonnees" => $lieuxDonneesJSON
+            "lieuxdonnees" => $lieuxDonneesJSON,
+            "error" => $error
         ]);
     }
 
@@ -78,8 +85,20 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $formSortie = $this->createForm(SortieLieuType::class, $sortie);
         $formSortie->handleRequest($request);
+        $error = "";
+        if($request->get('error') !== null){
+            $error = $request->get('error');
+        }
 
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+
+            if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
+                ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
+                return $this->redirectToRoute('sortie_creer_lieu', [
+                    "error" => "Erreur sur les dates"
+                ]);
+            }
+
             $manager = $this->getDoctrine()->getManager();
             $repository = $this->getDoctrine()->getRepository(Etat::class);
 
@@ -94,7 +113,8 @@ class SortieController extends AbstractController
         }
 
         return $this->render('sortie/sortieCreationAvecLieu.html.twig', [
-            "formSortie" => $formSortie->createView()
+            "formSortie" => $formSortie->createView(),
+            "error" => $error
         ]);
     }
 
@@ -107,19 +127,27 @@ class SortieController extends AbstractController
             $sortie->getEtat()->getId() == 1) {
             $form = $this->createForm(SortieType::class, $sortie);
             $form->handleRequest($request);
+            $error = "";
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $form->get('nom')->getData();
 
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($sortie);
-                $entityManager->flush();
+                if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
+                    ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
+                    $error = "Erreur sur les dates";
+                } else {
+                    $form->get('nom')->getData();
 
-                return $this->redirectToRoute('home');
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager->persist($sortie);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('home');
+                }
             }
             return $this->renderForm('sortie/sortieModification.html.twig', [
                 'sortie' => $sortie,
-                'formUpdate' => $form
+                'formUpdate' => $form,
+                "error" => $error
             ]);
         } else {
             return $this->redirectToRoute('home', [
@@ -137,12 +165,19 @@ class SortieController extends AbstractController
             $sortie->getEtat()->getId() == 1) {
             $formSortie = $this->createForm(ModifierSortieType::class, $sortie);
             $formSortie->handleRequest($request);
+            $error = "";
 
             $lieu = new Lieu();
             $formLieu = $this->createForm(LieuType::class, $lieu);
             $formLieu->handleRequest($request);
 
             if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+
+                if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
+                    ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
+                    $error = "Erreur sur les dates";
+                }
+
                 $sortie->setLieu($lieu);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($lieu);
@@ -154,7 +189,8 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/sortieModificationAvecLieu.html.twig', [
                 'sortie' => $sortie,
                 'formUpdate' => $formSortie,
-                'formLieu' => $formLieu
+                'formLieu' => $formLieu,
+                'error' => $error
             ]);
         } else {
             return $this->redirectToRoute('home', [

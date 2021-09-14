@@ -23,7 +23,7 @@
                     <div class='creation-champs pure-control-group'>
                         {{ form_label(formSortie.dateHeureDebut) }}
                         <div class="creation-champs pure-control-group">
-                            <div class='input-group date' id='datetimepicker1'>
+                            <div class='input-group' id='datetimepicker1'>
                                 {{ form_widget(formSortie.dateHeureDebut) }}
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -33,7 +33,6 @@
                     </div>
 
                     <div class='creation-champs pure-control-group'>
-                        <div class="form-group">
                         {{ form_label(formSortie.dateLimiteInscription) }}
                         <div class="creation-champs pure-control-group">
                             <div class='input-group date' id='datetimepicker2'>
@@ -43,7 +42,6 @@
                                 </span>
                             </div>
                         </div>
-                            </div>
                     </div>
 
                     <div class="creation-champs pure-control-group">
@@ -59,7 +57,7 @@
                 <div class="pure-u-1-2">
                     <div>
                         <a href="{{ path('sortie_creer_lieu') }}">
-                            <img src="{{ asset('img/plus-circle.svg') }}">
+                            <img src="{{ asset('img/plus-circle.svg') }}" alt="icon More">
                         </a>
                     </div>
                     <div class="creation-champs pure-control-group" id="select-creation">
