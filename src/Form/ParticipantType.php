@@ -7,6 +7,7 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -69,6 +70,16 @@ class ParticipantType extends AbstractType
                 // 'expanded' => true,
             ])
        */
+            ->add('img', FileType::class,[
+                'label'=>'Photo profil',
+                'mapped'=>false,
+                'required'=>false,
+                'constraints'=>[
+                    'maxSize'=>'2M',
+                    'mimeTypes'=>['image/png'],
+                    'mimeTypesMessage'=>'Veuillez ajouter une photo au bon format.',
+                ]
+       ])
         ;
     }
 
