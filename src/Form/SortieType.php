@@ -20,8 +20,9 @@ class SortieType extends AbstractType
             ->add('dateHeureDebut', DateTimeType::class,[
                 'required' => true,
                 'widget' => 'single_text',
-                'html5' => false,
+                'html5' => true,
                // 'input_format' => 'Y-m-d H:i:s',
+                'label' => "Limeption",
                 'label_attr' => ['class' => 'labeldisplay'],
                 'attr' => [
                     'class' => 'form-control input-inline datetimepicker',
@@ -35,7 +36,7 @@ class SortieType extends AbstractType
                 'required' => true,
                 'widget' => 'single_text',
                 'html5' => false,
-                'label' => "Limite inscription",
+                'label' => "Limiteption",
                 'label_attr' => ['class' => 'labeldisplay'],
                 'attr' => [
                     'class' => 'form-control input-inline datetimepicker',
