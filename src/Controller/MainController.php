@@ -64,7 +64,7 @@ class MainController extends AbstractController
             if ($request->get("tri-date-debut") !== "") {
 
                 $date = explode("-", $request->get("tri-date-debut"));
-                $labelFiltre .= "À partir du ".$date[2]." ". $date[1]." ". $date[0] ." | ";
+                $labelFiltre .= "À partir du ".$date[2]."/". $date[1]."/". $date[0] ." | ";
                 $timeStampDateChoisie = mktime(0, 0, 0, $date[1], $date[2], $date[0]);
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
@@ -78,7 +78,7 @@ class MainController extends AbstractController
             if ($request->get("tri-date-fin") !== "") {
                 $date = explode("-", $request->get("tri-date-fin"));
                 $timeStampDateChoisie = mktime(0, 0, 0, $date[1], $date[2], $date[0]);
-                $labelFiltre .= "Jusqu'au ".$date[2]." ". $date[1]." ". $date[0] ." | ";
+                $labelFiltre .= "Jusqu'au ".$date[2]."/". $date[1]."/". $date[0] ." | ";
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
                     if ($sortie->getDateHeureDebut()->getTimestamp() < $timeStampDateChoisie) {
