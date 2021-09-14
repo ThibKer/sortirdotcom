@@ -238,6 +238,10 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('home', [
                 "error" => "Erreur, sortie archivée"
             ]);
+        } elseif ($sortie->getEtat()->getId() == 1 && $this->getUser()->getId() != $sortie->getOrganisateur()->getId()){
+            return $this->redirectToRoute('home', [
+                "error" => "Erreur, sortie non publiée"
+            ]);
         } else {
             $participants = $sortie->getParticipants();
             return $this->render('sortie/sortie.html.twig',
