@@ -7,8 +7,8 @@
     <script src="/js/moment.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
-    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
 {% endblock %}
 
 {% block body %}
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="creation-champs pure-control-group">
-                        {{ form_row(formUpdate.duree) }}
+                        {{ form_row(formUpdate.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
                     </div>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formUpdate.nbInscriptionMax) }}
@@ -79,6 +79,7 @@
                 </div>
         </fieldset>
     </form>
+
     <div class="centred-conteneur">
         <div class="pure-controls">
             <button class="pure-button button-primary" type="submit" id="submit-modifier">Modifier</button>

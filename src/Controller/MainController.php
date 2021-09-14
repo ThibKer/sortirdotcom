@@ -7,6 +7,7 @@ use App\Entity\Participant;
 use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Form\RegistrationFormType;
+use Doctrine\ORM\Repository\RepositoryFactory;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,24 +46,25 @@ class MainController extends AbstractController
 
             if ($request->get("tri-site") != "0") {
                 $requeteDql["site"] = $request->get("tri-site");
-                $labelFiltre .= "Site |";
+                $labelFiltre .= "Site '".$repositorySite->find($request->get("tri-site"))->getNom()."' | ";
             }
 
             if ($request->get("tri-checkbox-organisateur") !== null) {
                 $requeteDql["organisateur"] = $this->getUser()->getId();
-                $labelFiltre .= "Organisateur |";
+                $labelFiltre .= "Que j'organise | ";
             }
 
             if ($request->get("tri-checkbox-passee") !== null) {
                 $requeteDql["etat"] = 5;
-                $labelFiltre .= "Sortie passées |";
+                $labelFiltre .= "Sortie(s) passée(s) | ";
             }
 
             $sorties = $repositorySortie->findBy($requeteDql);
 
             if ($request->get("tri-date-debut") !== "") {
-                $labelFiltre .= "Date de début |";
+
                 $date = explode("-", $request->get("tri-date-debut"));
+                $labelFiltre .= "À partir du ".$date[2]."/". $date[1]."/". $date[0] ." | ";
                 $timeStampDateChoisie = mktime(0, 0, 0, $date[1], $date[2], $date[0]);
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
@@ -74,9 +76,9 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-date-fin") !== "") {
-                $labelFiltre .= "Date de fin |";
                 $date = explode("-", $request->get("tri-date-fin"));
                 $timeStampDateChoisie = mktime(0, 0, 0, $date[1], $date[2], $date[0]);
+                $labelFiltre .= "Jusqu'au ".$date[2]."/". $date[1]."/". $date[0] ." | ";
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
                     if ($sortie->getDateHeureDebut()->getTimestamp() < $timeStampDateChoisie) {
@@ -87,7 +89,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-checkbox-inscrit") !== null) {
-                $labelFiltre .= "Inscrit";
+                $labelFiltre .= "Inscrit | ";
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
                     foreach ($sortie->getParticipants() as $participant) {
@@ -100,7 +102,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-checkbox-non-inscrit") !== null) {
-                $labelFiltre .= "Non-inscrit";
+                $labelFiltre .= "Non-inscrit | ";
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
                     $userInscrit = false;
@@ -117,7 +119,7 @@ class MainController extends AbstractController
             }
 
             if ($request->get("tri-texte") != "") {
-                $labelFiltre .= "Recherche par " . $request->get("tri-texte") . " |";
+                $labelFiltre .= "Recherche par '" . $request->get("tri-texte") . "' | ";
                 $result = $repositorySortie->findWithName($request->get("tri-texte"));
                 $toAdd = [];
                 foreach ($sorties as $sortie) {
