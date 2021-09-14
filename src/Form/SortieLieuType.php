@@ -24,7 +24,7 @@ class SortieLieuType extends AbstractType
                 'required' => true,
                 'widget' => 'single_text',
                 'html5' => false,
-                // 'input_format' => 'Y-m-d H:i:s',
+                'label' => "Limiteption",
                 'label_attr' => ['class' => 'labeldisplay'],
                 'attr' => [
                     'class' => 'form-control input-inline datetimepicker',
