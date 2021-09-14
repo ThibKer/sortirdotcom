@@ -20,12 +20,31 @@ class SortieLieuType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('dateHeureDebut')
+            ->add('dateHeureDebut', DateTimeType::class,[
+                'required' => true,
+                'widget' => 'single_text',
+                'html5' => false,
+                // 'input_format' => 'Y-m-d H:i:s',
+                'label_attr' => ['class' => 'labeldisplay'],
+                'attr' => [
+                    'class' => 'form-control input-inline datetimepicker',
+                    'data-provide' => 'datetimepicker',
+                ],
+            ])
             ->add('duree')
             ->add('nbInscriptionMax')
             ->add('infosSortie')
-            ->add('dateLimiteInscription')
-            ->add('site')
+            ->add('dateLimiteInscription', DateTimeType::class,[
+                'required' => true,
+                'widget' => 'single_text',
+                'html5' => false,
+                'label' => "Limite inscription",
+                'label_attr' => ['class' => 'labeldisplay inline'],
+                'attr' => [
+                    'class' => 'form-control input-inline datetimepicker',
+                    'data-provide' => 'datetimepicker',
+                ],
+            ])
             ->add('lieu', LieuType::class)
             ->add('site', EntityType::class, [
                 "class" => Site::class,
@@ -33,6 +52,7 @@ class SortieLieuType extends AbstractType
             ])
         ;
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

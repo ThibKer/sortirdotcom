@@ -3,8 +3,12 @@
 {% block title %}Création d'une sortie{% endblock %}
 
 {% block stylesheets %}
-    <link href="{{ asset('css/sortieCreation.css') }}" rel="stylesheet">
-
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/moment.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 {% endblock %}
 
 {% block body %}
@@ -15,11 +19,28 @@
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.nom) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.dateHeureDebut) }}
+                    <div class='creation-champs pure-control-group'>
+                        {{ form_label(formSortie.dateHeureDebut) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                {{ form_widget(formSortie.dateHeureDebut) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.dateLimiteInscription) }}
+
+                    <div class='creation-champs pure-control-group'>
+                        {{ form_label(formSortie.dateLimiteInscription) }}
+                        <div class="creation-champs pure-control-group">
+                            <div class='input-group' id='datetimepicker2'>
+                                {{ form_widget(formSortie.dateLimiteInscription) }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formSortie.duree) }}
@@ -70,39 +91,14 @@
 
 
 
-    <div class="container">
-        <div class='col-md-5'>
-            <div class="form-group">
-                <div class='input-group date' id='datetimepicker6'>
-                    <input type='text' class="form-control"/>
-                    <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-                </div>
-            </div>
-        </div>
-        <div class='col-md-5'>
-            <div class="form-group">
-                <div class='input-group date' id='datetimepicker7'>
-                    <input type='text' class="form-control"/>
-                    <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-            </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
+
+    <script>
         $(function () {
-            $('#datetimepicker6').datetimepicker();
-            $('#datetimepicker7').datetimepicker({
-                useCurrent: false //Important! See issue #1075
+            $('#datetimepicker1').datetimepicker({
+                format: "YYYY-MM-DD hh:mm:ss",
             });
-            $("#datetimepicker6").on("dp.change", function (e) {
-                $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-            });
-            $("#datetimepicker7").on("dp.change", function (e) {
-                $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+            $('#datetimepicker2').datetimepicker({
+                format: "YYYY-MM-DD hh:mm:ss",
             });
         });
     </script>
