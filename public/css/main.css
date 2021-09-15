@@ -3,13 +3,19 @@
     justify-content: flex-end;
 }
 
-#base-logo{
+#grouplogo a{
+    text-decoration: none;
+}
+#logologo{
+    margin-top: auto;
+    margin-left: 20vh;
     width: 70px;
     height: 70px;
+    /*filter: invert(8%) sepia(100%) saturate(6481%) hue-rotate(246deg) brightness(102%) contrast(143%);*/
+    filter: invert(75%) contrast(119%) saturate(246%)  sepia(1);
 }
-
-.base-titre{
-    text-align: center;
+#logodotcom{
+    height: 75px;
 }
 
 .button-no-button{
@@ -51,7 +57,7 @@
 }
 
  .menu-bordereau{
-     background-color: #FAF391;
+     background-color: rgba(128, 122, 122, 0.62);
      height: max-content;
  }
 
@@ -95,7 +101,7 @@
 }
 */
 .centered{
-    text-align: center;
+    text-align: left;
     justify-content: center;
     justify-self: center;
     justify-items: center;
@@ -104,7 +110,7 @@
 .detail-table{
     margin-top: 5vh;
 }
-/*
+
 .centred-conteneur{
     display: flex;
     justify-content: center;
@@ -112,7 +118,7 @@
     margin-top: 15vh;
 }
 
- */
 #bouton-creer-sortie>a,#filtre-recherche>button {
     border-radius: 25px;
 }
+
