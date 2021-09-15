@@ -17,33 +17,35 @@
     <div class="pure-u-1-1">
         <div class="pure-u-1-2" id="grouplogo">
             <a href="{{ path('home') }}">
-                <img src="{{ asset('img/logo.svg') }}" id="logologo">
-                <img id="logodotcom" src="/img/sortirdotcom.svg" alt="Sortir.com">
+                <img src="{{ asset('img/logo.svg') }}" alt="logo" id="logologo">
+                <img id="logodotcom" src="/img/Sortirdotcom3.svg" alt="Sortir.com">
             </a>
         </div>
+
         {% if app.user %}
-            <div class="pure-menu-list pure-u-1-2 ">
-            <ul class="" id="base-button">
-                {% if is_granted('ROLE_ADMIN') %}
+            <div class="pure-menu-list pure-u-1-2 " id="navmenu">
+                <ul class="" >
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="pure-menu-item">
+                            <a href="{{ path('ville') }}" class="pure-menu-link button-nav-admin">Villes</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a href="{{ path('site') }}" class="pure-menu-link button-nav-admin">Sites</a>
+                        </li>
+                    {% endif %}
                     <li class="pure-menu-item">
-                        <a href="{{ path('ville') }}" class="pure-menu-link">Villes</a>
+                        <a href="{{ path('home') }}" class="pure-menu-link button-nav">Accueil</a>
                     </li>
                     <li class="pure-menu-item">
-                        <a href="{{ path('site') }}" class="pure-menu-link">Sites</a>
+                        <a href="{{ path('participant_edit', {"id" : app.user.id}) }}" class="pure-menu-link button-nav">Mon profil</a>
                     </li>
-                {% endif %}
-                <li class="pure-menu-item">
-                    <a href="{{ path('home') }}" class="pure-menu-link">Accueil</a>
-                </li>
-                <li class="pure-menu-item">
-                    <a href="{{ path('participant_edit', {"id" : app.user.id}) }}" class="pure-menu-link">Mon profil</a>
-                </li>
-                <li class="pure-menu-item">
-                    <a href="{{ path('app_logout') }}" class="pure-menu-link">Se déconnecter</a>
-                </li>
-            </ul>
+                    <li class="pure-menu-item">
+                        <a href="{{ path('app_logout') }}" class="pure-menu-link button-nav">Se déconnecter</a>
+                    </li>
+                </ul>
             </div>
         {% endif %}
+
     </div>
 </div>
 {% block body %}
