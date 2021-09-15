@@ -186,5 +186,13 @@ a{
      max-width: 10vw !important;
  }
  .pure-controls{
-    /* letter-spacing: normal;*/
+     letter-spacing: normal;
  }
+
+
+ /* formulaire 'id' used for js :
+ - formulaire-modifier
+ -
+ -
+ -
+  */

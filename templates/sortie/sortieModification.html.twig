@@ -54,7 +54,7 @@
     <form method="post" class="pure-form pure-form-aligned centred-conteneur formsortie" id="formulaire-modifier">
         <fieldset>
             <!--<div class="pure-g">-->
-            <div>
+            <div class="pure-g">
                 <div class="pure-u-1-2">
                     <div class="creation-champs pure-control-group">
                         {{ form_row(formUpdate.nom) }}
@@ -93,39 +93,42 @@
                     </div>
                 </div>
 
-                <div>
-                    <img src="{{ asset('img/plus-circle.svg') }}" id="myBtn">
-                </div>
-                <div class="creation-champs pure-control-group" id="select-ville">
-                    <label for="select-ville-balise">Ville : </label>
-                    <select id="select-ville-balise">
-                        {% for ville in villes %}
-                            <option value="{{ ville.id }}">{{ ville.nom }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="creation-champs pure-control-group" id="select-creation">
-                    {{ form_row(formUpdate.lieu) }}
-                </div>
+                <div class="pure-u-1-2">
+                    <div>
+                        <img src="{{ asset('img/plus-circle.svg') }}" id="myBtn">
+                    </div>
+                    <div class="creation-champs pure-control-group" id="select-ville">
+                        <label for="select-ville-balise">Ville : </label>
+                        <select id="select-ville-balise">
+                            {% for ville in villes %}
+                                <option value="{{ ville.id }}">{{ ville.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="creation-champs pure-control-group" id="select-creation">
+                        {{ form_row(formUpdate.lieu) }}
+                    </div>
 
-                <legend></legend>
+                    <legend></legend>
 
-                <div class="creation-champs pure-control-group">
-                    <label class="labeldisplay" for="rue-holder">Rue</label>
-                    <label class="displayed labeldisplay" id="rue-holder"></label>
+                    <div class="creation-champs pure-control-group">
+                        <label class="labeldisplay" for="rue-holder">Rue</label>
+                        <label class="displayed labeldisplay" id="rue-holder"></label>
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        <label class="labeldisplay" for="latitude-holde">Latitude</label>
+                        <label class="displayed labeldisplay" id="latitude-holder"></label>
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        <label class="labeldisplay" for="longitude-holder">Longitude</label>
+                        <label class="displayed labeldisplay" id="longitude-holder"></label>
+                    </div>
+                    <legend></legend>
+                    {{ form_rest(formUpdate) }}
                 </div>
-                <div class="creation-champs pure-control-group">
-                    <label class="labeldisplay" for="latitude-holde">Latitude</label>
-                    <label class="displayed labeldisplay" id="latitude-holder"></label>
+                <div class="pure-controls">
+                    <!-- empty : for 'pure' disposition -->
                 </div>
-                <div class="creation-champs pure-control-group">
-                    <label class="labeldisplay" for="longitude-holder">Longitude</label>
-                    <label class="displayed labeldisplay" id="longitude-holder"></label>
-                </div>
-
-                <legend></legend>
-
-                {{ form_rest(formUpdate) }}
             </div>
         </fieldset>
     </form>
@@ -142,10 +145,8 @@
         </div>
     </div>
 
-
     <!-- The Modal -->
     <div id="myModal" class="modal">
-
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
