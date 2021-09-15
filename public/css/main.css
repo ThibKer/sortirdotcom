@@ -25,18 +25,22 @@
     color: black;
     /*border-radius: 4px;*/
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    font-size: 0.7em;
+    font-size: 0.9em;
 }
 .button-admin{
+    font-size: 0.9em;
     background: rgb(241, 48, 48);
 }
 .button-primary{
+    font-size: 0.9em;
     background : #AAE6FA;
 }
 .button-secondary{
+    font-size: 0.9em;
     background : #FAF391;
 }
 .button-warning{
+    font-size: 0.9em;
     background : lightgray;
 }
 
@@ -101,10 +105,14 @@
     margin-top: 5vh;
 }
 
-
 .centred-conteneur{
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 15vh;
 }
+
+#bouton-creer-sortie>a,#filtre-recherche>button {
+    border-radius: 25px;
+}
+

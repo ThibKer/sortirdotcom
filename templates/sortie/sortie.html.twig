@@ -26,7 +26,15 @@
                     </div>
                     <div class="creation-champs pure-control-group">
                         <label>Durée</label>
-                        <label class="displayed">{{ sortie.duree }} minutes</label>
+                        <label class="displayed">
+                            {% if sortie.duree>=1440 %}
+                                {{ sortie.duree//1440 }} j {{ (sortie.duree%1440)//60 }} h
+                            {% elseif sortie.duree%60==0%}
+                                {{ sortie.duree//60 }} h
+                            {% else %}
+                                {{ sortie.duree//60 }} h {{ sortie.duree%60 }} min
+                            {% endif %}
+                            </label>
                     </div>
                     <div class="creation-champs pure-control-group">
                         <label>Description et infos</label>
