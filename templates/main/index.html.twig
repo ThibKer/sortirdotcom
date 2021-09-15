@@ -117,12 +117,22 @@
                             {% endif %}
 
                             {% if app.user.id != sortie.organisateur.id %}
-                                <td>
-                                    <a href="{{ path('participant_show', {"id" : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                                <td class="centeredtab">
+                                    <a href="{{ path('participant_show', {"id" : sortie.organisateur.id}) }}">
+                                        {{ sortie.organisateur.pseudo }}
+                                        <span>
+                                            <img src="/img/person-square.svg" alt="">
+                                        </span>
+                                    </a>
                                 </td>
                             {% else %}
-                                <td>
-                                    {{ sortie.organisateur.pseudo }}
+                                <td class="centeredtab">
+                                    <p href="{{ path('participant_show', {"id" : sortie.organisateur.id}) }}">
+                                        {{ sortie.organisateur.pseudo }}
+                                        <span>
+                                            <img src="/img/person-square.svg" alt="">
+                                        </span>
+                                    </p>
                                 </td>
                             {% endif %}
 
