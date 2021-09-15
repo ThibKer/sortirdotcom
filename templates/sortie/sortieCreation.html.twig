@@ -13,7 +13,7 @@
 
 {% block body %}
 
-    <form method="post" class="pure-form pure-form-aligned centred-conteneur">
+    <form method="post" class="pure-form pure-form-aligned centred-conteneur formsortie">
         <fieldset>
             <div class="example-wrapper pure-g">
                 <div class="pure-u-1-2">
@@ -21,25 +21,23 @@
                         {{ form_row(formSortie.nom) }}
                     </div>
 
-                    <div class='creation-champs pure-control-group'>
-                        {{ form_label(formSortie.dateHeureDebut) }}
-                        <div class='input-group' id='datetimepicker1'>
+                    <div class='creation-champs pure-control-group pickerrow'>
+                        {{ form_label(formSortie.dateHeureDebut) }}<?
+                        ?><div class='input-group' id='datetimepicker1'>
                             {{ form_widget(formSortie.dateHeureDebut) }}
                             <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
+                                <span class="glyphicon glyphicon-calendar fix16px"></span>
                             </span>
                         </div>
                     </div>
 
-                    <div class='creation-champs pure-control-group'>
-                        {{ form_label(formSortie.dateLimiteInscription) }}
-                        <div class="creation-champs pure-control-group">
-                            <div class='input-group date' id='datetimepicker2'>
-                                {{ form_widget(formSortie.dateLimiteInscription) }}
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
+                    <div class='creation-champs pure-control-group pickerrow'>
+                        {{ form_label(formSortie.dateLimiteInscription) }}<?
+                        ?><div class='input-group date' id='datetimepicker2'>
+                            {{ form_widget(formSortie.dateLimiteInscription) }}
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar fix16px"></span>
+                            </span>
                         </div>
                     </div>
 
@@ -69,7 +67,8 @@
                     <div class="creation-champs pure-control-group" id="select-creation">
                         {{ form_row(formSortie.lieu) }}
                         <a href="">
-                            <img src="{{ asset('img/plus-circle.svg') }}" alt="icon More">
+                            <img src="{{ asset('img/plus-circle.svg') }}" alt="add lieu">
+                            new
                         </a>
                     </div>
 
