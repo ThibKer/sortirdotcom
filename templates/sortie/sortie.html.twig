@@ -12,23 +12,23 @@
             </legend>
             <div class="example-wrapper pure-g">
                 <div class="pure-u-1-2">
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Nom de la sortie</label>
                         <label class="displayed">{{ sortie.nom }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Date et heure de la sortie</label>
                         <label class="displayed">{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Date limite d'inscription</label>
                         <label class="displayed">{{ sortie.dateLimiteInscription | date('d/m/Y H:i') }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Nombre de place</label>
                         <label class="displayed">{{ sortie.nbInscriptionMax }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Durée</label>
                         <label class="displayed">
                             {% if sortie.duree>=1440 %}
@@ -40,33 +40,33 @@
                             {% endif %}
                             </label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Description et infos</label>
                         <label class="displayed">{{ sortie.infosSortie }}</label>
                     </div>
                 </div>
                 <div class="pure-u-1-2">
-                    <div class="creation-champs pure-control-group">
-                        <label>Ville oragnisatrice</label>
+                    <div class="creation-champs pure-control-group spacement">
+                        <label>Ville organisatrice</label>
                         <label class="displayed">{{ sortie.lieu.ville.nom }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Lieu</label>
                         <label class="displayed">{{ sortie.lieu.nom }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Rue</label>
                         <label class="displayed">{{ sortie.lieu.rue }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Code postal</label>
                         <label class="displayed">{{ sortie.lieu.ville.codePostal }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Latitude</label>
                         <label class="displayed">{{ sortie.lieu.latitude }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="creation-champs pure-control-group spacement">
                         <label>Longitude</label>
                         <label class="displayed">{{ sortie.lieu.longitude }}</label>
                     </div>
