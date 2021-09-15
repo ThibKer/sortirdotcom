@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block body %}
+
     <form method="post" class="pure-form pure-form-aligned centred-conteneur">
         <fieldset>
             <div class="example-wrapper pure-g">
@@ -22,13 +23,11 @@
 
                     <div class='creation-champs pure-control-group'>
                         {{ form_label(formSortie.dateHeureDebut) }}
-                        <div class="creation-champs pure-control-group">
-                            <div class='input-group' id='datetimepicker1'>
-                                {{ form_widget(formSortie.dateHeureDebut) }}
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
+                        <div class='input-group' id='datetimepicker1'>
+                            {{ form_widget(formSortie.dateHeureDebut) }}
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
                         </div>
                     </div>
 
@@ -55,14 +54,13 @@
                     </div>
                 </div>
                 <div class="pure-u-1-2">
-                    <div>
-                        <a href="">
-                            <img src="{{ asset('img/plus-circle.svg') }}" alt="icon More">
-                        </a>
+
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formSortie.site) }}
                     </div>
                     <div class="creation-champs pure-control-group" id="select-ville">
-                        <label for="select-ville-balise">Ville : </label>
-                        <select id="select-ville-balise">
+                        <label for="select-ville-balise">Ville</label><?
+                        ?><select id="select-ville-balise">
                             {% for ville in villes %}
                                 <option value="{{ ville.id }}">{{ ville.nom }}</option>
                             {% endfor %}
@@ -70,28 +68,29 @@
                     </div>
                     <div class="creation-champs pure-control-group" id="select-creation">
                         {{ form_row(formSortie.lieu) }}
+                        <a href="">
+                            <img src="{{ asset('img/plus-circle.svg') }}" alt="icon More">
+                        </a>
                     </div>
-
-                    <legend></legend>
-
-                        <div class="creation-champs pure-control-group">
-                            <label class="labeldisplay" for="rue-holder">Rue</label>
-                            <label class="displayed labeldisplay" id="rue-holder"></label>
-                        </div>
-                        <div class="creation-champs pure-control-group">
-                            <label class="labeldisplay" for="latitude-holde">Latitude</label>
-                            <label class="displayed labeldisplay" id="latitude-holder"></label>
-                        </div>
-                        <div class="creation-champs pure-control-group">
-                            <label class="labeldisplay" for="longitude-holder">Longitude</label>
-                            <label class="displayed labeldisplay" id="longitude-holder"></label>
-                        </div>
 
                     <legend></legend>
 
                     <div class="creation-champs pure-control-group">
-                        {{ form_row(formSortie.site) }}
+                        <label class="labeldisplay" for="rue-holder">Rue</label>
+                        <label class="displayed labeldisplay" id="rue-holder"></label>
                     </div>
+                    <div class="creation-champs pure-control-group">
+                        <label class="labeldisplay" for="latitude-holde">Latitude</label>
+                        <label class="displayed labeldisplay" id="latitude-holder"></label>
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        <label class="labeldisplay" for="longitude-holder">Longitude</label>
+                        <label class="displayed labeldisplay" id="longitude-holder"></label>
+                    </div>
+
+                    <legend></legend>
+
+
                     {{ form_row(formSortie._token) }}
                 </div>
 
@@ -114,7 +113,5 @@
             });
         });
     </script>
-
-
     <script src="{{ asset('js/selectCreationModification.js') }}"></script>
 {% endblock %}

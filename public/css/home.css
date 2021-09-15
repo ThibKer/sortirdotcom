@@ -47,11 +47,13 @@ h2{
     height: 26vh;
 }
 
-.fixed_header thead {
 
+table {
+    /*background-color: #e0e0e0;*/
+    background-color: #f0f0f0;
 }
-
 .fixed_header thead tr {
+    background-color: #e0e0e0;
     display: block;
     height: auto;
 }
