@@ -58,11 +58,13 @@ h2{
 
 .fixed_header th, .fixed_header td {
     padding: 5px;
-    text-align: left;
+    text-decoration: none;
     width: 10vw;
 }
 
-
+.centeredtab{
+    text-align: center;
+}
 
 
 
