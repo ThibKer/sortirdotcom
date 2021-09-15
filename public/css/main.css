@@ -1,9 +1,15 @@
+body{
+    background: #ffffff;
+    background: radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
+    background: -webkit-radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
+    background: -moz-radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
+}
+
 .menu-bordereau{
     background: #008dff;
     background: linear-gradient(315deg,#008dff 0%, #fffc00 150%);
     background: -webkit-linear-gradient(315deg,#008dff 0%, #fffc00 150%);
     background: -moz-linear-gradient(315deg,#008dff 0%, #fffc00 150%);
-
     height: max-content;
 }
 #grouplogo a{
