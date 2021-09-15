@@ -91,7 +91,7 @@
 }
 */
 .centered{
-    text-align: center;
+    text-align: left;
     justify-content: center;
     justify-self: center;
     justify-items: center;
