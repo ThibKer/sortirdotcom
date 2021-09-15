@@ -30,7 +30,7 @@
                             {% if sortie.duree>=1440 %}
                                 {{ sortie.duree//1440 }} j {{ (sortie.duree%1440)//60 }} h
                             {% elseif sortie.duree%60==0%}
-                                {{ sortie.duree//60 }} h 
+                                {{ sortie.duree//60 }} h
                             {% else %}
                                 {{ sortie.duree//60 }} h {{ sortie.duree%60 }} min
                             {% endif %}
