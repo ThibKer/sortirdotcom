@@ -1,10 +1,17 @@
+body{
+    background: #ffffff;
+    background: radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
+    background: -webkit-radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
+    background: -moz-radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
+    cursor: none;/* lol mdr */
+}
+
 .menu-bordereau{
     background: #008dff;
     background: linear-gradient(315deg,#008dff 0%, #fffc00 150%);
     background: -webkit-linear-gradient(315deg,#008dff 0%, #fffc00 150%);
     background: -moz-linear-gradient(315deg,#008dff 0%, #fffc00 150%);
 
-    height: max-content;
 }
 #grouplogo a{
     text-decoration: none;
@@ -71,12 +78,12 @@
 
 #hometabbody>tr:nth-child(odd){
     background: white;
-    font-weight: bold;
+    /*font-weight: bold;*/;
 }#hometabbody>tr:nth-child(even){
     background: rgba(17, 144, 199, 0.79);
     color: #ffffff;
     text-shadow: 1px 1px 0px rgb(0 0 0);
-    font-weight: bold;
+     /*font-weight: bold;*/
 }
 a{
     text-shadow: none;
@@ -92,7 +99,7 @@ a{
     width: max-content;
 }
 .labeldisplay{
-    padding: .5em .6em;
+    padding: inherit;
 }
 .inline{
 

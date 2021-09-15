@@ -13,6 +13,7 @@ function changementLieu(){
     selectLieu = document.getElementById('select-creation').getElementsByTagName("select")[0];
     selectLieu.innerHTML = "";
 
+
     for (i = 0; i < lieuxObj.length; i++){
         if(lieuxObj[i].ville.id == choix){
             element = document.createElement('option');
