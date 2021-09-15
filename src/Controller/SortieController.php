@@ -7,6 +7,7 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use App\Form\LieuType;
 use App\Form\ModifierSortieType;
 use App\Form\SortieLieuType;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -62,17 +64,27 @@ class SortieController extends AbstractController
 
         $repositoryLieu = $this->getDoctrine()->getRepository(Lieu::class);
         $lieux = $repositoryLieu->findAll();
-        foreach ($lieux as $lieu) {
-            foreach ($lieu->getSorties() as $sortieForEach) {
-                $lieu->removeSorty($sortieForEach);
-            }
-            $lieu->setVille(null);
-        }
-        $lieuxDonneesJSON = $serializer->serialize($lieux, 'json');
+
+        $encoder = new JsonEncoder();
+        $defaultContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getNom();
+            },
+        ];
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+
+        $serializer = new Serializer([$normalizer], [$encoder]);
+        $lieuxDonneesJSON = $serializer->serialize($lieux, 'json', [
+            'ignored_attributes' => ['sorties'
+            ]]);
+
+        $repositoryVille = $this->getDoctrine()->getRepository(Ville::class);
+        $villes = $repositoryVille->findAll();
 
         return $this->render('sortie/sortieCreation.html.twig', [
             "formSortie" => $formSortie->createView(),
             "lieuxdonnees" => $lieuxDonneesJSON,
+            "villes" => $villes,
             "error" => $error
         ]);
     }
