@@ -33,13 +33,13 @@ class SortieController extends AbstractController
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formSortie->handleRequest($request);
         $error = "";
-        if($request->get('error') !== null){
+        if ($request->get('error') !== null) {
             $error = $request->get('error');
         }
 
         if ($formSortie->isSubmitted()) {
 
-            if ($formSortie->isValid()){
+            if ($formSortie->isValid()) {
 
                 if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
                     ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
@@ -86,7 +86,7 @@ class SortieController extends AbstractController
         $formSortie = $this->createForm(SortieLieuType::class, $sortie);
         $formSortie->handleRequest($request);
         $error = "";
-        if($request->get('error') !== null){
+        if ($request->get('error') !== null) {
             $error = $request->get('error');
         }
 
@@ -207,7 +207,7 @@ class SortieController extends AbstractController
         if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
             $sortie->getEtat()->getId() == 2) {
             if ($request->get("annulation-motif") !== null) {
-                $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(6));
+                $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(7));
                 $annulation = new AnnulationSortie();
                 $annulation->setLibelle($request->get("annulation-motif"));
                 $annulation->setSortie($sortie);
@@ -234,11 +234,11 @@ class SortieController extends AbstractController
     {
         $timestampFinSortie = ($sortie->getDateHeureDebut()->getTimestamp() + $sortie->getDuree() * 60);
         $timestampDans1Mois = (time() - (31 * 24 * 60 * 60));
-        if ($timestampFinSortie < $timestampDans1Mois || $sortie->getEtat()->getId() == 7) {
+        if ($timestampFinSortie < $timestampDans1Mois || $sortie->getEtat()->getId() == 8) {
             return $this->redirectToRoute('home', [
                 "error" => "Erreur, sortie archivée"
             ]);
-        } elseif ($sortie->getEtat()->getId() == 1 && $this->getUser()->getId() != $sortie->getOrganisateur()->getId()){
+        } elseif ($sortie->getEtat()->getId() == 1 && $this->getUser()->getId() != $sortie->getOrganisateur()->getId()) {
             return $this->redirectToRoute('home', [
                 "error" => "Erreur, sortie non publiée"
             ]);
@@ -255,6 +255,8 @@ class SortieController extends AbstractController
      */
     public function gestionInscription(Sortie $sortie): Response
     {
+
+        // Liste des sorties dans lequel l'utilisateur est inscrit
         $manager = $this->getDoctrine()->getManager();
         $inscrit = $this->getUser()->getSorties();
         $participantInscrit = false;
@@ -271,19 +273,8 @@ class SortieController extends AbstractController
             $autorisationInscitpion = false;
         }
 
-        // Pour empêcher l'inscription dans une sortie pleine
-        if (count($sortie->getParticipants()) >= $sortie->getNbInscriptionMax() && !$participantInscrit) {
-            $autorisationInscitpion = false;
-        }
-
-        // Pour empêcher l'inscription dans une sortie CREER / CLOTURER / EN COURS / TERMINER / ANNULER
-        if (!$participantInscrit && $sortie->getEtat()->getId() != 2) {
-            $autorisationInscitpion = false;
-        }
-
-        if (($participantInscrit && $sortie->getEtat()->getId() == 4) ||
-            ($participantInscrit && $sortie->getEtat()->getId() == 5) ||
-            ($participantInscrit && $sortie->getEtat()->getId() == 6)) {
+        // Pour empêcher l'inscription dans une sortie en dehors de l'etat "OUVERT" ou "COMPLET"
+        if (!$participantInscrit && ($sortie->getEtat()->getId() != 2 && $sortie->getEtat()->getId() != 3)) {
             $autorisationInscitpion = false;
         }
 
@@ -294,8 +285,8 @@ class SortieController extends AbstractController
                 $this->getUser()->addSorty($sortie);
             }
 
-            // Vérification Etat "CLOTURER"
-            if (count($sortie->getParticipants()) < $sortie->getNbInscriptionMax()) {
+            // Vérification Etat "INSCRIPTION FINIES"
+            if (count($sortie->getParticipants()) > $sortie->getNbInscriptionMax()) {
                 $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(3));
             } else {
                 $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(2));
@@ -333,7 +324,7 @@ class SortieController extends AbstractController
     public function suppressionSortie(Sortie $sortie): Response
     {
         if ($sortie->getEtat()->getId() == 1 && $sortie->getOrganisateur()->getId() == $this->getUser()->getId()) {
-            $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(7));
+            $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->find(8));
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($sortie);
             $manager->flush();

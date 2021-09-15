@@ -162,13 +162,11 @@
                                 <td>
                                     <a class="pure-button button-primary"
                                        href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
-                                    {% if find == 1 %}
                                         -
                                         <a class="pure-button button-secondary"
                                            href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">Se désister</a>
-                                    {% endif %}
                                 </td>
-                            {% elseif sortie.etat.id == 4 or sortie.etat.id == 5 or sortie.etat.id == 6 %}
+                            {% elseif sortie.etat.id == 4 or sortie.etat.id == 5 or sortie.etat.id == 6 or sortie.etat.id == 7%}
                                 {% set archivee = 0 %}
 
                                 {% for sortieArchivee in sortiesArchivees %}
@@ -184,7 +182,7 @@
                                     </td>
                                 {% else %}
                                     <td>
-                                        <button class="pure-button button-warning button-no-button" disabled href="">
+                                        <button class="pure-button button-warning button-no-button" disabled>
                                             Archiver
                                         </button>
                                     </td>
