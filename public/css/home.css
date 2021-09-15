@@ -67,6 +67,12 @@ h2{
 .centeredtab a {
     text-decoration: none;
 }
+.orgalink{
+    font-weight: 600;
+}
 
-
+.myevent{
+    font-style: italic;
+    font-weight: 600;
+}
 
