@@ -147,20 +147,21 @@ class SortieController extends AbstractController
             $error = "";
 
             // Vérification formulaire submit et valide
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    // Vérification des dates
+                    if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
+                        ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
+                        $error = "Erreur sur les dates";
+                    } else {
+                        $form->get('nom')->getData();
 
-                // Vérification des dates
-                if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
-                    ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
-                    $error = "Erreur sur les dates";
-                } else {
-                    $form->get('nom')->getData();
+                        $entityManager = $this->getDoctrine()->getManager();
+                        $entityManager->persist($sortie);
+                        $entityManager->flush();
 
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $entityManager->persist($sortie);
-                    $entityManager->flush();
-
-                    return $this->redirectToRoute('home');
+                        return $this->redirectToRoute('home');
+                    }
                 }
             }
 
