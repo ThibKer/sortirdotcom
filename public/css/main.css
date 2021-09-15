@@ -87,8 +87,7 @@ a{
 
 
 .displayed{
-    font-weight: bold;
-    text-align:right !important;
+    /*font-weight: bold;*/
     color: rgba(35, 33, 33, 0.85) !important;
     width: max-content;
 }
@@ -148,5 +147,13 @@ a{
 
 .pure-control-group label{
     text-align: left !important;
+}
+
+.spacement>label{
+    margin-bottom: 0.5em !important;
+}
+.spacement>label:first-child{
+    font-weight: bold;
+    text-decoration: wavy underline green;
 }
 
