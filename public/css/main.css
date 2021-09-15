@@ -71,12 +71,12 @@
 
 #hometabbody>tr:nth-child(odd){
     background: white;
-    font-weight: bold;
+    /*font-weight: bold;*/;
 }#hometabbody>tr:nth-child(even){
     background: rgba(17, 144, 199, 0.79);
     color: #ffffff;
     text-shadow: 1px 1px 0px rgb(0 0 0);
-    font-weight: bold;
+     /*font-weight: bold;*/
 }
 a{
     text-shadow: none;
