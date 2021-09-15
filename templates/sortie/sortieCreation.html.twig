@@ -12,16 +12,15 @@
 {% endblock %}
 
 {% block body %}
-
     <form method="post" class="pure-form pure-form-aligned centred-conteneur formsortie">
         <fieldset>
-            <div class="example-wrapper pure-g">
+            <div class="pure-g">
                 <div class="pure-u-1-2">
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formSortie.nom) }}
                     </div>
 
-                    <div class='creation-champs pure-control-group pickerrow'>
+                    <div class='pure-control-group pickerrow'>
                         {{ form_label(formSortie.dateHeureDebut) }}<?
                         ?><div class='input-group' id='datetimepicker1'>
                             {{ form_widget(formSortie.dateHeureDebut) }}
@@ -31,7 +30,7 @@
                         </div>
                     </div>
 
-                    <div class='creation-champs pure-control-group pickerrow'>
+                    <div class='pure-control-group pickerrow'>
                         {{ form_label(formSortie.dateLimiteInscription) }}<?
                         ?><div class='input-group date' id='datetimepicker2'>
                             {{ form_widget(formSortie.dateLimiteInscription) }}
@@ -41,22 +40,22 @@
                         </div>
                     </div>
 
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formSortie.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formSortie.nbInscriptionMax) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formSortie.infosSortie) }}
                     </div>
                 </div>
                 <div class="pure-u-1-2">
 
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formSortie.site) }}
                     </div>
-                    <div class="creation-champs pure-control-group" id="select-ville">
+                    <div class="pure-control-group" id="select-ville">
                         <label for="select-ville-balise">Ville</label><?
                         ?><select id="select-ville-balise">
                             {% for ville in villes %}
@@ -64,7 +63,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="creation-champs pure-control-group" id="select-creation">
+                    <div class="pure-control-group" id="select-creation">
                         {{ form_row(formSortie.lieu) }}
                         <a href="">
                             <img src="{{ asset('img/plus-circle.svg') }}" alt="add lieu">
@@ -74,15 +73,15 @@
 
                     <legend></legend>
 
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         <label class="labeldisplay" for="rue-holder">Rue</label>
                         <label class="displayed labeldisplay" id="rue-holder"></label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         <label class="labeldisplay" for="latitude-holde">Latitude</label>
                         <label class="displayed labeldisplay" id="latitude-holder"></label>
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         <label class="labeldisplay" for="longitude-holder">Longitude</label>
                         <label class="displayed labeldisplay" id="longitude-holder"></label>
                     </div>
@@ -93,7 +92,7 @@
                     {{ form_row(formSortie._token) }}
                 </div>
 
-                <div class="creation-champs pure-controls">
+                <div class="pure-controls">
                     <button class="pure-button button-primary" type="submit">Ajouter</button>
                 </div>
             </div>

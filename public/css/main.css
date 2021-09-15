@@ -185,3 +185,6 @@ a{
      min-width: 10vw !important;
      max-width: 10vw !important;
  }
+ .pure-controls{
+    /* letter-spacing: normal;*/
+ }
