@@ -135,30 +135,70 @@ class SortieController extends AbstractController
      */
     public function modificationSortie(Request $request, Sortie $sortie): Response
     {
+        // Si la sortie n'est pas encore publiée
         if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
             $sortie->getEtat()->getId() == 1) {
+
+            // Création formulaire Sortie
             $form = $this->createForm(SortieType::class, $sortie);
             $form->handleRequest($request);
+
+            // Initialisation potientiel erreur
             $error = "";
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            // Vérification formulaire submit et valide
+            if ($form->isSubmitted()) {
+                if ($form->isValid()) {
+                    // Vérification des dates
+                    if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
+                        ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
+                        $error = "Erreur sur les dates";
+                    } else {
+                        $form->get('nom')->getData();
 
-                if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
-                    ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
-                    $error = "Erreur sur les dates";
-                } else {
-                    $form->get('nom')->getData();
+                        $entityManager = $this->getDoctrine()->getManager();
+                        $entityManager->persist($sortie);
+                        $entityManager->flush();
 
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $entityManager->persist($sortie);
-                    $entityManager->flush();
-
-                    return $this->redirectToRoute('home');
+                        return $this->redirectToRoute('home');
+                    }
                 }
             }
+
+            // Passage des données de lieux en JSON
+            $repositoryLieu = $this->getDoctrine()->getRepository(Lieu::class);
+            $lieux = $repositoryLieu->findAll();
+            $encoder = new JsonEncoder();
+            $defaultContext = [
+                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                    return $object->getNom();
+                },
+            ];
+            $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+            $serializer = new Serializer([$normalizer], [$encoder]);
+            $lieuxDonneesJSON = $serializer->serialize($lieux, 'json', [
+                'ignored_attributes' => ['sorties'
+                ]]);
+
+
+            // Récupération des villes
+            $repositoryVille = $this->getDoctrine()->getRepository(Ville::class);
+            $villes = $repositoryVille->findAll();
+
+            // Formulaire des lieux
+            $lieu = new Lieu();
+            $formLieu = $this->createForm(LieuType::class, $lieu);
+            $formLieu->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                dd($lieu);
+            }
+
             return $this->renderForm('sortie/sortieModification.html.twig', [
                 'sortie' => $sortie,
+                "villes" => $villes,
                 'formUpdate' => $form,
+                'formLieu' => $formLieu,
+                "lieuxdonnees" => $lieuxDonneesJSON,
                 "error" => $error
             ]);
         } else {

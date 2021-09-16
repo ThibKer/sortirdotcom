@@ -12,63 +12,130 @@
 {% endblock %}
 
 {% block body %}
-    <form method="post" class="pure-form pure-form-aligned centred-conteneur" id="formulaire-modifier">
-        <fieldset class="pure-g">
-            <div class="pure-u-1-2">
+    <style>
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
 
-                <div class="pure-control-group">
-                    {{ form_row(formUpdate.nom, { 'label': 'Nom de la sortie' }) }}
-                </div>
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
 
-                <div class='pure-control-group'>
-                    {{ form_label(formUpdate.dateHeureDebut) }}
-                    <div class="pure-control-group">
-                        <div class='input-group date' id='datetimepicker1'>
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <form method="post" class="pure-form pure-form-aligned centred-conteneur formsortie" id="formulaire-modifier">
+        <fieldset>
+            <!--<div class="pure-g">-->
+            <div class="pure-g">
+                <div class="pure-u-1-2">
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formUpdate.nom) }}
+                    </div>
+
+                    <div class='creation-champs pure-control-group pickerrow'>
+                        {{ form_label(formUpdate.dateHeureDebut) }}<?
+                        ?>
+                        <div class='input-group' id='datetimepicker1'>
                             {{ form_widget(formUpdate.dateHeureDebut) }}
                             <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
+                                <span class="glyphicon glyphicon-calendar fix16px"></span>
+                            </span>
                         </div>
                     </div>
-                </div>
 
-                <div class='creation-champs pure-control-group'>
-                    {{ form_label(formUpdate.dateLimiteInscription) }}
-                    <div class="creation-champs pure-control-group">
-                        <div class='input-group' id='datetimepicker2'>
+                    <div class='creation-champs pure-control-group pickerrow'>
+                        {{ form_label(formUpdate.dateLimiteInscription) }}<?
+                        ?>
+                        <div class='input-group date' id='datetimepicker2'>
                             {{ form_widget(formUpdate.dateLimiteInscription) }}
                             <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
+                                <span class="glyphicon glyphicon-calendar fix16px"></span>
+                            </span>
                         </div>
                     </div>
+
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formUpdate.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formUpdate.nbInscriptionMax) }}
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formUpdate.infosSortie) }}
+                    </div>
                 </div>
-                <div class="creation-champs pure-control-group">
-                    {{ form_row(formUpdate.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
+
+                <div class="pure-u-1-2">
+
+                    <div class="creation-champs pure-control-group">
+                        {{ form_row(formUpdate.site) }}
+                    </div>
+                    <div class="creation-champs pure-control-group" id="select-ville">
+                        <label for="select-ville-balise">Ville</label><?
+                        ?><select id="select-ville-balise">
+                            {% for ville in villes %}
+                                <option value="{{ ville.id }}">{{ ville.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="creation-champs pure-control-group" id="select-creation">
+                        {{ form_row(formUpdate.lieu) }}
+                        <a href="">
+                            <img src="{{ asset('img/plus-circle.svg') }}" alt="add lieu">
+                            new
+                        </a>
+                    </div>
+
+                    <legend></legend>
+                    <div class="creation-champs pure-control-group">
+                        <label class="labeldisplay" for="rue-holder">Rue</label>
+                        <label class="displayed labeldisplay" id="rue-holder"></label>
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        <label class="labeldisplay" for="latitude-holde">Latitude</label>
+                        <label class="displayed labeldisplay" id="latitude-holder"></label>
+                    </div>
+                    <div class="creation-champs pure-control-group">
+                        <label class="labeldisplay" for="longitude-holder">Longitude</label>
+                        <label class="displayed labeldisplay" id="longitude-holder"></label>
+                    </div>
+                    <legend></legend>
+
+                    {{ form_rest(formUpdate) }}
+
                 </div>
-                <div class="creation-champs pure-control-group">
-                    {{ form_row(formUpdate.nbInscriptionMax) }}
-                </div>
-                <div class="creation-champs pure-control-group">
-                    {{ form_row(formUpdate.infosSortie) }}
+                <div class="pure-controls">
+                    <!-- empty : for 'pure' disposition -->
                 </div>
             </div>
-
-            <div class="pure-u-1-2">
-                <div class="creation-champs pure-control-group">
-                    {{ form_row(formUpdate.site) }}
-                </div>
-                <div class="creation-champs pure-control-group">
-                    {{ form_row(formUpdate.lieu) }}
-                </div>
-                <div>
-                    <a href="{{ path('sortie_modifier_lieu', {"id" : sortie.id}) }}">
-                        <img src="{{ asset('img/plus-circle.svg') }}">
-                    </a>
-                </div>
-                {{ form_rest(formUpdate) }}
-            </div>
-
         </fieldset>
     </form>
 
@@ -77,13 +144,39 @@
             <button class="pure-button button-primary" type="submit" id="submit-modifier">Modifier</button>
             <a class="pure-button button-primary" href="{{ path('sortie_publication', {"id" : sortie.id}) }}">Publier la
                 sortie</a>
-            <a class="pure-button button-primary" href="{{ path('sortie_suppression', {"id" : sortie.id}) }}" onclick="alert('Attention, cette sortie ne sera visible à aucun endroit du site mais restera archivée dans la base de donnée')">Supprimer
+            <a class="pure-button button-primary" href="{{ path('sortie_suppression', {"id" : sortie.id}) }}"
+               onclick="alert('Attention, cette sortie ne sera visible à aucun endroit du site mais restera archivée dans la base de donnée')">Supprimer
                 la sortie</a>
             <a class="pure-button button-primary" href="{{ path('home') }}">Annuler</a>
         </div>
     </div>
 
-    <script src="{{ asset('js/modification.js') }}"></script>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="pure-control-group" id="ajout-lieu-nom">
+                {{ form_row(formLieu.nom) }}
+            </div>
+            <div class="pure-control-group" id="ajout-lieu-rue">
+                {{ form_row(formLieu.rue) }}
+            </div>
+            <div class="pure-control-group" id="ajout-lieu-latitude">
+                {{ form_row(formLieu.latitude) }}
+            </div>
+            <div class="pure-control-group" id="ajout-lieu-longitude">
+                {{ form_row(formLieu.longitude) }}
+            </div>
+            <div class="pure-control-group" id="ajout-lieu-ville">
+                {{ form_row(formLieu.ville) }}
+            </div>
+            <button id="creer-lieu" class="btn">Créer</button>
+        </div>
+
+    </div>
+
+    <input type="hidden" value="{{ lieuxdonnees }}" id="hidden">
 
     <script>
         $(function () {
@@ -95,4 +188,7 @@
             });
         });
     </script>
+    <script src="{{ asset('js/selectCreationModification.js') }}"></script>
+    <script src="{{ asset('js/modification.js') }}"></script>
+    <script src="{{ asset('js/creationLieu.js') }}"></script>
 {% endblock %}

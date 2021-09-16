@@ -26,9 +26,9 @@ body{
 #logodotcom{
     height: 75px;
 }
-#navmenu{
+#menu-nav{
     margin-top: auto;
-    margin-left: 10vw;
+
 }
 .button-nav,
 .button-nav-admin{
@@ -163,3 +163,35 @@ a{
     text-decoration:  underline ;
 }
 
+.pickerrow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+}
+.fix16px{
+    width: 16px;
+}
+
+ .formsortie textarea,
+ .formsortie select,
+ .formsortie input{
+     min-width: 12vw;
+     max-width: 12vw;
+ }
+ .input-group{
+     min-width: 10vw !important;
+     max-width: 10vw !important;
+ }
+ .pure-controls{
+     letter-spacing: normal;
+ }
+
+
+ /* formulaire 'id' used for js :
+ - formulaire-modifier
+ -
+ -
+ -
+  */
