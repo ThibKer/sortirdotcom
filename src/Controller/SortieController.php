@@ -39,26 +39,23 @@ class SortieController extends AbstractController
             $error = $request->get('error');
         }
 
-        if ($formSortie->isSubmitted()) {
+        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
 
-            if ($formSortie->isValid()) {
-
-                if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
-                    ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
-                    return $this->redirectToRoute('sortie_creer', [
-                        "error" => "Erreur sur les dates"
-                    ]);
-                }
-                $manager = $this->getDoctrine()->getManager();
-                $repository = $this->getDoctrine()->getRepository(Etat::class);
-
-                $sortie->setOrganisateur($this->getUser());
-                $sortie->setEtat($repository->find(1));
-
-                $manager->persist($sortie);
-                $manager->flush();
-                return $this->redirectToRoute('home');
+            if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
+                ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
+                return $this->redirectToRoute('sortie_creer', [
+                    "error" => "Erreur sur les dates"
+                ]);
             }
+            $manager = $this->getDoctrine()->getManager();
+            $repository = $this->getDoctrine()->getRepository(Etat::class);
+
+            $sortie->setOrganisateur($this->getUser());
+            $sortie->setEtat($repository->find(1));
+
+            $manager->persist($sortie);
+            $manager->flush();
+            return $this->redirectToRoute('home');
         }
 
 
@@ -133,7 +130,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/modifier/{id}", name="sortie_modifier", methods={"GET","POST"}, requirements={"id"="\d+"})
      */
-    public function modificationSortie(Request $request, Sortie $sortie): Response
+    public function modificationSortie(Request $request, SerializerInterface $serializer, Sortie $sortie): Response
     {
         // Si la sortie n'est pas encore publiée
         if ($sortie->getOrganisateur()->getId() == $this->getUser()->getId() &&
@@ -148,11 +145,32 @@ class SortieController extends AbstractController
 
             // Vérification formulaire submit et valide
             if ($form->isSubmitted()) {
-                if ($form->isValid()) {
+
+                if($request->get('hidden-data-ajout') != "") {
+                    $data = $request->get('hidden-data-ajout');
+//                $data = substr($data, 1, strlen($data));
+//                $data = substr($data, 0, -1);
+                    $newLieu = $serializer->deserialize($data, Lieu::class, 'json');
+
+                    $repositoryVille = $this->getDoctrine()->getRepository(Ville::class);
+                    $ville = $repositoryVille->findBy(["nom" => $newLieu->getVille()->getNom()])[0];
+                    $newLieu->setVille($ville);
+                    $newLieu->addSorty($sortie);
+
+                    $manager = $this->getDoctrine()->getManager();
+                    $manager->persist($newLieu);
+                    $manager->persist($sortie);
+                    $manager->persist($ville);
+
+                    $manager->flush();
+                }
+
+                if ($form->isValid() || $request->get('hidden-data-ajout') != "") {
                     // Vérification des dates
                     if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
                         ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
                         $error = "Erreur sur les dates";
+                        return $this->redirectToRoute('sortie_modifier');
                     } else {
                         $form->get('nom')->getData();
 

@@ -108,10 +108,10 @@
                     </div>
                     <div class="creation-champs pure-control-group" id="select-creation">
                         {{ form_row(formUpdate.lieu) }}
-                        <a href="">
+                        <div id="myBtn">
                             <img src="{{ asset('img/plus-circle.svg') }}" alt="add lieu">
                             new
-                        </a>
+                        </div>
                     </div>
 
                     <legend></legend>
@@ -137,6 +137,7 @@
                 </div>
             </div>
         </fieldset>
+        <input type="hidden" value="" id="hidden-ajout" name="hidden-data-ajout">
     </form>
 
     <div class="centred-conteneur">
@@ -176,7 +177,8 @@
 
     </div>
 
-    <input type="hidden" value="{{ lieuxdonnees }}" id="hidden">
+
+    <input type="hidden" value="{{ lieuxdonnees }}" id="hidden" name="hidden-data">
 
     <script>
         $(function () {
@@ -187,6 +189,19 @@
                 format: "YYYY-MM-DD hh:mm:ss",
             });
         });
+    </script>
+    <script>
+        function villeDeBase() {
+            selecteurVille = document.getElementById("lieu_ville");
+            for (i = 0; i < selecteurVille.length; i++) {
+                if (selecteurVille[i].value == {{ sortie.lieu.ville.id }}) {
+                    selecteurVille[i].setAttribute("selected", "selected");
+                    document.getElementById("lieu_ville").appendChild(selecteurVille[i]);
+                }
+            }
+            changementInfoLieu();
+            changementLieu();
+        }
     </script>
     <script src="{{ asset('js/selectCreationModification.js') }}"></script>
     <script src="{{ asset('js/modification.js') }}"></script>
