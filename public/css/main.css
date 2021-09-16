@@ -167,10 +167,13 @@ a{
     border-radius: 25px;
 }
 
+
 .pure-control-group label{
     text-align: left !important;
 }
-
+.spacement{
+    margin-bottom: 0.8em !important;
+}
 .spacement>label{
     margin-bottom: 0.5em !important;
 }
@@ -203,7 +206,9 @@ a{
  .pure-controls{
      letter-spacing: normal;
  }
-
+#filtre{
+    padding-left: 1.5%;
+}
 
  /* formulaire 'id' used for js :
  - formulaire-modifier
