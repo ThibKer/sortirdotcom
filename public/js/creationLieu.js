@@ -10,8 +10,17 @@ span = document.getElementsByClassName("close")[0];
 validation = document.getElementById("creer-lieu");
 
 validation.onclick = function () {
-    modal.style.display = 'none';
-    createLieu();
+    if (
+        document.getElementById('lieu_nom').value != '' &&
+        document.getElementById('lieu_rue').value != '' &&
+        document.getElementById('lieu_latitude').value != '' &&
+        document.getElementById('lieu_longitude').value != '' &&
+        !isNaN(document.getElementById('lieu_latitude').value) &&
+        !isNaN(document.getElementById('lieu_longitude').value)
+    ){
+        modal.style.display = 'none';
+        createLieu();
+    }
 }
 
 // When the user clicks the button, open the modal

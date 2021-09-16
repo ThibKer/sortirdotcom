@@ -14,20 +14,17 @@
 {% endblock %}
 
 {% block body %}
-
-    <form method="post" class="pure-form pure-form-aligned centred-conteneur formsortie " id="formulaire-modifier">
+    <form method="post" class="pure-form pure-form-aligned centred-conteneur formsortie " id="formulaire-sortie">
         <fieldset>
             <legend>Modification de la sortie</legend>
-            <!--<div class="pure-g">-->
             <div class="pure-g">
                 <div class="pure-u-1-2">
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formUpdate.nom) }}
                     </div>
-                    <div class='creation-champs pure-control-group pickerrow'>
+                    <div class='pure-control-group pickerrow'>
                         {{ form_label(formUpdate.dateHeureDebut) }}<?
-                        ?>
-                        <div class='input-group' id='datetimepicker1'>
+                        ?><div class='input-group' id='datetimepicker1'>
                             {{ form_widget(formUpdate.dateHeureDebut) }}
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar fix16px"></span>
@@ -35,10 +32,9 @@
                         </div>
                     </div>
 
-                    <div class='creation-champs pure-control-group pickerrow'>
+                    <div class='pure-control-group pickerrow'>
                         {{ form_label(formUpdate.dateLimiteInscription) }}<?
-                        ?>
-                        <div class='input-group date' id='datetimepicker2'>
+                        ?><div class='input-group date' id='datetimepicker2'>
                             {{ form_widget(formUpdate.dateLimiteInscription) }}
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar fix16px"></span>
@@ -46,23 +42,22 @@
                         </div>
                     </div>
 
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formUpdate.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formUpdate.nbInscriptionMax, { 'attr' : { 'min' : '1' , 'value' : '1'}}) }}
                     </div>
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formUpdate.infosSortie) }}
                     </div>
                 </div>
 
                 <div class="pure-u-1-2">
-
-                    <div class="creation-champs pure-control-group">
+                    <div class="pure-control-group">
                         {{ form_row(formUpdate.site) }}
                     </div>
-                    <div class="creation-champs pure-control-group" id="select-ville">
+                    <div class="pure-control-group" id="select-ville">
                         <label for="select-ville-balise">Ville</label><?
                         ?><select id="select-ville-balise">
                             {% for ville in villes %}
@@ -70,7 +65,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="creation-champs pure-control-group" id="select-creation">
+                    <div class="pure-control-group" id="select-creation">
                         {{ form_row(formUpdate.lieu) }}
                         <div id="myBtn">
                             <img src="{{ asset('img/plus-circle.svg') }}" alt="add lieu">
@@ -109,7 +104,7 @@
 
     <div class="centred-conteneur mt1">
         <div class="pure-controls">
-            <button class="pure-button button-primary" type="submit" id="submit-modifier">Modifier</button>
+            <button class="pure-button button-primary" type="submit" id="submit-sortie">Modifier</button>
             <a class="pure-button button-primary" href="{{ path('sortie_publication', {"id" : sortie.id}) }}">Publier la
                 sortie</a>
             <a class="pure-button button-primary" href="{{ path('sortie_suppression', {"id" : sortie.id}) }}"
@@ -120,8 +115,6 @@
     </div>
 
     <!-- The Modal -->
-
-
     <div id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content pure-form pure-form-aligned formsortie">
@@ -148,13 +141,11 @@
                     {{ form_row(formLieu.longitude) }}
                 </div>
                 <div class="pure-controls" >
-                    <button id="creer-lieu" class="btn pure-button button-primary">Confirmer</button>
+                    <button type="submit" id="creer-lieu" class="btn pure-button button-primary">Confirmer</button>
                 </div>
             </div>
         </div>
     </div>
-
-
     <input type="hidden" value="{{ lieuxdonnees }}" id="hidden" name="hidden-data">
 
     <script>
