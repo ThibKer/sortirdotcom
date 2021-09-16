@@ -2,13 +2,20 @@
 
 {% block title %}Détails d'une sortie{% endblock %}
 
+{% block stylesheets %}
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+{% endblock %}
+
 {% block body %}
     <div class="pure-form pure-form-aligned centred-conteneur formsortie">
         <fieldset>
-            <legend >Détail de la sortie
-           {% if sortie.etat.id == 7 %}
-               &nbsp<strong style="color: red;" >(Annulée : ' {{ sortie.annulationSortie.libelle }} ')</strong>
-            {% endif %}
+            <legend>Détail de la sortie
+                {% if sortie.etat.id == 7 %}
+                    &nbsp<strong style="color: red;">(Annulée : ' {{ sortie.annulationSortie.libelle }} ')</strong>
+                {% endif %}
             </legend>
             <div class="example-wrapper pure-g">
                 <div class="pure-u-1-2">
@@ -64,19 +71,20 @@
                         <label>Code postal :</label>
                         <label class="displayed">{{ sortie.lieu.ville.codePostal }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group spacement">
-                        <label>Latitude :</label>
-                        <label class="displayed">{{ sortie.lieu.latitude }}</label>
-                    </div>
-                    <div class="creation-champs pure-control-group spacement">
-                        <label>Longitude :</label>
-                        <label class="displayed">{{ sortie.lieu.longitude }}</label>
-                    </div>
+                    {# <div class="creation-champs pure-control-group spacement"> #}
+                    {# <label>Latitude</label> #}
+                    {# <label class="displayed">{{ sortie.lieu.latitude }}</label> #}
+                    {# </div> #}
+                    {# <div class="creation-champs pure-control-group spacement"> #}
+                    {# <label>Longitude</label> #}
+                    {# <label class="displayed">{{ sortie.lieu.longitude }}</label> #}
+                    {# </div> #}
+                    <div class="creation-champs pure-control-group spacement" id="map"></div>
                 </div>
             </div>
         </fieldset>
     </div>
-    <div class="centred-conteneur">
+    <div class="centred-conteneur mt1">
         <table class="pure-table detail-table">
             <thead>
             <tr>
@@ -103,4 +111,10 @@
             </tbody>
         </table>
     </div>
+    <script src="{{ asset('js/map.js') }}"></script>
+    <script>
+        window.onload = function () {
+            getMap({{ sortie.lieu.longitude }}, {{ sortie.lieu.latitude }});
+        }
+    </script>
 {% endblock %}
