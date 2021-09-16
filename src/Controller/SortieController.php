@@ -146,23 +146,31 @@ class SortieController extends AbstractController
             // Vérification formulaire submit et valide
             if ($form->isSubmitted()) {
 
-                if($request->get('hidden-data-ajout') != "") {
-                    $data = $request->get('hidden-data-ajout');
+                if($request->get('hidden-data-ajout') != "" &&
+                $request->get('sortie[lieu]') != 0) { // TODO
+                    try {
+                        $data = $request->get('hidden-data-ajout');
 //                $data = substr($data, 1, strlen($data));
 //                $data = substr($data, 0, -1);
-                    $newLieu = $serializer->deserialize($data, Lieu::class, 'json');
+                        $newLieu = $serializer->deserialize($data, Lieu::class, 'json');
 
-                    $repositoryVille = $this->getDoctrine()->getRepository(Ville::class);
-                    $ville = $repositoryVille->findBy(["nom" => $newLieu->getVille()->getNom()])[0];
-                    $newLieu->setVille($ville);
-                    $newLieu->addSorty($sortie);
+                        $repositoryVille = $this->getDoctrine()->getRepository(Ville::class);
+                        $ville = $repositoryVille->findBy(["nom" => $newLieu->getVille()->getNom()])[0];
+                        $newLieu->setVille($ville);
+                        $newLieu->addSorty($sortie);
 
-                    $manager = $this->getDoctrine()->getManager();
-                    $manager->persist($newLieu);
-                    $manager->persist($sortie);
-                    $manager->persist($ville);
+                        $manager = $this->getDoctrine()->getManager();
+                        $manager->persist($newLieu);
+                        $manager->persist($sortie);
+                        $manager->persist($ville);
 
-                    $manager->flush();
+                        $manager->flush();
+                    }catch (\Exception $e){
+                        return $this->redirectToRoute('sortie_modifier', [
+                            "id" => $sortie->getId(),
+                            "error" => "Erreur dans le nouveau lieu"
+                        ]);
+                    }
                 }
 
                 if ($form->isValid() || $request->get('hidden-data-ajout') != "") {
