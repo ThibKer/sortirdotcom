@@ -1,6 +1,5 @@
 window.onload = function() {
-    changementLieu();
-    changementInfoLieu();
+    villeDeBase();
 };
 document.getElementById('select-creation').addEventListener("change", changementInfoLieu);
 document.getElementById('select-ville').addEventListener("change", changementLieu);
@@ -45,3 +44,4 @@ function changementInfoLieu(){
         document.getElementById("longitude-holder").innerText = trouver.longitude;
     }
 }
+
