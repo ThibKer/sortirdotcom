@@ -77,3 +77,7 @@ table {
     font-style: italic;
 }
 
+#menu-nav>*{
+    text-align: end;
+    padding-right: 10px;
+}
