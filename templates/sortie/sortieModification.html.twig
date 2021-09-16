@@ -192,15 +192,21 @@
     </script>
     <script>
         function villeDeBase() {
-            selecteurVille = document.getElementById("lieu_ville");
+            selecteurVille = document.getElementById("select-ville-balise");
             for (i = 0; i < selecteurVille.length; i++) {
                 if (selecteurVille[i].value == {{ sortie.lieu.ville.id }}) {
                     selecteurVille[i].setAttribute("selected", "selected");
-                    document.getElementById("lieu_ville").appendChild(selecteurVille[i]);
                 }
             }
             changementInfoLieu();
             changementLieu();
+            selecteurLieu = document.getElementById('sortie_lieu');
+            for (i = 0; i < selecteurLieu.length; i++) {
+                if (selecteurLieu[i].value == {{ sortie.lieu.id }}) {
+                    selecteurLieu[i].setAttribute("selected", "selected");
+                }
+            }
+            changementInfoLieu();
         }
     </script>
     <script src="{{ asset('js/selectCreationModification.js') }}"></script>
