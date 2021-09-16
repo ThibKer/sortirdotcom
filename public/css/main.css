@@ -211,7 +211,12 @@ a{
 #filtre{
     padding-left: 1.5%;
 }
-#myBtn> * {
+#myBtn{
+    margin-top: -20px;
+    padding-left: 85%;
+    font-style: italic;
+}
+#myBtn:hover {
     cursor:pointer;
 }
 
@@ -220,9 +225,6 @@ a{
     padding-right: 10px;
 }
 
-tr{
-    text-align: center;
-}
  /* formulaire 'id' used for js :
  - formulaire-modifier
  -
