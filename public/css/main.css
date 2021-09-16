@@ -44,7 +44,7 @@ body{
     border: 1px solid #d22828;
     color: #d22828;
 }
-
+.ok-msg,
 .warning-msg{
     color: red;
     font-style: italic;
@@ -57,7 +57,9 @@ body{
    /* border: none transparent;
     background-color: #e6e6e6;
     border-radius: 2px; */
-}
+}.ok-msg{
+    color:Blue;
+ }
 
 
 .button-admin,

@@ -95,25 +95,21 @@
                         <tr class="">
                             <td>{{ sortie.nom }}</td>
                             <td>{{ sortie.dateHeureDebut|date('d/m/Y h:i') }}</td>
-
                             <!--<td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>-->
                             <td>
                             {% if date() < sortie.dateLimiteInscription %}
-
                                 {# endDate and startDate are strings or DateTime objects #}
                                 {% set difference = sortie.dateLimiteInscription.diff(date()) %}
                                 {% set leftd = difference.d %}
                                 {% set lefth = difference.h %}
                                 {% set lefti = difference.i %}
                                 {% if leftd != 0 %}
-                                    {{ leftd }} jour(s)  {{ lefth }} heure(s)
+                                    <p class="ok-msg">{{ leftd }} jour(s) et {{ lefth }} h</p>
                                 {% else %}
-                                    {{ lefth }} heure(s)  {{ lefti }} minute(s)
+                                    <p class="ok-msg">{{ lefth }} h et {{ lefti }} minute(s)</p>
                                 {% endif %}
                             {% else %}
-                                <p class="warning-msg">
-                                    Hors délai
-                                </p>
+                                <p class="warning-msg">" Hors délai "</p>
                             {% endif %}
                             </td>
                             <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</td>
