@@ -3,7 +3,6 @@ body{
     background: radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
     background: -webkit-radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
     background: -moz-radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
-    /*cursor: none; lol mdr */
 }
 
 .menu-bordereau{
@@ -170,16 +169,19 @@ a{
     border-radius: 25px;
 }
 
+
 .pure-control-group label{
     text-align: left !important;
 }
-
+.spacement{
+    margin-bottom: 0.8em !important;
+}
 .spacement>label{
     margin-bottom: 0.5em !important;
 }
 .spacement>label:first-child{
     font-weight: bold;
-   /* text-decoration: wavy underline green;*/
+    text-decoration:  underline ;
 }
 
 .pickerrow{
@@ -206,7 +208,12 @@ a{
  .pure-controls{
      letter-spacing: normal;
  }
-
+#filtre{
+    padding-left: 1.5%;
+}
+#myBtn> * {
+    cursor:pointer;
+}
 
  /* formulaire 'id' used for js :
  - formulaire-modifier

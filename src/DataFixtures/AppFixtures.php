@@ -170,8 +170,9 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
 
             $manager->persist($product);
 
-            $manager->flush();
+
         }
+        $manager->flush();
     }
 
     public function getDependencies()
