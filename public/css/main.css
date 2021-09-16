@@ -209,6 +209,9 @@ a{
 #filtre{
     padding-left: 1.5%;
 }
+#myBtn> * {
+    cursor:pointer;
+}
 
  /* formulaire 'id' used for js :
  - formulaire-modifier
