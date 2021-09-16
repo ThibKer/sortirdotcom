@@ -14,16 +14,15 @@
 
 <body>
 <div class="pure-menu pure-menu-horizontal menu-bordereau">
-    <div class="pure-u-1-1">
+    <div class="">
         <div class="pure-u-1-2" id="grouplogo">
             <a href="{{ path('home') }}">
                 <img src="{{ asset('img/logo.svg') }}" alt="logo" id="logologo">
                 <img id="logodotcom" src="/img/Sortirdotcom8.svg" alt="Sortir.com">
             </a>
-        </div>
-
-        {% if app.user %}
-            <div class="pure-menu-list pure-u-1-2 " id="navmenu">
+        </div><?
+        ?><div class="pure-menu-list pure-u-1-2" id="menu-nav">
+            {% if app.user %}
                 <ul class="" >
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="pure-menu-item">
@@ -43,8 +42,9 @@
                         <a href="{{ path('app_logout') }}" class="pure-menu-link button-nav">Se déconnecter</a>
                     </li>
                 </ul>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
+
 
     </div>
 </div>
