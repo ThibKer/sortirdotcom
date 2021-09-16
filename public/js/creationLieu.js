@@ -58,7 +58,6 @@ function createLieu(){
         valueHidden.pop();
     }
     valueHidden.push(newLieu);
-    console.log(valueHidden);
     document.getElementById("hidden-ajout").value = JSON.stringify(newLieu);
     document.getElementById("hidden").value = JSON.stringify(valueHidden);
     changementLieu();

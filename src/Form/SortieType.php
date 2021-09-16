@@ -32,7 +32,9 @@ class SortieType extends AbstractType
             ])
             ->add('duree')
             ->add('nbInscriptionMax')
-            ->add('infosSortie', TextareaType::class)
+            ->add('infosSortie', TextareaType::class, [
+                "required" => false
+            ])
             ->add('dateLimiteInscription', DateTimeType::class,[
                 'required' => true,
                 'widget' => 'single_text',
