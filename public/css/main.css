@@ -3,7 +3,6 @@ body{
     background: radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
     background: -webkit-radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
     background: -moz-radial-gradient(ellipse farthest-corner at center center, #ffffff 0%, rgba(250,243,145,0.5) 100%);
-    cursor: none;/* lol mdr */
 }
 
 .menu-bordereau{
