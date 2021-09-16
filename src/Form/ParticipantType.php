@@ -21,7 +21,6 @@ class ParticipantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-          //  ->add('id', HiddenType::class)
             ->add('pseudo')
             ->add('password', PasswordType::class,[
                 'mapped' => false,
@@ -60,7 +59,8 @@ class ParticipantType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('email')
-       /*     ->add('site', EntityType::class, [
+       /*
+            ->add('site', EntityType::class, [
                 // looks for choices from this entity
                 'class' => Site::class,
                 // uses the User.username property as the visible option string
@@ -70,6 +70,7 @@ class ParticipantType extends AbstractType
                 // 'expanded' => true,
             ])
        */
+        /*
             ->add('img', FileType::class,[
                 'label'=>'Photo profil',
                 'mapped'=>false,
@@ -79,7 +80,8 @@ class ParticipantType extends AbstractType
                     'mimeTypes'=>['image/png'],
                     'mimeTypesMessage'=>'Veuillez ajouter une photo au bon format.',
                 ]
-       ])
+            ])
+        */
         ;
     }
 
