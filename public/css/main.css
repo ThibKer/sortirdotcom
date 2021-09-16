@@ -44,7 +44,19 @@ body{
     color: #d22828;
 }
 
-
+.warning-msg{
+    color: red;
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: inherit;
+    font-size: 80%;
+    padding: .5em 1em;
+   /* border: none transparent;
+    background-color: #e6e6e6;
+    border-radius: 2px; */
+}
 
 
 .button-admin,
@@ -104,7 +116,11 @@ a{
 
 }
 #date_compte{
+    margin-top: 3vh;
     margin-left: 70vw;
+}
+.lab{
+    font-weight: bold;
 }
 
 

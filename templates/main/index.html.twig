@@ -10,11 +10,11 @@
     <main class="">
         <div id="date_compte" class="pure-u-1-5 pure-form-aligned pure-form-aligned">
             <div class="pure-control-group mt1">
-                <label>Date du jour </label>
-                <label class="displayed">{{ "now"|format_date(locale='fr') }}</label>
+                <label class="lab">Date du jour </label>
+                <label class="displayed">{{ "now"|format_date('long', locale='fr') }}</label>
             </div>
             <div class="pure-control-group mt1">
-                <label>Participant </label>
+                <label class="lab">Participant </label>
                 <label class="displayed">{{ app.user.username }}</label>
             </div>
         </div>
@@ -95,7 +95,27 @@
                         <tr class="">
                             <td>{{ sortie.nom }}</td>
                             <td>{{ sortie.dateHeureDebut|date('d/m/Y h:i') }}</td>
-                            <td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>
+
+                            <!--<td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>-->
+                            <td>
+                            {% if date() < sortie.dateLimiteInscription %}
+
+                                {# endDate and startDate are strings or DateTime objects #}
+                                {% set difference = sortie.dateLimiteInscription.diff(date()) %}
+                                {% set leftd = difference.d %}
+                                {% set lefth = difference.h %}
+                                {% set lefti = difference.i %}
+                                {% if leftd != 0 %}
+                                    {{ leftd }} jour(s)  {{ lefth }} heure(s)
+                                {% else %}
+                                    {{ lefth }} heure(s)  {{ lefti }} minute(s)
+                                {% endif %}
+                            {% else %}
+                                <p class="warning-msg">
+                                    Hors délai
+                                </p>
+                            {% endif %}
+                            </td>
                             <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</td>
                             <td>{{ sortie.etat.libelle }}</td>
                             {% set find = 0 %}
@@ -192,9 +212,9 @@
                                     </td>
                                 {% else %}
                                     <td>
-                                        <button class="pure-button button-warning button-no-button" disabled>
+                                        <p class="pure-button button-warning button-no-button">
                                             Archiver
-                                        </button>
+                                        </p>
                                     </td>
                                 {% endif %}
                             {% endif %}

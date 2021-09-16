@@ -32,21 +32,22 @@ window.onclick = function (event) {
 }
 
 function createLieu(){
+    console.log("create lieu");
     for(i = 0; i < document.getElementById('lieu_ville').length; i++){
         if(document.getElementById('lieu_ville')[i].value == document.getElementById('lieu_ville').value){
             nomVille = document.getElementById('lieu_ville')[i].innerText;
         }
     }
     newLieu = {
-        "id" : "new",
+        "id" : 0,
         "nom" : document.getElementById('lieu_nom').value,
         "rue" : document.getElementById('lieu_rue').value,
-        "latitude" : document.getElementById('lieu_latitude').value,
-        "longitude" : document.getElementById('lieu_longitude').value,
+        "latitude" : Number(document.getElementById('lieu_latitude').value),
+        "longitude" : Number(document.getElementById('lieu_longitude').value),
         "ville" : {
-            "id" : document.getElementById('lieu_ville').value,
+            "id" : Number(document.getElementById('lieu_ville').value),
             "nom" : nomVille,
-            "codePostal" : null,
+            "codePostal" : 0,
             "lieux" : [],
             "__initializer__":null,
             "__cloner__":null,
@@ -54,6 +55,8 @@ function createLieu(){
         },
     }
     valueHidden = JSON.parse(document.getElementById("hidden").value);
+    document.getElementById("hidden-ajout").value += JSON.stringify(newLieu);
     valueHidden.push(newLieu);
     document.getElementById("hidden").value = JSON.stringify(valueHidden);
+    changementLieu();
 }
