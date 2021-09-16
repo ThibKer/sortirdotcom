@@ -39,6 +39,7 @@ function changementInfoLieu(){
         }
     }
     if (trouver) {
+        document.getElementById("id-choix-lieu").value = trouver.id;
         document.getElementById("rue-holder").innerText = trouver.rue;
         document.getElementById("latitude-holder").innerText = trouver.latitude;
         document.getElementById("longitude-holder").innerText = trouver.longitude;

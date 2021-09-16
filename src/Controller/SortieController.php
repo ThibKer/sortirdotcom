@@ -147,7 +147,7 @@ class SortieController extends AbstractController
             if ($form->isSubmitted()) {
 
                 if($request->get('hidden-data-ajout') != "" &&
-                $request->get('sortie[lieu]') != 0) { // TODO
+                $request->get('id-choix-lieu') == 0) {
                     try {
                         $data = $request->get('hidden-data-ajout');
 //                $data = substr($data, 1, strlen($data));
@@ -168,7 +168,6 @@ class SortieController extends AbstractController
                     }catch (\Exception $e){
                         return $this->redirectToRoute('sortie_modifier', [
                             "id" => $sortie->getId(),
-                            "error" => "Erreur dans le nouveau lieu"
                         ]);
                     }
                 }
@@ -178,7 +177,9 @@ class SortieController extends AbstractController
                     if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
                         ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
                         $error = "Erreur sur les dates";
-                        return $this->redirectToRoute('sortie_modifier');
+                        return $this->redirectToRoute('sortie_modifier', [
+                            "id" => $sortie->getId()
+                        ]);
                     } else {
                         $form->get('nom')->getData();
 
