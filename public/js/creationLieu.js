@@ -26,6 +26,14 @@ validation.onclick = function () {
 // When the user clicks the button, open the modal
 btn.onclick = function () {
     modal.style.display = "block";
+    ville = document.getElementById('select-ville-balise').value;
+    console.log(ville);
+    villeLieu = document.getElementById('lieu_ville');
+    for (i = 0; i < villeLieu.length; i++){
+        if(ville === villeLieu[i].value){
+            villeLieu[i].setAttribute('selected', "selected");
+        }
+    }
 }
 
 // When the user clicks on <span> (x), close the modal
