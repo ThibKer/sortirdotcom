@@ -146,13 +146,30 @@ class SortieController extends AbstractController
             // Vérification formulaire submit et valide
             if ($form->isSubmitted()) {
 
-                if($request->get('hidden-data-ajout') != "" &&
-                $request->get('id-choix-lieu') == 0) {
+                if ($request->get('hidden-data-ajout') != "" &&
+                    $request->get('id-choix-lieu') == 0) {
                     try {
                         $data = $request->get('hidden-data-ajout');
-//                $data = substr($data, 1, strlen($data));
-//                $data = substr($data, 0, -1);
                         $newLieu = $serializer->deserialize($data, Lieu::class, 'json');
+                        $li = new Lieu();
+                        $redirection = false;
+
+                        if ($newLieu->getNom() === null || $newLieu->getNom() === "") {
+                            $redirection = true;
+                        }
+                        if ($newLieu->getRue() === null || $newLieu->getRue() === "") {
+                            $redirection = true;
+                        }
+                        if ($newLieu->getLatitude() === null || $newLieu->getLatitude() == 0) {
+                            $redirection = true;
+                        }
+                        if ($newLieu->getLongitude() === null || $newLieu->getLongitude() == 0) {
+                            $redirection = true;
+                        }
+
+                        if ($redirection) {
+                            throw new \Exception();
+                        }
 
                         $repositoryVille = $this->getDoctrine()->getRepository(Ville::class);
                         $ville = $repositoryVille->findBy(["nom" => $newLieu->getVille()->getNom()])[0];
@@ -165,7 +182,7 @@ class SortieController extends AbstractController
                         $manager->persist($ville);
 
                         $manager->flush();
-                    }catch (\Exception $e){
+                    } catch (\Exception $e) {
                         return $this->redirectToRoute('sortie_modifier', [
                             "id" => $sortie->getId(),
                         ]);

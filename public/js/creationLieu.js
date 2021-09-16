@@ -32,7 +32,6 @@ window.onclick = function (event) {
 }
 
 function createLieu(){
-    console.log("create lieu");
     for(i = 0; i < document.getElementById('lieu_ville').length; i++){
         if(document.getElementById('lieu_ville')[i].value == document.getElementById('lieu_ville').value){
             nomVille = document.getElementById('lieu_ville')[i].innerText;
@@ -55,8 +54,12 @@ function createLieu(){
         },
     }
     valueHidden = JSON.parse(document.getElementById("hidden").value);
-    document.getElementById("hidden-ajout").value += JSON.stringify(newLieu);
+    if(document.getElementById("hidden-ajout").value != ""){
+        valueHidden.pop();
+    }
     valueHidden.push(newLieu);
+    console.log(valueHidden);
+    document.getElementById("hidden-ajout").value = JSON.stringify(newLieu);
     document.getElementById("hidden").value = JSON.stringify(valueHidden);
     changementLieu();
 }
