@@ -3,16 +3,11 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post" class="pure-form pure-form-aligned"
-      style="	position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-    ">
+<form method="post" class="pure-form pure-form-aligned centred-conteneur">
     <fieldset>
         <legend>Connectez-vous s'il vous plait</legend>
         {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            <div class="warning-msg">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
         {% if app.user %}
