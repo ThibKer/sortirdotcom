@@ -215,6 +215,14 @@ a{
     cursor:pointer;
 }
 
+#menu-nav>*{
+    text-align: end;
+    padding-right: 10px;
+}
+
+tr{
+    text-align: center;
+}
  /* formulaire 'id' used for js :
  - formulaire-modifier
  -
