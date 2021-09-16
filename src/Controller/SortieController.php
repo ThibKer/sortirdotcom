@@ -86,8 +86,9 @@ class SortieController extends AbstractController
                 }
             }
             if ($formSortie->isValid() || $request->get('hidden-data-ajout') != "") {
-
-
+                if($sortie->getLieu() === null){
+                    return $this->redirectToRoute('sortie_creer');
+                }
                 if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
                     ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
                     return $this->redirectToRoute('sortie_creer', [
@@ -202,6 +203,11 @@ class SortieController extends AbstractController
                 }
 
                 if ($form->isValid() || $request->get('hidden-data-ajout') != "") {
+                    if($sortie->getLieu() === null){
+                        return $this->redirectToRoute('sortie_modifier', [
+                            "id" => $sortie->getId(),
+                        ]);
+                    }
                     // Vérification des dates
                     if (($sortie->getDateHeureDebut()->getTimestamp() < $sortie->getDateLimiteInscription()->getTimestamp()) ||
                         ($sortie->getDateLimiteInscription()->getTimestamp() < time())) {
