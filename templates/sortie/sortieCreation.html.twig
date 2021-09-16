@@ -9,56 +9,19 @@
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
+
+    <link rel="stylesheet" href="/css/modal.css">
 {% endblock %}
 
 {% block body %}
-    <style>
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0); /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
-    <form method="post" class="pure-form pure-form-aligned centred-conteneur formsortie">
+    <form method="post" class="pure-form pure-form-aligned centred-conteneur formsortie" id="formulaire-sortie">
         <fieldset>
+            <legend>Création d'une sortie</legend>
             <div class="pure-g">
                 <div class="pure-u-1-2">
                     <div class="pure-control-group">
                         {{ form_row(formSortie.nom) }}
                     </div>
-
                     <div class='pure-control-group pickerrow'>
                         {{ form_label(formSortie.dateHeureDebut) }}<?
                         ?><div class='input-group' id='datetimepicker1'>
@@ -83,14 +46,14 @@
                         {{ form_row(formSortie.duree, { 'attr' : { 'min' : '15' , 'value' : '15'}}) }}
                     </div>
                     <div class="pure-control-group">
-                        {{ form_row(formSortie.nbInscriptionMax) }}
+                        {{ form_row(formSortie.nbInscriptionMax, { 'attr' : { 'min' : '1' , 'value' : '1'}}) }}
                     </div>
                     <div class="pure-control-group">
                         {{ form_row(formSortie.infosSortie) }}
                     </div>
                 </div>
-                <div class="pure-u-1-2">
 
+                <div class="pure-u-1-2">
                     <div class="pure-control-group">
                         {{ form_row(formSortie.site) }}
                     </div>
@@ -128,43 +91,56 @@
 
                     <legend></legend>
 
-
                     {{ form_row(formSortie._token) }}
-                </div>
 
+                </div>
                 <div class="pure-controls">
-                    <button class="pure-button button-primary" type="submit">Ajouter</button>
+                    <!-- empty : for 'pure' disposition -->
                 </div>
             </div>
         </fieldset>
         <input type="hidden" value="" id="hidden-ajout" name="hidden-data-ajout">
     </form>
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="pure-control-group" id="ajout-lieu-nom">
-                {{ form_row(formLieu.nom) }}
-            </div>
-            <div class="pure-control-group" id="ajout-lieu-rue">
-                {{ form_row(formLieu.rue) }}
-            </div>
-            <div class="pure-control-group" id="ajout-lieu-latitude">
-                {{ form_row(formLieu.latitude) }}
-            </div>
-            <div class="pure-control-group" id="ajout-lieu-longitude">
-                {{ form_row(formLieu.longitude) }}
-            </div>
-            <div class="pure-control-group" id="ajout-lieu-ville">
-                {{ form_row(formLieu.ville) }}
-            </div>
-            <button id="creer-lieu" class="btn">Créer</button>
+    <div class="centred-conteneur mt1">
+        <div class="pure-controls">
+            <button class="pure-button button-primary" type="submit" id="submit-sortie">Ajouter</button>
+            <a class="pure-button button-primary" href="{{ path('home') }}">Annuler</a>
         </div>
     </div>
 
-
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content pure-form pure-form-aligned formsortie">
+            <div class="modal-header">
+                <h3>Ajouter un nouveau lieu</h3>
+                <label for="modal" class="close">
+                    <img src="data:imavbge/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAdVBMVEUAAABNTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU1NTU0N3NIOAAAAJnRSTlMAAQIDBAUGBwgRFRYZGiEjQ3l7hYaqtLm8vsDFx87a4uvv8fP1+bbY9ZEAAAB8SURBVBhXXY5LFoJAAMOCIP4VBRXEv5j7H9HFDOizu2TRFljedgCQHeocWHVaAWStXnKyl2oVWI+kd1XLvFV1D7Ng3qrWKYMZ+MdEhk3gbhw59KvlH0eTnf2mgiRwvQ7NW6aqNmncukKhnvo/zzlQ2PR/HgsAJkncH6XwAcr0FUY5BVeFAAAAAElFTkSuQmCC" width="16" height="16" alt="lol">
+                </label>
+            </div>
+            <div class="modal-inputs">
+                <div class="pure-control-group" id="ajout-lieu-ville">
+                    {{ form_row(formLieu.ville) }}
+                </div>
+                <div class="pure-control-group" id="ajout-lieu-nom">
+                    {{ form_row(formLieu.nom) }}
+                </div>
+                <div class="pure-control-group" id="ajout-lieu-rue">
+                    {{ form_row(formLieu.rue) }}
+                </div>
+                <div class="pure-control-group" id="ajout-lieu-latitude">
+                    {{ form_row(formLieu.latitude) }}
+                </div>
+                <div class="pure-control-group" id="ajout-lieu-longitude">
+                    {{ form_row(formLieu.longitude) }}
+                </div>
+                <div class="pure-controls" >
+                    <button type="submit" id="creer-lieu" class="btn pure-button button-primary">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <input type="hidden" value="{{ lieuxdonnees }}" id="hidden" name="hidden-data">
 
     <script>
@@ -184,5 +160,6 @@
         };
     </script>
     <script src="{{ asset('js/selectCreationModification.js') }}"></script>
+    <script src="{{ asset('js/modification.js') }}"></script>
     <script src="{{ asset('js/creationLieu.js') }}"></script>
 {% endblock %}
