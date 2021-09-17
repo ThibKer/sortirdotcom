@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\AnnulationSortie;
 use App\Entity\Etat;
 use App\Entity\Lieu;
-use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\LieuType;
@@ -150,7 +149,7 @@ class SortieController extends AbstractController
             $sortie->getEtat()->getId() == 1) {
 
             // Création formulaire Sortie
-            $form = $this->createForm(SortieType::class, $sortie);
+            $form = $this->createForm(ModifierSortieType::class, $sortie);
             $form->handleRequest($request);
 
             // Initialisation potientiel erreur
