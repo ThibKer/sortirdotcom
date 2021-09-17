@@ -18,17 +18,22 @@ h2{
     margin-left: 20px;
 }
 
- #filtre-recherche button{
-     width: 26vh;
-     height: 10vh;
- }
-
+#filtre-recherche button,
 #bouton-creer-sortie a{
-    width: 26vh;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: auto;
+    padding: 20%;
+    width: 10vw;
+    border-radius: 16px;
+    min-width: max-content;
+    min-height: max-content;
+}
+#filtre-recherche{
+    display: grid;
+    justify-content: flex-start;
+}
+#bouton-creer-sortie{
+    display: grid;
+    justify-content: flex-start;
 }
 
 .label-date-filtre{

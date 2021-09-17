@@ -152,7 +152,7 @@
                                     <a class="pure-button button-secondary" href="{{ path('sortie_modifier', {"id" : sortie.id}) }}">
                                         Modifier
                                     </a>
-                                    <a class="pure-button button-secondary" href="{{ path('sortie_publication', {"id" : sortie.id}) }}">
+                                    <a class="pure-button button-publish" href="{{ path('sortie_publication', {"id" : sortie.id}) }}">
                                         Publier
                                     </a>
                                 </td>
@@ -162,7 +162,7 @@
                                         <a class="pure-button button-primary" href="{{ path('sortie_details', {"id" : sortie.id}) }}">
                                             Afficher
                                         </a>
-                                        <a class="pure-button button-secondary" href="{{ path('sortie_annuler', {"id" : sortie.id}) }}">
+                                        <a class="pure-button button-cancel" href="{{ path('sortie_annuler', {"id" : sortie.id}) }}">
                                             Annuler
                                         </a>
                                     </td>

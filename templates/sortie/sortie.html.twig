@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="pure-form pure-form-aligned centred-conteneur formsortie">
+    <div class="pure-form pure-form-aligned centred-conteneur formsortie detailsortie">
         <fieldset>
             <legend>Détail de la sortie
                 {% if sortie.etat.id == 7 %}
@@ -79,7 +79,7 @@
                     {# <label>Longitude</label> #}
                     {# <label class="displayed">{{ sortie.lieu.longitude }}</label> #}
                     {# </div> #}
-                    <div class="pure-control-group spacement" id="map">
+                    <div class="pure-control-group spacement contraint" id="map">
                         <label>Position :</label>
                     </div>
                 </div>

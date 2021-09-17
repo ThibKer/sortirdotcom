@@ -56,7 +56,7 @@ body{
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     text-align: center;
     font-family: inherit;
-    font-size: 80%;
+    font-size: 0.9em;
     padding: .5em 1em;
    /* border: none transparent;
     background-color: #e6e6e6;
@@ -69,6 +69,8 @@ body{
 .button-admin,
 .button-primary,
 .button-secondary,
+.button-cancel,
+.button-publish,
 .button-warning,
 .button-error,
 .button-success {
@@ -82,12 +84,16 @@ body{
     background: rgb(241, 48, 48);
 }
 .button-primary{
-    font-size: 0.9em;
     background : #AAE6FA;
 }
 .button-secondary{
-    font-size: 0.9em;
-    background : #FAF391;
+    background : #fff07a;
+}
+.button-cancel{
+    background : #f69a72;
+}
+.button-publish{
+    background: #95ce6a;
 }
 .button-warning{
     font-size: 0.9em;
@@ -102,7 +108,9 @@ body{
     color: #ffffff;
     text-shadow: 1px 1px 0px rgb(0 0 0);
      /*font-weight: bold;*/
-}
+}#hometabbody .pure-button{
+      width: 45%;
+  }
 a{
     text-shadow: none;
     font-weight: normal;
@@ -112,9 +120,9 @@ a{
 
 
 .displayed{
-    /*font-weight: bold;*/
-    color: rgb(35, 33, 33) !important;
+    color: rgb(0, 0, 0) !important;
     width: max-content;
+    font-size: 105%;
 }
 .labeldisplay{
     padding: inherit;
@@ -170,9 +178,7 @@ a{
     margin-top: 15vh;
 }
 
-#bouton-creer-sortie>a,#filtre-recherche>button {
-    border-radius: 25px;
-}
+
 
 
 .pure-control-group label{
@@ -184,12 +190,12 @@ a{
 .spacement>label{
     margin-bottom: 0.5em !important;
 }
-.spacement>label:first-child{
+/*.spacement>label:first-child{
     font-size: 115%;
-    /*
+    !*
     text-decoration:  underline ;
-    */
-}
+    *!
+}*/
 
 .pickerrow{
     display: flex;
@@ -208,6 +214,9 @@ a{
      min-width: 12vw;
      max-width: 12vw;
  }
+.detailsortie{
+    margin-top: 8vh !important;
+}
  .input-group{
      min-width: 10vw !important;
      max-width: 10vw !important;
@@ -225,6 +234,15 @@ a{
 }
 #myBtn:hover {
     cursor:pointer;
+}
+
+.contraint{
+    width: 15vw;
+
+}
+
+legend{
+    color:black !important;
 }
 
  /* formulaire 'id' used for js :
