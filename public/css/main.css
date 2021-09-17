@@ -21,7 +21,9 @@ body{
     background: linear-gradient(315deg,#008dff 0%, #fffc00 150%);
     background: -webkit-linear-gradient(315deg,#008dff 0%, #fffc00 150%);
     background: -moz-linear-gradient(315deg,#008dff 0%, #fffc00 150%);
-
+    position: fixed;
+    left: 0px;
+    top: 0px;
 }
 #grouplogo a{
     text-decoration: none;
@@ -43,6 +45,9 @@ body{
 #menu-nav>*{
     text-align: center;
     padding-right: 10px;
+}
+#contentbox{
+    margin-top: 80px;
 }
 
 
@@ -75,7 +80,9 @@ body{
 }.ok-msg{
     color:Blue;
  }
-
+.formlogin{
+    margin-top: 20vh !important;
+}
 
 .button-admin,
 .button-primary,
@@ -235,7 +242,7 @@ a{
      max-width: 12vw;
  }
 .detailsortie{
-    margin-top: 8vh !important;
+    margin-top: 15vh !important;
 }
  .input-group{
      min-width: 10vw !important;
