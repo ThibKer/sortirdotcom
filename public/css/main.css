@@ -272,7 +272,13 @@ legend{
     color:black !important;
     font-size: 120%;
 }
-
+.mbb{
+    margin-top: 0 !important;
+}
+.mbb table{
+    margin-top: 0 !important;
+    bottom: 200px !important;
+}
 
  /* formulaire 'id' used for js :
  - formulaire-modifier
