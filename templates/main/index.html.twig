@@ -10,11 +10,11 @@
     <main class="">
         <div id="date_compte" class="pure-u-1-5 pure-form-aligned pure-form-aligned">
             <div class="pure-control-group mt1">
-                <label>Date du jour </label>
-                <label class="displayed">{{ "now"|format_date(locale='fr') }}</label>
+                <label class="lab">Date du jour </label>
+                <label class="displayed">{{ "now"|format_date('long', locale='fr') }}</label>
             </div>
             <div class="pure-control-group mt1">
-                <label>Participant </label>
+                <label class="lab">Participant </label>
                 <label class="displayed">{{ app.user.username }}</label>
             </div>
         </div>
@@ -25,8 +25,8 @@
                     <div class="pure-g">
                         <div class="pure-u-1-2">
                             <div class="pure-g">
-                                <label for="choix-site" class="pure-u-1-2">Site : </label>
-                                <select id="choix-site" class="pure-u-1-2" name="tri-site">
+                                <label for="choix-site" class="pure-u-1-2 ">Site : </label>
+                                <select id="choix-site" class="pure-u-1-2 spacement" name="tri-site">
                                     <option value="0">---------Choisir un site-------</option>
                                     {% for site in sites %}
                                         <option value="{{ site.id }}">{{ site.nom }}</option>
@@ -35,12 +35,12 @@
                             </div>
                             <div class="pure-g">
                                 <label for="recherche-nom" class="pure-u-1-2">Le nom de la sortie contient : </label>
-                                <input id="recherche-nom" type="text" class="pure-u-1-2" name="tri-texte" placeholder="Rechercher">
+                                <input id="recherche-nom" type="text" class="pure-u-1-2 spacement" name="tri-texte" placeholder="Rechercher">
                             </div>
                             <div id="recherche-date" class="pure-g">
                                 <label for="date-debut" class="pure-u-1-4 label-date-filtre">Entre : </label>
                                 <input type="date" id="date-debut" class="pure-u-1-4" name="tri-date-debut">
-                                <label for="date-fin" class="pure-u-1-4 label-date-filtre">et : </label>
+                                <label for="date-fin" class="pure-u-1-4 label-date-filtre">&nbsp&nbsp et : </label>
                                 <input type="date" id="date-fin" class="pure-u-1-4" name="tri-date-fin">
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                     <tr>
                         <th>Nom de la sortie</th>
                         <th>Date de la sortie</th>
-                        <th>Clotûre</th>
+                        <th>Fin d'inscription</th>
                         <th>Inscrit/Places</th>
                         <th>Etat</th>
                         <th>Inscrit</th>
@@ -90,15 +90,30 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody id="lol">
+                    <tbody id="hometabbody">
                     {% for sortie in sorties %}
                         <tr class="">
                             <td>{{ sortie.nom }}</td>
                             <td>{{ sortie.dateHeureDebut|date('d/m/Y h:i') }}</td>
-                            <td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>
+                            <!--<td>{{ sortie.dateLimiteInscription|date('d/m/Y') }}</td>-->
+                            <td>
+                            {% if date() < sortie.dateLimiteInscription %}
+                                {# endDate and startDate are strings or DateTime objects #}
+                                {% set difference = sortie.dateLimiteInscription.diff(date()) %}
+                                {% set leftd = difference.d %}
+                                {% set lefth = difference.h %}
+                                {% set lefti = difference.i %}
+                                {% if leftd != 0 %}
+                                    <p class="ok-msg">{{ leftd }} jour(s) et {{ lefth }} h</p>
+                                {% else %}
+                                    <p class="ok-msg">{{ lefth }} h et {{ lefti }} minute(s)</p>
+                                {% endif %}
+                            {% else %}
+                                <p class="warning-msg">" Hors délai "</p>
+                            {% endif %}
+                            </td>
                             <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</td>
                             <td>{{ sortie.etat.libelle }}</td>
-
                             {% set find = 0 %}
                             {% if app.user.getSorties is not null %}
                                 {% for sortieUser in app.user.getSorties %}
@@ -109,66 +124,74 @@
                             {% else %}
                                 {% set find = 0 %}
                             {% endif %}
-
                             {% if find == 1 %}
-                                <td>X</td>
+                                <td style="text-align: center">X</td>
                             {% else %}
                                 <td></td>
                             {% endif %}
 
                             {% if app.user.id != sortie.organisateur.id %}
-                                <td>
-                                    <a href="{{ path('participant_show', {"id" : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                                <td class="centeredtab">
+                                    <a class="orgalink" href="{{ path('participant_show', {"id" : sortie.organisateur.id}) }}">
+                                        {{ sortie.organisateur.pseudo }}
+                                        <span>
+                                            <img src="/img/person-square.svg" alt=".user">
+                                        </span>
+                                    </a>
                                 </td>
                             {% else %}
-                                <td>
-                                    {{ sortie.organisateur.pseudo }}
+                                <td class="centeredtab">
+                                    <p class="myevent" href="{{ path('participant_show', {"id" : sortie.organisateur.id}) }}">
+                                        "Votre événement"
+                                    </p>
                                 </td>
                             {% endif %}
 
                             {% if sortie.etat.id  == 1 %}
-                                <td>
-                                    <a class="pure-button button-secondary"
-                                       href="{{ path('sortie_modifier', {"id" : sortie.id}) }}">Modifier</a>
-                                    -
-                                    <a class="pure-button button-secondary"
-                                       href="{{ path('sortie_publication', {"id" : sortie.id}) }}">Publier</a>
+                                <td class="centeredtab">
+                                    <a class="pure-button button-secondary" href="{{ path('sortie_modifier', {"id" : sortie.id}) }}">
+                                        Modifier
+                                    </a>
+                                    <a class="pure-button button-publish" href="{{ path('sortie_publication', {"id" : sortie.id}) }}">
+                                        Publier
+                                    </a>
                                 </td>
                             {% elseif sortie.etat.id == 2 %}
                                 {% if app.user.id == sortie.organisateur.id %}
-                                    <td>
-                                        <a class="pure-button button-primary"
-                                           href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
-                                        -
-                                        <a class="pure-button button-secondary"
-                                           href="{{ path('sortie_annuler', {"id" : sortie.id}) }}">Annuler</a>
+                                    <td class="centeredtab">
+                                        <a class="pure-button button-primary" href="{{ path('sortie_details', {"id" : sortie.id}) }}">
+                                            Afficher
+                                        </a>
+                                        <a class="pure-button button-cancel" href="{{ path('sortie_annuler', {"id" : sortie.id}) }}">
+                                            Annuler
+                                        </a>
                                     </td>
                                 {% else %}
-                                    <td>
-                                        <a class="pure-button button-primary"
-                                           href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
-                                        -
+                                    <td class="centeredtab">
+                                        <a class="pure-button button-primary" href="{{ path('sortie_details', {"id" : sortie.id}) }}">
+                                            Afficher
+                                        </a>
                                         {% if find == 1 %}
-                                            <a class="pure-button button-secondary"
-                                               href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">Se
-                                                désister</a>
+                                            <a class="pure-button button-secondary" href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">
+                                                Se désister
+                                            </a>
                                         {% else %}
-                                            <a class="pure-button button-secondary"
-                                               href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">S'inscrire</a>
+                                            <a class="pure-button button-secondary" href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">
+                                                S'inscrire
+                                            </a>
                                         {% endif %}
                                     </td>
                                 {% endif %}
                             {% elseif sortie.etat.id == 3 %}
-                                <td>
-                                    <a class="pure-button button-primary"
-                                       href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
-                                    {% if find == 1 %}
-                                        -
-                                        <a class="pure-button button-secondary"
-                                           href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">Se désister</a>
-                                    {% endif %}
+                                <td class="centeredtab">
+                                    <a class="pure-button button-primary" href="{{ path('sortie_details', {"id" : sortie.id}) }}">
+                                        Afficher
+                                    </a>
+                                    <a class="pure-button button-secondary" href="{{ path('sortie_inscription', {"id" : sortie.id}) }}">
+                                        Se désister
+                                    </a>
                                 </td>
-                            {% elseif sortie.etat.id == 4 or sortie.etat.id == 5 or sortie.etat.id == 6 %}
+                            {% elseif sortie.etat.id == 4 or sortie.etat.id == 5 or sortie.etat.id == 6 or sortie.etat.id == 7%}
                                 {% set archivee = 0 %}
 
                                 {% for sortieArchivee in sortiesArchivees %}
@@ -178,15 +201,16 @@
                                 {% endfor %}
 
                                 {% if archivee == 0 %}
-                                    <td>
-                                        <a class="pure-button button-primary"
-                                           href="{{ path('sortie_details', {"id" : sortie.id}) }}">Afficher</a>
+                                    <td class="centeredtab">
+                                        <a class="pure-button button-primary" href="{{ path('sortie_details', {"id" : sortie.id}) }}">
+                                            Afficher
+                                        </a>
                                     </td>
                                 {% else %}
                                     <td>
-                                        <button class="pure-button button-warning button-no-button" disabled href="">
+                                        <p class="pure-button button-warning button-no-button">
                                             Archiver
-                                        </button>
+                                        </p>
                                     </td>
                                 {% endif %}
                             {% endif %}

@@ -2,73 +2,91 @@
 
 {% block title %}Détails d'une sortie{% endblock %}
 
+{% block stylesheets %}
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+{% endblock %}
+
 {% block body %}
-    <div class="pure-form pure-form-aligned centred-conteneur">
+    <div class="pure-form pure-form-aligned centred-conteneur formsortie detailsortie">
         <fieldset>
-            <legend>Détail de la sortie</legend>
-            <div class="example-wrapper pure-g">
+            <legend>Détail de la sortie
+                {% if sortie.etat.id == 7 %}
+                    &nbsp<strong style="color: red;">(Annulée : ' {{ sortie.annulationSortie.libelle }} ')</strong>
+                {% endif %}
+            </legend>
+            <div class="pure-g">
                 <div class="pure-u-1-2">
-                    <div class="creation-champs pure-control-group">
-                        <label>Nom de la sortie</label>
+                    <div class="pure-control-group spacement">
+                        <label>Nom de la sortie :</label>
                         <label class="displayed">{{ sortie.nom }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Date et heure de la sortie</label>
+                    <div class="pure-control-group spacement">
+                        <label>Date et heure de la sortie :</label>
                         <label class="displayed">{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Date limite d'inscription</label>
+                    <div class="pure-control-group spacement">
+                        <label>Date limite d'inscription :</label>
                         <label class="displayed">{{ sortie.dateLimiteInscription | date('d/m/Y H:i') }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Nombre de place</label>
+                    <div class="pure-control-group spacement">
+                        <label>Nombre de place :</label>
                         <label class="displayed">{{ sortie.nbInscriptionMax }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Durée</label>
-                        <label class="displayed">{{ sortie.duree }} minutes</label>
+                    <div class="pure-control-group spacement">
+                        <label>Durée :</label>
+                        <label class="displayed">
+                            {% if sortie.duree>=1440 %}
+                                {{ sortie.duree//1440 }} j {{ (sortie.duree%1440)//60 }} h
+                            {% elseif sortie.duree%60==0 %}
+                                {{ sortie.duree//60 }} h
+                            {% elseif sortie.duree//60==0 %}
+                                {{ sortie.duree%60 }} min
+                            {% else %}
+                                {{ sortie.duree//60 }} h
+                            {% endif %}
+                        </label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Description et infos</label>
+                    <div class="pure-control-group spacement">
+                        <label>Description et infos :</label>
                         <label class="displayed">{{ sortie.infosSortie }}</label>
                     </div>
                 </div>
                 <div class="pure-u-1-2">
-                    <div class="creation-champs pure-control-group">
-                        <label>Ville oragnisatrice</label>
+                    <div class="pure-control-group spacement">
+                        <label>Ville organisatrice :</label>
                         <label class="displayed">{{ sortie.lieu.ville.nom }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Lieu</label>
+                    <div class="pure-control-group spacement">
+                        <label>Lieu :</label>
                         <label class="displayed">{{ sortie.lieu.nom }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Rue</label>
+                    <div class="pure-control-group spacement">
+                        <label>Rue :</label>
                         <label class="displayed">{{ sortie.lieu.rue }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Code postal</label>
+                    <div class="pure-control-group spacement">
+                        <label>Code postal :</label>
                         <label class="displayed">{{ sortie.lieu.ville.codePostal }}</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Latitude</label>
-                        <label class="displayed">{{ sortie.lieu.latitude }}</label>
+                    {# <div class="creation-champs pure-control-group spacement"> #}
+                    {# <label>Latitude</label> #}
+                    {# <label class="displayed">{{ sortie.lieu.latitude }}</label> #}
+                    {# </div> #}
+                    {# <div class="creation-champs pure-control-group spacement"> #}
+                    {# <label>Longitude</label> #}
+                    {# <label class="displayed">{{ sortie.lieu.longitude }}</label> #}
+                    {# </div> #}
+                    <div class="pure-control-group spacement contraint" id="map">
+                        <label>Position :</label>
                     </div>
-                    <div class="creation-champs pure-control-group">
-                        <label>Longitude</label>
-                        <label class="displayed">{{ sortie.lieu.longitude }}</label>
-                    </div>
-                    {% if sortie.etat.id == 6 %}
-                        <div class="creation-champs pure-control-group">
-                            <label>Motif d'annulation</label>
-                            <label class="displayed">{{ sortie.annulationSortie.libelle }}</label>
-                        </div>
-                    {% endif %}
                 </div>
             </div>
         </fieldset>
     </div>
-    <div class="centred-conteneur">
+    <div class="centred-conteneur mt1 mbb">
         <table class="pure-table detail-table">
             <thead>
             <tr>
@@ -81,18 +99,26 @@
             <tr>
                 <td>{{ sortie.organisateur.getPseudo() }}</td>
                 <td>{{ sortie.organisateur.getPrenom() }} {{ sortie.organisateur.getNom() }}</td>
-                <td><a class="pure-button button-secondary"
-                       href={{ path("participant_show",{"id":sortie.organisateur.getId()}) }}>Profil</a></td>
+                <td>
+                    <a class="pure-button button-secondary" href={{ path("participant_show",{"id":sortie.organisateur.getId()}) }}>Profil</a>
+                </td>
             </tr>
             {% for participant in participants %}
                 <tr>
                     <td>{{ participant.pseudo }}</td>
                     <td>{{ participant.prenom }} {{ participant.nom }}</td>
-                    <td><a class="pure-button button-primary" href={{ path("participant_show",{"id":participant.id}) }}>Profil</a>
+                    <td>
+                        <a class="pure-button button-primary" href={{ path("participant_show",{"id":participant.id}) }}>Profil</a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
+    <script src="{{ asset('js/map.js') }}"></script>
+    <script>
+        window.onload = function () {
+            getMap({{ sortie.lieu.longitude }}, {{ sortie.lieu.latitude }});
+        }
+    </script>
 {% endblock %}

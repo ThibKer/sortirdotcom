@@ -3,6 +3,11 @@
 <form method="post" class="pure-form pure-form-aligned centred-conteneur">
     <fieldset>
         <legend>Editer votre profil</legend>
+
+        <div class="pure-control-group">
+            <label>Site</label>
+            <label class="displayed">{{ participant.site.nom }}</label>
+        </div>
         <div class="my-custom-class-for-errors">
             {{ form_errors(form) }}
         </div>
@@ -42,11 +47,8 @@
         </div>
 
         <legend></legend> <!-- make space beetween fields-->
-        
-        <div class="pure-control-group">
-            <label>Site</label>
-            <label class="displayed">{{ participant.site.nom }}</label>
-        </div>
+
+        {{ form_rest(form) }}
         <div class="pure-controls">
             <button class="pure-button button-primary" type="submit">{{ button_label|default('Sauvegarder') }}</button>
             {% if is_granted('ROLE_ADMIN') %}
@@ -54,6 +56,5 @@
                 {{ include('participant/_delete_form.html.twig') }}
             {% endif %}
         </div>
-        {{ form_rest(form) }}
     </fieldset>
 </form>

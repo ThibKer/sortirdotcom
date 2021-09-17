@@ -10,21 +10,21 @@
         <fieldset>
             <legend>Annuler une sortie</legend>
 
-            <div class="pure-control-group">
+            <div class="pure-control-group spacement mt1">
                 <label>Nom de la sortie </label>
-                <input class="displayer" disabled value="{{ sortie.nom }}">
+                <label class="displayed">{{ sortie.nom }}</label>
             </div>
-            <div class="pure-control-group">
+            <div class="pure-control-group spacement">
                 <label>Date</label>
-                <input class="displayer" disabled value="{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}">
+                <label class="displayed">{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</label>
             </div>
-            <div class="pure-control-group">
+            <div class="pure-control-group spacement">
                 <label>Ville</label>
-                <input class="displayer" disabled value="{{ sortie.lieu.ville.nom }}">
+                <label class="displayed">{{ sortie.lieu.ville.nom }}</label>
             </div>
-            <div class="pure-control-group">
+            <div class="pure-control-group spacement">
                 <label>Lieu</label>
-                <input class="displayer" disabled value="{{ sortie.lieu.nom }} {{ sortie.lieu.rue }}">
+                <label class="displayed">{{ sortie.lieu.nom }} {{ sortie.lieu.rue }}</label>
             </div>
             <form method="post" class="pure-form">
                 <div class="pure-control-group">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="pure-controls">
                     <input type="submit" value="Confirmer" class="pure-button button-primary">
-                    <button class="pure-button button-primary" onClick="window.history.back();">Retour</button>
+                    <button class="pure-button button-cancel" onClick="window.history.back();">Retour</button>
                     {% if is_granted('ROLE_ADMIN') %}
 
                     {% endif %}

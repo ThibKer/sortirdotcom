@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}Sortir.com{% endblock %}</title>
 
     {% block stylesheets %}{% endblock %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/2.0.6/pure-min.css"
@@ -14,40 +14,49 @@
 
 <body>
 <div class="pure-menu pure-menu-horizontal menu-bordereau">
-    <div class="pure-g">
-        <div class="pure-u-1-3">
-            <a href="{{ path('home') }}"><img src="{{ asset('img/logo.png') }}" id="base-logo"></a>
-        </div>
-        <div class="pure-menu-list pure-u-1-3 base-titre">
-            <h1>Sortie.com</h1>
-        </div>
-        {% if app.user %}
-            <ul class="pure-menu-list pure-u-1-3" id="base-button">
-                {% if is_granted('ROLE_ADMIN') %}
+    <div class="">
+        <div class="pure-u-1-2" id="grouplogo">
+            <a href="{{ path('home') }}">
+                <img src="{{ asset('img/logo.svg') }}" alt="logo" id="logologo">
+                <img id="logodotcom" src="/img/Sortirdotcom8.svg" alt="Sortir.com">
+            </a>
+        </div><?
+        ?><div class="pure-menu-list pure-u-1-2" id="menu-nav">
+            {% if app.user %}
+                <ul class="" >
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="pure-menu-item">
+                            <a href="{{ path('ville') }}" class="pure-menu-link button-nav-admin">Villes</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a href="{{ path('site') }}" class="pure-menu-link button-nav-admin">Sites</a>
+                        </li>
+                    {% endif %}
                     <li class="pure-menu-item">
-                        <a href="{{ path('ville') }}" class="pure-menu-link">Villes</a>
+                        <a href="{{ path('home') }}" class="pure-menu-link button-nav">Accueil</a>
                     </li>
                     <li class="pure-menu-item">
-                        <a href="{{ path('site') }}" class="pure-menu-link">Sites</a>
+                        <a href="{{ path('participant_edit', {"id" : app.user.id}) }}" class="pure-menu-link button-nav">Mon profil</a>
                     </li>
-                {% endif %}
-                <li class="pure-menu-item">
-                    <a href="{{ path('home') }}" class="pure-menu-link">Accueil</a>
-                </li>
-                <li class="pure-menu-item">
-                    <a href="{{ path('participant_edit', {"id" : app.user.id}) }}" class="pure-menu-link">Mon profil</a>
-                </li>
-                <li class="pure-menu-item">
-                    <a href="{{ path('app_logout') }}" class="pure-menu-link">Se déconnecter</a>
-                </li>
-            </ul>
-        {% endif %}
+                    <li class="pure-menu-item">
+                        <a href="{{ path('app_logout') }}" class="pure-menu-link button-nav">Se déconnecter</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </div>
+
+
     </div>
 </div>
+<div id="contentbox">
 {% block body %}
 
 {% endblock %}
+</div>
 </body>
+<footer class="footer-div">
+    <p><a href="#" style="color:black;">@MarvelousTiptopTechnology</a> pour Eni-Ecole</p>
+</footer>
 <script src="{{ asset('js/error.js') }}"></script>
 {% if error is defined %}
     <script>

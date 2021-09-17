@@ -85,6 +85,11 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $sorties;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $id_photo;
+
     public function __construct()
     {
         $this->sortiesOrganisees = new ArrayCollection();
@@ -314,6 +319,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSite(?Site $site): self
     {
         $this->site = $site;
+
+        return $this;
+    }
+
+    public function getIdPhoto(): ?int
+    {
+        return $this->id_photo;
+    }
+
+    public function setIdPhoto(?int $id_photo): self
+    {
+        $this->id_photo = $id_photo;
 
         return $this;
     }
