@@ -29,6 +29,9 @@ btn.onclick = function () {
     ville = document.getElementById('select-ville-balise').value;
     console.log(ville);
     villeLieu = document.getElementById('lieu_ville');
+    if(villeLieu == null){
+        villeLieu = document.getElementById('modifier_sortie_lieu');
+    }
     for (i = 0; i < villeLieu.length; i++){
         if(ville === villeLieu[i].value){
             villeLieu[i].setAttribute('selected', "selected");
