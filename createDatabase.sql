@@ -283,7 +283,7 @@ ALTER TABLE `sortie`
 COMMIT;
 
 INSERT INTO site VALUE (NULL, 'ENI QUIMPER');
-INSERT INTO `participant`(`id`, `site_id`, `pseudo`, `roles`, `password`, `nom`, `prenom`, `telephone`, `administrateur`, `actif`, `email`, `id_photo`) VALUES (NULL,1,'admin','[]','$2y$13$I7S4NjeFfbroU5IW.NPETu7kx3KwblEziM9IK8CBslfEqyF.ZL6Zi','admin','admin','0000000000',false,true,'admin', NULL);
+INSERT INTO `participant`(`id`, `site_id`, `pseudo`, `roles`, `password`, `nom`, `prenom`, `telephone`, `administrateur`, `actif`, `email`, `id_photo`) VALUES (NULL,1,'admin','["ROLE_ADMIN"]','$2y$13$I7S4NjeFfbroU5IW.NPETu7kx3KwblEziM9IK8CBslfEqyF.ZL6Zi','admin','admin','0000000000',false,true,'admin', NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
