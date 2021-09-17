@@ -110,10 +110,10 @@
             <button class="pure-button button-primary" type="submit" id="submit-sortie">Modifier</button>
             <a class="pure-button button-primary" href="{{ path('sortie_publication', {"id" : sortie.id}) }}">Publier la
                 sortie</a>
-            <a class="pure-button button-primary" href="{{ path('sortie_suppression', {"id" : sortie.id}) }}"
+            <a class="pure-button button-secondary" href="{{ path('sortie_suppression', {"id" : sortie.id}) }}"
                onclick="alert('Attention, cette sortie ne sera visible à aucun endroit du site mais restera archivée dans la base de donnée')">Supprimer
                 la sortie</a>
-            <a class="pure-button button-primary" href="{{ path('home') }}">Annuler</a>
+            <a class="pure-button button-cancel" href="{{ path('home') }}">Annuler</a>
         </div>
     </div>
 
